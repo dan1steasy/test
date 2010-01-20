@@ -59,7 +59,7 @@ end
 Rails::Initializer.run do |config|
   config.gem 'mislav-will_paginate', :version => '~> 2.2.3', :lib => 'will_paginate', 
     :source => 'http://gems.github.com'
-  config.gem 'pNet-DNS', :version => '~> 1.0.2'
+  config.gem 'pNet-DNS', :version => '~> 1.0.2', :lib => 'Net/DNS'
 end
 
 

@@ -16,7 +16,7 @@ ActionController::Routing::Routes.draw do |map|
               :controller => 'hardware', :action => 'show_name',
               :requirements => {:name => /([\w-]+\.){1,4}[\w]+/}
 
-  map.resource :tasks
+  map.resources :tasks
   # You can have the root of your site routed by hooking up '' 
   # -- just remember to delete public/index.html.
   map.connect '', :controller => 'main'
