@@ -1,0 +1,10 @@
+<% @page_title = "Listing #{@account_type.name} accounts" -%>
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2>Accounts</h2>
+  <p><%= pluralize @total_accounts, 'account' %> in the database of type <em><%= @account_type.name %></em>.</p>
+  <%= render :partial => 'listing' %>
+  <%= will_paginate @accounts, :params => {:account_type_id => @account_type.id} %>
+</div>
+<!--[eodiv:contentfull]-->

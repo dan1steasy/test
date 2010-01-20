@@ -1,0 +1,25 @@
+<% @page_title = "Hardware type" -%>
+<% @topnav_info = {:object_id => @hardware_type.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Hardware type details</h2>
+  <%= edit_and_delete_options @hardware_type -%>
+  <table>
+  <% for column in HardwareType.content_columns %>
+    <tr>
+      <th><%= column.human_name %></th>
+      <td><%=h @hardware_type.send(column.name) %></td>
+    </tr>
+  <% end %>
+  </table>
+
+  <h2>Hardware type options</h2>
+  <ul>
+    <li><%= link_to 'Edit', :action => 'edit', :id => @hardware_type %> - edit this hardware type</li>
+    <li><%= link_to 'Delete', {:action => 'destroy', :id => @hardware_type},
+                    :confirm => "Are you sure you want to delete this hardware type?",
+                    :method => 'post' %> - delete this hardware type</li>
+  </ul>
+</div>
+<!--[eodiv:contentleft]-->

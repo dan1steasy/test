@@ -1,0 +1,7 @@
+<ul>
+  <% for account in @accounts -%>
+  <li>
+    <%= link_to(highlight(excerpt(account.fqdn, @search_phrase, 9), @search_phrase), :controller => 'accounts', :action => 'show', :id => account) %>
+  </li>
+  <% end -%>
+</ul>

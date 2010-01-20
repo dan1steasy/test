@@ -1,0 +1,20 @@
+<%= error_messages_for 'account_type' %>
+
+<!--[form:account_type]-->
+<tr>
+  <td><label for="account_type_name">Name</label></td>
+  <td><%= text_field 'account_type', 'name'  %></td>
+</tr>
+<tr>
+  <td><label for="account_type_description">Description</label></td>
+  <td><%= text_field 'account_type', 'description'  %></td>
+</tr>
+<tr>
+  <td><label for="account_type_requires_hardware">Requires hardware</label></td>
+  <td><select id="account_type_requires_hardware" name="account_type[requires_hardware]"><option value="false">False</option><option value="true">True</option></select></td>
+</tr>
+<tr>
+  <td><label for="account_type_requires_hosting">Requires hosting</label></td>
+  <td><select id="account_type_requires_hosting" name="account_type[requires_hosting]"><option value="false">False</option><option value="true">True</option></select></td>
+</tr>
+<!--[eoform:account_type]-->

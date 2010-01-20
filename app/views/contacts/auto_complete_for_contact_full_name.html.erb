@@ -1,0 +1,7 @@
+<ul class="auto_complete">
+  <% for contact in @contacts -%>
+  <li>
+    <%= link_to(highlight(contact.full_name, @search_phrase), :controller => 'contacts', :action => 'show', :id => contact) %>
+  </li>
+  <% end -%>
+</ul>

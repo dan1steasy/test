@@ -1,0 +1,35 @@
+<% @page_title = "Edit licence" -%>
+<% @topnav_info = {:object_id => @licence.id.to_s} -%>
+<% @body_options = ' onLoad="toggleExpiry();"' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Edit licence</h2>
+
+  <!--[form:licence]-->
+  <% form_tag({:action => 'update', :id => @licence}, {:name => 'licence', :id => 'licence'}) do %>
+  <table>
+    <tr>
+      <td><label for="licence_licence_type_id">Licence type</label></td>
+      <td><%= collection_select :licence, :licence_type_id, @licence_types, :id, :name %></td>
+    </tr>
+    <tr>
+      <td><label for="licence_value">Licence</label></td>
+      <td><%= text_area :licence, :value, :rows => 8 %></td>
+    </tr>
+    <tr>
+      <td><label for="licence_expires_on">Expiry date</label></td>
+      <td><%= date_select :licence, :expires_on, :order => [:day, :month, :year] %>
+        No expiry date
+        <%= check_box :licence, :no_expiry,
+                      {:name => 'licence_no_expiry', :onclick => 'toggleExpiry();'} %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= submit_tag 'Update licence' %></td>
+    </tr>
+  </table>
+  <% end -%>
+  <!--[eoform:licence]-->
+</div>
+<!--[eodiv:contentleft]-->

@@ -1,0 +1,21 @@
+# == Schema Information
+# Schema version: 20090925131705
+#
+# Table name: users
+#
+#  id            :integer(4)    not null, primary key
+#  name          :string(255)   
+#  real_name     :string(255)   
+#  email         :string(255)   
+#  password      :string(255)   
+#  pin           :string(255)   
+#  key           :binary        
+#  list_limit    :integer(4)    default(15)
+#  is_in_finance :boolean(1)    
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+first:
+  id: 1
+another:
+  id: 2

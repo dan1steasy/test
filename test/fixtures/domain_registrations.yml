@@ -1,0 +1,21 @@
+# == Schema Information
+# Schema version: 82
+#
+# Table name: domain_registrations
+#
+#  id                :integer(11)   not null, primary key
+#  company_id        :integer(11)   
+#  tld               :string(255)   
+#  domain_name       :string(255)   
+#  registrar_id      :integer(11)   
+#  renewal_date      :date          
+#  reg_period        :integer(11)   
+#  registration_date :date          
+#  last_updated      :date          
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+first:
+  id: 1
+another:
+  id: 2

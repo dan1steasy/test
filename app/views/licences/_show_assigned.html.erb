@@ -1,0 +1,23 @@
+<% div_id = "assign_div_#{@licence.id.to_s}" -%>
+<!--[div:<%= div_id %>]-->
+<div id="<%= div_id %>">
+<%=
+if @licence.in_use
+  if @licence.account.blank?
+    "Not assigned to an account " +
+    link_to_remote('Assign to account', :url => {:action => 'assign', :id => @licence},
+                   :update => div_id)
+  else
+    @licence.account.fqdn + " (" +
+    link_to_remote('Change', :url => {:action => 'assign', :id => @licence},
+                   :update => div_id) + " or " +
+    link_to_remote('unassign', :url => {:action => 'unassign', :id => @licence},
+                   :update => div_id) + ")"
+  end
+else
+  "Not in use " + link_to_remote('Assign to account', :url => {:action => 'assign', :id => @licence},
+                                 :update => div_id)
+end
+%>
+</div>
+<!--[eodiv:<%= div_id %>-->

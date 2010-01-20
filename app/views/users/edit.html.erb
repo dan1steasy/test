@@ -1,0 +1,19 @@
+<% @page_title = "Editing user" %>
+<% @topnav_info = {:object_id => @user.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Edit user</h2>
+  <p>Use the form below to edit the details of this user. If the password and PIN fields are left
+  blank, no changes will be made to those fields. If you are editing the PIN, you also need to
+  provide the decrypted key.</p>
+  <% form_tag :action => 'update', :id => @user do %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag 'Update' %></td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+<!--[eodiv:contentleft]-->

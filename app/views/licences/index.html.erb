@@ -1,0 +1,68 @@
+<% @page_title = 'Licence management' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Licences</h2>
+  <p>Use this section to manage licences, which are to be used against various accounts.</p>
+
+  <h2>Find licence</h2>
+  <h3>Search for a licence</h3>
+  <% form_for :licence, :url => {:action => 'search'} do |f| %>
+  <table>
+    <tr>
+      <td><label for="licence_value">Licence number/code:</label></td>
+      <td><%= text_field_with_auto_complete :licence, :value %></td>
+      <td><%= submit_tag 'Search' %></td>
+    </tr>
+  </table>
+  <% end -%>
+
+  <h3>List licences by type</h3>
+  <% form_for :licence_type, :url => {:controller => 'licence_types', :action => 'show'} do |f| -%>
+  <table>
+    <tr>
+      <td>Licence type</td>
+      <td><%= f.collection_select :id, @licence_types, :id, :name %></td>
+      <td><%= submit_tag 'Show licences' %></td>
+    </tr>
+  </table>
+  <% end -%>
+
+  <h2>Options</h2>
+  <ul>
+    <li><%= link_to 'Add licence', :action => 'new' %> - add 1 or more new licences</li>
+    <li><%= link_to 'Manage licence types', :controller => 'licence_types' %>
+      - list and add new licence types to add new licences to</li>
+  </ul>
+</div>
+<!--[eodiv:contentleft]-->
+
+<!--[div:contentright]-->
+<div id="contentright">
+  <h2>Add licence(s)</h2>
+   <% if @licence_types.size < 1 -%>
+  <p>No licence types exist. You must <%= link_to 'add a licence type', :controller => 'licence_types', :action => 'new' %>
+  before adding any licences!</p>
+  <% else -%>
+  <p>Use the form below to add one or more new licences. If you are adding mulitple licences, put 
+  each licence on a new line. If a licence is valid for several instances, put the licence in the
+  text area multiple times. Any expiry dates will be applied to all licences added into the text
+  area.</p>
+
+  <!--[form:licence]-->
+  <% form_tag({:action => 'create'}, {:name => 'licence', :id => 'licence'}) do %>
+  <table>
+    <tr>
+      <td><label for="licence_licence_type_id">Licence type</label></td>
+      <td><%= collection_select :licence, :licence_type_id, @licence_types, :id, :name %></td>
+    </tr>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag 'Add licence(s)' %></td>
+    </tr>
+  </table>
+  <% end -%>
+  <!--[eoform:licence]-->
+  <% end -%>
+</div>
+<!--[eodiv:contentright]-->

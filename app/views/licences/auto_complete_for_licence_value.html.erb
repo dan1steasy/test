@@ -1,0 +1,7 @@
+<ul class="auto_complete">
+  <% for licence in @licences -%>
+  <li>
+  <%= link_to(highlight(truncate(licence.value, 80), @search_phrase), :controller => 'licences', :action => 'show', :id => licence) %>
+  </li>
+  <% end -%>
+</ul>

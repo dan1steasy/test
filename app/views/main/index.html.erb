@@ -1,0 +1,55 @@
+<% @page_title = "Main" %>
+<% @manual_topnav = {'Control Panel' => '/cp'} %>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Datacentres/Assets</h2>
+  <p>Datacentre administration:</p>
+  <ul>
+    <li><%= link_to "Datacentres", :controller => 'dc' %> - view and administer datacentres.</li>
+    <li><%= link_to "Asset values", :controller => 'hardware', :action => 'asset_values' %> - view asset value information.</li>
+    <li><%= link_to 'IP addresses', :controller => 'ip_addresses', :action => 'index' %> - manage IP addresses.</li>
+    <li><%= link_to "Licences", :controller => 'licences' %> - manage software licences.</li>
+  </ul>
+
+  <h2>Customers</h2>
+  <p>Manage customers and their accounts.</p>
+  <ul>
+    <li class="auto_complete"><%= link_to "Accounts", :controller => 'accounts' %> - manage customer accounts (hosting, dedicated servers, etc.).</li>
+    <li><%= link_to "Companies", :controller => 'companies' %> - manage companies.</li>
+    <li><%= link_to "Contacts", :controller => 'contacts' %> - manage contacts.</li>
+    <li><%= link_to "Email contacts", :controller => 'emails' %> - send emails to contacts.</li>
+  </ul>
+
+  <h2>Control Panel</h2>
+  <p>Manage system users, support levels and view statistics in the
+  <%= link_to 'control panel', :controller => 'cp' %>.</p>
+</div>
+<!--[eodiv:contentleft]-->
+
+<!--[div:contentright]-->
+<div id="contentright">
+  <h2>Latest Accounts</h2>
+  <p>Recent accounts added to the system:</p>
+  <ul>
+    <% for account in @latest_accounts -%>
+    <li>
+      <%= link_to(account.fqdn_with_status, account_url(:fqdn => account.fqdn)) %>
+      (added by <%= User.find(account.created_by).real_name %>
+      on <%= account.created_at.to_s(:short) %>)
+    </li>
+    <% end -%>
+  </ul>
+  <h2>Latest Companies</h2>
+  <p>Recent companies added to the system:</p>
+  <ul>
+    <% for company in @latest_companies -%>
+    <li>
+      <%= link_to(company.name, :controller => :companies, :action => :show, :id => company) %>
+      (added by <%= User.find(company.created_by).real_name %>
+      on <%= company.created_at.to_s(:short) %>)
+    </li>
+    <% end -%>
+  </ul>
+</div>
+<!--[eodiv:contentright]-->

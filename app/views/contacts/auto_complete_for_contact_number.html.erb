@@ -1,0 +1,18 @@
+<ul class="auto_complete">
+  <% for contact in @contacts -%>
+  <li>
+    <%= contact.full_name %>
+    <% if contact.phone1 ~= /#{@search_phrase}/ -%>
+    <br />
+    <em>(Phone: <%= contact.phone1 %>)</em>
+    <% end -%>
+    <% if contact.phone2 ~= /#{@search_phrase}/ -%>
+    <br />
+    <em>(Alt. Phone: <%= contact.phone2 %>)</em>
+    <% end -%>
+    <% if contact.fax ~= /#{@search_phrase}/ -%>
+    <br />
+    <em>(Fax: <%= contact.fax %>)</em>
+  </li>
+  <% end -%>
+</ul>

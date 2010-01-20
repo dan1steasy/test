@@ -1,0 +1,91 @@
+<% @page_title = "Show datacentre" -%>
+<% @topnav_info = {:object_id => @datacentre.id.to_s, :object_name => 'datacentre'} -%>
+<% @javascripts = ['portalloc'] -%>
+<%
+if @use_ajax_cabinets 
+  # We may need to call our AJAX to load up the cabinet
+  onload_action = "new Ajax.Updater('cabinet_view', " +
+                  "'/dc/show_cabinet/'+document.location.hash.replace('#cabinet_', ''), " +
+                  "{asynchronous:true, evalScripts:true})"
+  # We only actually add a body onload if there has been a '#cabinet_x' anchor passed through
+  @body_options = " onload=\"if(document.location.hash != ''){#{onload_action}}\""
+end
+-%>
+
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <a id="top"><h2>Datacentre summary</h2></a>
+  <p><em>Show statistics about the datacentre: number of servers, number of spare servers, number of power units, switches, etc.</em></p>
+  <table>
+    <tr>
+      <th>Name</th>
+      <td><%= in_place_editor_field :datacentre, :name, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Description</th>
+      <td><%= in_place_editor_field :datacentre, :description, {}, {:rows => 4} %></td>
+    </tr>
+    <tr>
+      <th>Cabinet space</th>
+      <td><%= @datacentre.cabinet_space %></td>
+    </tr>
+    <tr>
+      <th>Current cabinets</th>
+      <td>
+        <%= cabinet_link_display @datacentre.cabinets, @use_ajax_cabinets %>
+      </td>
+    </tr>
+  </table>
+
+  <h3>Statistics</h3>
+  <table>
+    <% for hw_type in @hardware_types -%>
+    <tr>
+      <td><%= pluralize(hw_type.count_hardware_in_dc(@datacentre), hw_type.name) %></td>
+    </tr>
+    <% end -%>
+  </table>
+</div>
+<!--[eodiv:contentleft]-->
+
+<!--[div:contentright]-->
+<div id="contentright">
+  <h2>Add new cabinet</h2>
+  <% if @datacentre.cabinets.size < @datacentre.cabinet_space -%>
+  <p>Use the form below to add a new cabinet to this datacentre.</p>
+  <table>
+  <% form_tag :action => 'create_cabinet' do %>
+    <%= hidden_field 'cabinet', 'datacentre_id', :value => @datacentre.id %>
+    <%= render :partial => 'cabinet_form' %>
+    <tr>
+      <td><%= submit_tag 'Add cabinet' %></td>
+    </tr>
+  <% end %>
+  </table>
+  <% else -%>
+  <p><strong>You have reached the cabinet limit for this datacentre.</strong>
+  <%= link_to 'Edit', :action => 'edit', :id => @datacentre %> this datacentre
+  to increase the cabinet space.</p>
+  <% end -%>
+</div>
+<!--[eodiv:contentright]-->
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2>Port allocation</h2>
+  <% if @use_ajax_cabinets -%>
+    <div id="cabinet_view">
+      <% if request.env['HTTP_REFERER'] =~ /\/dc|\/emails\/for_cabinet/ %>
+        <p>Click on a cabinet name above to view the cabinet here.</p>
+      <% else -%>
+        <p><%= image_tag 'spinner.gif' %> Loading cabinet...</p>
+      <% end -%>
+    </div>
+  <% else -%>
+    <% for cabinet in @datacentre.cabinets -%>
+      <%= render :partial => 'cabinet_view', :locals => {:cabinet => cabinet} %>
+    <% end -%>
+  <% end -%>
+</div>
+<!--[eodiv:contentfull]-->

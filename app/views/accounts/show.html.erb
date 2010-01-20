@@ -1,0 +1,296 @@
+<% @page_title = @account.fqdn_with_status -%>
+<% @topnav_info = {:object_id => @account.id.to_s} -%>
+<% onload_action = remote_function(:update => 'nameservers', :complete => "Element.hide('spinner')",
+                                   :url => {:action => 'get_nameservers', :id => @account}) -%>
+<% @body_options = " onload=\"#{onload_action}\"" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Account details</h2>
+  <%= edit_and_delete_options @account, @delete_confirm %>
+  <table>
+    <% unless @account.is_active -%>
+      <tr>
+        <th colspan="2">
+          <span class="deactivatedobject">Account deactivated on <%= @account.deactivated_on.to_s %></span>
+        </th>
+      </tr>
+    <% end -%>
+    <tr>
+      <th>Domain name</th>
+      <td>
+        <%= @account.fqdn %>
+        <%= link_to(image_tag('go.gif', :title => "Go to #{@account.fqdn}"),
+                    "http://#{@account.fqdn}", :popup => true) %>
+      </td>
+    </tr>
+    <tr>
+      <th>Resolved IP address</th>
+      <td><%= @ip_addresses[:resolved_ip_address] || "Unable to resolve" %></td>
+    </tr>
+    <tr>
+      <th>Nameservers</th>
+      <td>
+        <div id="nameservers"></div>
+        <div id="spinner">Checking WHOIS database... <%= image_tag 'spinner.gif' %></div>
+      </td>
+    </tr>
+    <tr>
+      <th>Account type</th>
+      <td><%= @account.account_type.name %> - <em><%= @account.account_type.description %></em></td>
+    </tr>
+    <tr>
+      <th>Support level</th>
+      <% if @account.support_level.blank? -%>
+        <td><em>None available</em></td>
+      <% else -%>
+        <td><%= @account.support_level.name %> - <em><%= @account.support_level.description %></em></td>
+      <% end -%>
+    </tr>
+    <% if @account.account_type.requires_hosting -%>
+      <tr>
+        <th>Hosting server</th>
+        <td>
+          <%= link_to @account.hardware.name, account_url(:fqdn => @account.hardware.name) %>
+        </td>
+      </tr>
+      <% unless @account.secure_link.blank? -%>
+      <tr>
+        <th>Secure URL</th>
+        <td><%= @account.hardware.secure_url + '/' + @account.secure_link %></td>
+      </tr>
+      <% end -%>
+    <% end -%>
+    <% if @account.has_ssl? -%>
+      <tr>
+        <th>SSL Certificate</th>
+        <td>
+          Expires: <%= @account.ssl.expires_on.to_s(:db) %>
+          <%= link_to 'View SSL details', :action => :show_ssl, :id => @account %>
+        </td>
+      </tr>
+    <% end -%>
+    <tr>
+    <tr>
+      <th>Disk quota</th>
+      <td><%= @account.disk_quota_value %></td>
+    </tr>
+      <th>Bandwidth quota</th>
+      <td><%= @account.bandwidth_quota_value %></td>
+    </tr>
+  </table>
+
+  <%= audit_div @account %>
+
+  <% if @hardware -%>
+  <h2>Hardware details</h2>
+  <p>This account has hardware associated with it.</p>
+  <table>
+    <tr>
+      <th>Hardware type</th>
+      <td><%= @hardware.hardware_type.name %></td>
+    </tr>
+    <% if @hardware.hardware_type.has_admin_url? -%>
+    <tr>
+      <th>Go to admin URL</th>
+      <td>
+        <%= link_to(@hardware.hardware_type.admin_url_link(@account.fqdn),
+                    @hardware.hardware_type.admin_url_link(@account.fqdn),
+                    :popup => true) %>
+      </td>
+    </tr>
+    <% end -%>
+    <% if @hardware.ip_addresses.size > 3 -%>
+    <tr>
+      <th>IP Address(es)</th>
+      <td>
+        <table>
+        <% row_ctr = 0 -%>
+        <% for ip in @hardware.ip_addresses -%>
+          <%= "<tr>" if row_ctr % 2 == 0 %>
+          <td><%= ip.address %></td>
+          <%= "</tr>" if row_ctr % 2 == 1 %>
+          <% row_ctr += 1 -%>
+        <% end -%>
+        </table>
+      </td>
+    </tr>
+    <% else -%>
+    <tr>
+      <th>IP address(es)</th>
+      <td><%= @hardware.ip_addresses.map {|ip| ip.address}.join(' ') %></td>
+    </tr>
+    <% end -%>
+    <tr>
+      <th>Description</th>
+      <td><%= @hardware.description %></td>
+    </tr>
+    <tr>
+      <th>Size</th>
+      <td><%= @hardware.u_size %>U</td>
+    </tr>
+    <tr>
+      <th>Model number</th>
+      <td><%= @hardware.model_number %></td>
+    </tr>
+    <tr>
+      <th>Serial number</th>
+      <td><%= @hardware.serial_number %></td>
+    </tr>
+    <tr>
+      <th>MAC Address</th>
+      <td><%= @hardware.mac_address %></td>
+    </tr>
+    <tr>
+      <th>Asset tag</th>
+      <td><%= @hardware.asset_tag %></td>
+    </tr>
+    <tr>
+      <th>Purchase price</th>
+      <td>
+        <%= @hardware.asset_value.blank? ? '&pound;0.00 (No value set)' : number_to_currency(@hardware.asset_value, :unit => "&pound;") %>
+      </td>
+    </tr>
+    <tr>
+      <th>Switch &amp; power ports</th>
+      <td><%= @hardware.connections %></td>
+    </tr>
+    <tr>
+      <th>Datacentre</th>
+      <td><%= @hardware.cabinet.datacentre.name %></td>
+    </tr>
+    <tr>
+      <th>Cabinet</th>
+      <% cab_details = "#{@hardware.cabinet.name}" -%>
+      <% if @hardware.u_size > 1 -%>
+        <% cab_details += " (bays #{@hardware.starting_cabinet_bay} - #{@hardware.starting_cabinet_bay + @hardware.u_size - 1})" -%>
+      <% else -%>
+        <% cab_details += " (bay #{@hardware.starting_cabinet_bay})" -%>
+      <% end -%>
+      <td>
+        <%= link_to cab_details, {:controller => :dc, :action => :show,
+                                  :id => "#{@hardware.cabinet.datacentre.id}",
+                                  :anchor => "cabinet_#{@hardware.cabinet.id.to_s}"} %>
+      </td>
+    </tr>
+  </table>
+
+  <% if @hardware.is_hostable && @hosted_account_number > 0 -%>
+  <% img_id = "hardware_#{@hardware.id}_img" -%>
+  <% div_id = "hardware_#{@hardware.id}_div" -%>
+  <br />
+  <h3>Hosted accounts</h3>
+  <p>This hardware hosts <%= pluralize @hosted_account_number, 'account' %>.
+  <img id="<%= img_id %>" src="/images/more.gif" title="More/Less" onClick="Effect.toggle('<%= div_id %>', 'slide'); imgSwap('<%= img_id %>')" /></p>
+  <!--[div:<%= div_id %>]-->
+  <div id="<%= div_id %>" style="display: none;">
+    <table class="listing">
+      <%= render :partial => 'accounts/listing' %>
+    </table>
+  </div>
+  <!--[eodiv:<%= div_id %>]-->
+  <% end -%>
+
+  <%= audit_div @hardware %>
+  <% end -%>
+
+  <% if @account.licences.size > 0 -%>
+  <% img_id = "account_#{@account.id}_img" -%>
+  <% div_id = "account_#{@account.id}_div" -%>
+  <h2>Licence details</h2>
+  <p><%= pluralize @account.licences.size, 'licence' %> assigned to <%= @account.fqdn %>
+  <img id="<%= img_id %>" src="/images/more.gif" title="More/Less" onClick="Effect.toggle('<%= div_id %>', 'slide'); imgSwap('<%= img_id %>')" /></p>
+  <!--[div:<%= div_id %>]-->
+  <div id="<%= div_id %>" style="display: none;">
+  <table class="listing">
+    <tr>
+      <th>Licence</th><th>Licence Type</th>
+    </tr>
+    <% for licence in @account.licences -%>
+    <tr>
+      <td><%= simple_format(h(licence.value)) %></td><td><%= licence.licence_type.name %></td>
+    </tr>
+    <% end -%>
+  </table>
+  </div>
+  <!--[eodiv:<%= div_id %>]-->
+  <% end -%>
+
+  <h2>Account company</h2>
+  <p><%= @account.fqdn %> is associated with
+  <%= link_to @account.company.name, :controller => 'companies', :action => 'show',
+              :id => @account.company %>
+
+  <%= render :partial => 'companies/company_info' %>
+
+  <% if @account.company.contacts.length > 0 -%>
+  <h2>Account contacts</h2>
+  <p><%= pluralize @account.company.contacts.length, 'contact' %> associated with
+  <%= @account.fqdn %>.</p>
+  <table class="listing">
+    <%= render :partial => 'contacts/listing' %>
+  </table>
+  <% end -%>
+
+  <h2>Options</h2>
+  <ul>
+    <li><%= link_to "Edit", :action => 'edit', :id => @account %> - edit this account's details</li>
+    <li><%= link_to "Delete", {:action => 'destroy', :id => @account},
+                    :confirm => @delete_confirm,
+                    :method => 'post' %><%= @delete_text %></li>
+    <% unless @account.is_active -%>
+    <li><%= link_to "Activate", :action => 'activate', :id => @account %> - reactivate this account</li>
+    <% end -%>
+    <li><%= link_to_remote "Add login", :update => 'add_login_div',
+                          :url => {:controller => 'login_details', :action => 'new',
+                          :id => @account} %> - add login information to this account</li>
+    <div id="add_login_div"></div>
+    <li><%= link_to_remote "Add note", :update => 'add_note_div',
+                           :url => {:controller => 'notes',
+                                    :action => 'new_account_note',
+                                    :id => @account} %> - add a note about this account</li>
+    <div id="add_note_div"></div>
+    <li><%= link_to "Compose email", :controller => 'emails', :action => 'for_account', :id => @account %>
+      - send an email to relevant contacts about this account.</li>
+    <li><%= link_to_remote "Assign licence", :update => 'assign_licence_div',
+                           :url => {:action => 'assign_licence', :id => @account} %>
+        - assign a new or existing licence to this account.</li>
+    <div id="assign_licence_div"></div>
+    <% if @hardware -%>
+    <li><%= link_to "Assign new IP address" %> - add a new IP address to this hardware</li>
+    <% end -%>
+    <% if @account.has_ssl? -%>
+      <li><%= link_to "Manage SSL", :action => :show_ssl, :id => @account %> - update or delete an
+      SSL certificate for this account.</li>
+    <% else -%>
+      <li><%= link_to "Add SSL", :action => :new_ssl, :id => @account %> - add an SSL certificate to
+      this account.</li>
+    <% end -%>
+  </ul>
+
+</div>
+<!--[eodiv:contentleft]-->
+
+<% if @account.account_notes.size > 0 || @account.account_logins.size > 0 -%>
+<!--[div:contentright]-->
+<div id="contentright">
+
+  <% if @account.account_logins.size > 0 -%>
+  <h2>Login details</h2>
+  <% for @account_login in @account.account_logins -%>
+    <% @div_id = 'login_detail_div_' + @account_login.id.to_s -%>
+    <%= render :partial => 'login_details/show' %>
+  <% end -%>
+  <% end -%>
+  
+  <% if @account.account_notes.size > 0 -%>
+  <h2>Account notes</h2>
+  <% for @note in @account.account_notes -%>
+    <% @div_id = "note_div_" + @note.id.to_s -%>
+    <%= render :partial => 'notes/show' %>
+  <% end -%>
+  <% end -%>
+
+</div>
+<!--[eodiv:contentright]-->
+<% end -%>

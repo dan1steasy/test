@@ -1,0 +1,25 @@
+<p>To assign a licence to this account, select a licence type from below. If there are no licences
+of that type available, use the fields below to add one. Alternatively, use the
+<%= link_to 'licence management', :controller => 'licences' %> section to add multiple licences
+and assign to accounts.</p>
+<% form_tag :action => 'assign_licence', :id => @account do %>
+<%= render :partial => 'assign_licence_form' %>
+<p>If you are adding a new licence, it will be of the licence type selected above.</p>
+<table>
+  <tr>
+    <td><label for="licence_value">Licence</label></td>
+    <td><%= text_area :licence, :value, :rows => 5 %></td>
+  </tr>
+  <tr>
+    <td><label for="licence_expires_on">Expiry date</label></td>
+    <td><%= date_select :licence, :expires_on, :order => [:day, :month, :year] %>
+      No expiry date
+      <%= check_box :licence, :no_expiry,
+                    {:name => 'licence_no_expiry', :onclick => 'toggleExpiry();'} %>
+    </td>
+  </tr>
+  <tr>
+    <td><%= submit_tag 'Assign licence' %></td>
+  </tr>
+</table>
+<% end -%>

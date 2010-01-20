@@ -1,0 +1,32 @@
+<div id="<%= @div_id %>">
+<div class="login_detail">
+  <div class="options">
+    <%= link_to_remote(image_tag('edit.gif', :title => 'Edit login details'), :update => @div_id,
+    :url => {:controller => 'login_details', :action => 'edit', :id => @account_login}) %>
+    <%= link_to(image_tag('delete.gif', :title => 'Delete login details'),
+                {:controller => 'login_details', :action => 'destroy', :id => @account_login},
+                :confirm => 
+                "Are you sure you want to delete the login details for #{@account_login.description}?",
+                :method => 'post') %>
+  </div>
+    <table>
+      <tr>
+        <th>Description</th>
+        <td><%= h @account_login.description %></td>
+      </tr>
+      <tr>
+        <th>Username</th>
+        <td><%= h(@account_login.decrypt_username(decryption_key)) %></td>
+      </tr>
+      <tr>
+        <th>Password</th>
+        <td><%= h(@account_login.decrypt_password(decryption_key)) %></td>
+      </tr>
+      <tr>
+        <th>URL</th>
+        <td><%= auto_link @account_login.url, :urls, :target => "_#{@account_login.id}" %></td>
+      </tr>
+    </table>
+    <%= audit_div @account_login %>
+</div>
+</div>

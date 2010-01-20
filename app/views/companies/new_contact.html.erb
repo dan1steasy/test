@@ -1,0 +1,19 @@
+<% @page_title = "New company contact" -%>
+<% @body_options = focus_first_field 'contact' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Add new contact</h2>
+  <p>Use the form below to add a new contact to <%= @company.name %>.</p>
+  <% form_tag({:controller => 'contacts', :action => 'create'}, {:name => 'contact', :id => 'contact'}) do %>
+  <%= hidden_field_tag 'company_ids[]', @company.id %>
+  <table>
+    <% @company_select_off = true -%>
+    <%= render :partial => 'contacts/form' %>
+    <tr>
+      <td><%= submit_tag "Add contact" %></td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+<!--[eodiv:contentleft]-->

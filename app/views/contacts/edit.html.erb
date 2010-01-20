@@ -1,0 +1,18 @@
+<% @page_title = "Edit contact" -%>
+<% @topnav_info = {:object_id => @contact.id.to_s} -%>
+<% @body_options = focus_first_field -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Edit contact details</h2>
+  <p>Use the form below to edit the details of this contact.</p>
+  <% form_tag({:action => 'update', :id => @contact}, {:name => 'contact', :id => 'contact'}) do  %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag "Update contact" %></td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+<!--[eodiv:contentleft]-->

@@ -1,0 +1,64 @@
+<% @page_title = "IP addresses" -%>
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2>Listing IP addresses</h2>
+  <% if @start_value -%>
+    <p><%= pluralize @total_ips, 'IP address' %> in the database beginning with
+    <%= @start_value %>.</p>
+  <% else -%>
+    <p><%= pluralize @total_ips, 'IP address' %> in the database.</p>
+  <% end -%>
+  <table class="listing">
+    <tr>
+      <th>
+        <%= link_to 'IP Address',
+                    {:page => params[:page], :order_by => 'address', :order => @order} %>
+      </th>
+      <th>PTR</th>
+      <th>
+        <%= link_to 'Assigned to company',
+                    {:page => params[:page], :order_by => 'company_id', :order => @order} %>
+      </th>
+      <th>
+        <%= link_to 'Assigned to hardware',
+                    {:page => params[:page], :order_by => 'hardware_id', :order => @order} %>
+      </th>
+    </tr>
+    
+    <% for @ip_address in @ip_addresses %>
+      <% div_id = "ptr_#{@ip_address.id.to_s}" -%>
+      <% spinner = "spinner_#{@ip_address.id.to_s}" -%>
+      <tr class="<%= cycle('list-even', 'list-odd') %>">
+        <td><%=h @ip_address.address %></td>
+        <td>
+          <% js = remote_function(:update => div_id,
+                    :before => "Element.hide('#{div_id}'); Element.show('#{spinner}')",
+                    :complete => "Element.hide('#{spinner}')",
+                    :url => {:action => 'get_ptr', :id => @ip_address}) -%>
+          <div id="<%= div_id %>" onclick="<%= js %>">
+            <span class="clickable"><em>Click to resolve PTR</em></span>
+          </div>
+          <div id="<%= spinner %>" style="display: none;"><%= image_tag 'spinner.gif' %></div>
+        </td>
+        <td>
+          <%= render :partial => 'show_assigned_company' %>
+        </td>
+        <td>
+          <%= render :partial => 'show_assigned_hardware' %>
+        </td>
+        <td><%= link_to(image_tag('edit.gif', :title => 'Edit IP'),
+                        :action => 'edit', :id => @ip_address) %></td>
+        <td><%= link_to(image_tag('delete.gif', :title => 'Delete IP'),
+                        {:action => 'destroy', :id => @ip_address},
+                        :confirm => "Are you sure you want to delete " +
+                                    "this IP address (#{@ip_address.address})?",
+                        :method => :post) %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate @ip_addresses, params => {:order_by => params[:order_by], :order => params[:order]} %>
+
+</div>
+<!--[eodiv:contentfull]-->

@@ -1,0 +1,19 @@
+<% @page_title = "Listing contacts" -%>
+
+<!--[div;contentfull]-->
+<div id="contentfull">
+  <h2>Contacts</h2>
+  <% if @search_phrase %>
+    <p><%= pluralize @total_contacts, 'contact' %> in the database beginning with
+    "<%= @search_phrase %>".</p>
+  <% else %>
+    <p><%= pluralize @total_contacts, 'contacts' %> in the database.</p>
+  <% end -%>
+  <table class="listing">
+    <%= render :partial => 'listing' %>
+  </table>
+
+  <%= will_paginate @contacts %>
+  <p><%= link_to "New", :action => 'new' %> - add a new contact.</p>
+</div>
+<!--[eodiv:contentfull]-->

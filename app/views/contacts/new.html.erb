@@ -1,0 +1,22 @@
+<% @page_title = "New contact" -%>
+<% @body_options = focus_first_field 'contact' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Add new contact</h2>
+  <% if @companies.size < 1 %>
+  <p>No companies exist. You must <%= link_to 'add a company', :controller => 'companies', :action => 'new' %>
+  before adding any contacts!</p>
+  <% else %>
+  <p>Use the form below to add a new contact.</p>
+  <% form_tag({:action => 'create'}, {:name => 'contact', :id => 'contact'}) do %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag "Add contact" %></td>
+    </tr>
+  </table>
+  <% end %>
+  <% end %>
+</div>
+<!--[eodiv:contentleft]-->

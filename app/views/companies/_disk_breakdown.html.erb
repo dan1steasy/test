@@ -1,0 +1,19 @@
+<div id="disk_breakdown">
+  <h2>Disk quota breakdown</h2>
+  <table>
+    <tr>
+      <th>Account</th><th>Disk quota (<%= DiskQuota::UNIT %>)</th>
+    </tr>
+    <% @company.accounts.each do |account| -%>
+    <tr>
+      <td><%= account.fqdn %></td>
+      <td style="text-align: right;">
+        <%= if account.disk_quota.blank? || account.disk_quota.value == nil then '0' else account.disk_quota.value end %>
+      </td>
+    </tr>
+    <% end -%>
+    <tr>
+      <td>&nbsp;</td><td style="text-align: right;">Total: <%= @company.total_disk_quota %></td>
+    </tr>
+  </table>
+</div>

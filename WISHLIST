@@ -1,0 +1,17 @@
+TODO:
+* Add checkboxes to licences/list view to delete multiple licences
+* Add account name to licence edit page
+* Add account name to licence adding page, with multiple check box disabling this field, as it is only applicable to single licences
+* Add ability to free up a licence (via accounts/show and licences/list) - mark it as not in use.
+* Add search functionality to accounts_controller.rb
+* Finish IP address searching
+* Finish IP address viewing
+* Implement cabinet editing and deleting
+
+FEATURE IDEAS:
+* Create a naming history functionality for hardware
+* Make it possible to add IP addresses using CIDR notation
+* Implement a clever search for domain names, incorporating real-time DNS checks and/or searching hardware history. Useful for if we rename a server.
+* Implement service history for hardware - track faults, crashes, etc
+* Implement a quota system for accounts (allow us to track bandwidth, disk quota & power)
+* Implement SSL certificates for accounts

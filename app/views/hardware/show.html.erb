@@ -1,0 +1,81 @@
+<% (@hardware.is_active) ? (@page_title = @hardware.name) : (@page_title = @hardware.fqdn + ' (deactivated)') -%>
+<% @topnav_info = {:object_id => @hardware.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Hardware details</h2>
+  <%= edit_and_delete_options @hardware %>
+  <table>
+    <% unless @hardware.is_active -%>
+      <tr>
+        <th colspan="2">
+          <span class="deactivatedobject">Hardware deactivated on <%= @hardware.deactivated_on.to_s %></span>
+        </th>
+      </tr>
+    <% end -%>
+    <tr>
+      <th>Name</th>
+      <td><%= @hardware.name %></td>
+    </tr>
+    <% if @hardware.ip_addresses.size > 3 -%>
+    <tr>
+      <th>IP Address(es)</th>
+      <td>
+        <table>
+        <% row_ctr = 0 -%>
+        <% for ip in @hardware.ip_addresses -%>
+          <%= "<tr>" if row_ctr % 2 == 0 %>
+          <td><%= ip.address %></td>
+          <%= "</tr>" if row_ctr % 2 == 1 %>
+          <% row_ctr += 1 -%>
+        <% end -%>
+        </table>
+      </td>
+    </tr>
+    <% else -%>
+    <tr>
+      <th>IP address(es)</th>
+      <td><%= @hardware.ip_addresses.map {|ip| ip.address}.join(' ') %></td>
+    </tr>
+    <% end -%>
+    <tr>
+      <th>Description</th>
+      <td><%= @hardware.description %></td>
+    </tr>
+    <tr>
+      <th>Size</th>
+      <td><%= @hardware.u_size %>U</td>
+    </tr>
+    <tr>
+      <th>Model number</th>
+      <td><%= @hardware.model_number %></td>
+    </tr>
+    <tr>
+      <th>Serial number</th>
+      <td><%= @hardware.serial_number %></td>
+    </tr>
+    <tr>
+      <th>Switch &amp; power ports</th>
+      <td><%= @hardware.connections %></td>
+    </tr>
+    <tr>
+      <th>Datacentre</th>
+      <td><%= @hardware.cabinet.datacentre.name %></td>
+    </tr>
+    <tr>
+      <th>Cabinet</th>
+      <% cab_details = "#{@hardware.cabinet.name}" -%>
+      <% if @hardware.u_size > 1 -%>
+        <% cab_details += " (bays #{@hardware.starting_cabinet_bay} - #{@hardware.starting_cabinet_bay + @hardware.u_size - 1})" -%>
+      <% else -%>
+        <% cab_details += " (bay #{@hardware.starting_cabinet_bay})" -%>
+      <% end -%>
+      <td>
+        <%= link_to cab_details, {:controller => :dc, :action => :show,
+                                  :id => "#{@hardware.cabinet.datacentre.id}",
+                                  :anchor => "cabinet_#{@hardware.cabinet.id.to_s}"} %>
+      </td>
+    </tr>
+  </table>
+</div>
+<!--[eodiv:contentleft]-->

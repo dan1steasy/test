@@ -1,0 +1,28 @@
+<% @page_title = "Log In" %>
+<% @body_options = focus_first_field 'login' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Log in</h2>
+  <p>Enter your user details below.</p>
+  <% form_tag({:action => "login"}, {:name => 'login', :id => 'login'}) do %>
+  <table>
+    <tr>
+      <td><label for="username">Username:</label></td>
+      <td><%= text_field_tag "username" %></td>
+    </tr>
+    <tr>
+      <td><label for="password">Password:</label></td>
+      <td><%= password_field_tag "password" %></td>
+    </tr>
+    <tr>
+      <td><label for="pin">PIN:</label></td>
+      <td><%= password_field_tag "pin" %></td>
+    </tr>
+    <tr>
+      <td><%= submit_tag "Log in" %></td>
+    </tr>
+  </table>
+  <% end -%>
+</div>
+<!--[eodivcontentleft]-->

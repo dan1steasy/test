@@ -1,0 +1,60 @@
+<% @page_title = "Add IP Addresses" -%>
+<% @body_options = " onload=\"#{focus_first_field('ip_address', true)}; toggleIpCompany();\"" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Add new IP addresses</h2>
+  <p>Use the form below to add new IP addresses. You can optionally assign them to a company now
+  or you can do this at any time once the IP addresses have been created.</p>
+  <p>If you have IP addresses from mulitple networks to add, use the
+  <strong>Individual address(es)</strong> text area. If you have multiple IPs from a single
+  class C network to add, use the <strong>Start address</strong> &amp;
+  <strong>End address</strong> text fields.</p>
+
+  <!--[form:ip_address]-->
+  <% form_tag({:action => 'create'}, {:name => 'ip_address', :id => 'ip_address'}) do %>
+  <table>
+    <%= error_messages_for 'ip_address' %>
+    <tr>
+      <td>Address adding method</td>
+      <td><%= select :ip_address, :method, [['CHOOSE ADDRESS ADDING METHOD...', 0],
+                                            ['Multiple addresses (any network)', 1],
+                                            ['Range on same class C', 2],
+                                            ['CIDR notation', 3]] %>
+      </td>
+      <td>
+        <div id="spinner" style="display: none;"><%= image_tag('spinner.gif') %></div>
+      </td>
+      <%= observe_field :ip_address_method, :update => 'method_options',
+                        :before => "Element.show('spinner')",
+                        :complete => "Element.hide('spinner')",
+                        :url => {:action => 'options_for_method'},
+                        :with =>"'id=' + $F('ip_address_method')" %>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <table id="method_options">
+      </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="ip_address_company_id">Assign to company</label>
+      </td>
+      <td>
+        <%= collection_select :ip_address, :company_id, @companies, :id, :name %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        Do not assign to a company <%= check_box :ip_address, :no_company, {:onclick => 'toggleIpCompany();'} %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= submit_tag "Add IP addresses" %></td>
+    </tr>
+  </table>
+  <% end %>
+  <!--[eoform:ip_address]-->
+</div>
+<!--[eodiv:contentleft]-->

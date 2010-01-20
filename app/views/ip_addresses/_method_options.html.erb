@@ -1,0 +1,35 @@
+<% case @method -%>
+<% when 0 -%>
+<table id="method_options" style="display: none;" class="inner_table">
+</table>
+<% when 1 -%>
+<table id="method_options" class="inner_table">
+<tr>
+  <td><label for="ip_address_address">Individual address(es)</label></td>
+  <td colspan="2"><%= text_area :ip_address, :address, :rows => 8 %></td>
+</tr>
+</table>
+<% when 2 -%>
+<table id="method_options" class="inner_table">
+<tr>
+  <td><label for="ip_address_network">Class C network</label></td>
+  <td><label for="ip_address_start">Start address</label></td>
+  <td><label for="ip_address_end">End address</label></td>
+</tr>
+<tr>
+  <td><%= text_field :ip_address, :network, :maxlength => 11 %></td>
+  <td><strong>.</strong> <%= text_field :ip_address, :start, :maxlength => 3, :size => 4 %></td>
+  <td><em>to</em> <%= text_field :ip_address, :end, :maxlength => 3, :size => 4 %></td>
+</tr>
+</table>
+<% when 3 -%>
+<table id="method_options" class="inner_table">
+<tr>
+  <td>One day...</td>
+</tr>
+</table>
+<% else -%>
+<table id="method_options" style="display: none;" class="inner_table">
+</table>
+<% end -%>
+

@@ -1,0 +1,17 @@
+<% @page_title = "New company" -%>
+<% @body_options = focus_first_field 'company' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Add new company</h2>
+  <p>Use the form below to add a new company.</p>
+  <% form_tag({:action => 'create'}, {:name => 'company', :id => 'company'}) do %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag "Add company" %></td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+<!--[eodiv:contentleft]-->

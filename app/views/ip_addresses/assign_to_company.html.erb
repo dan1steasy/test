@@ -1,0 +1,12 @@
+<% div_id = "assign_company_div_#{@ip_address.id.to_s}" -%>
+<!--[div:<%= div_id %>]-->
+<div id="<%= div_id %>">
+  <% form_remote_tag(:url => {:action => 'update_assigned_company', :id => @ip_address},
+                     :update => div_id) do -%>
+                     <%= collection_select :ip_address, :company_id, @companies, :id, :name %>
+  <%= submit_tag 'Assign' %>
+  <%= link_to_remote('Cancel', :url => {:action => 'show_assigned_company', :id => @ip_address},
+                     :update => div_id) %>
+  <% end -%>
+</div>
+<!--[eodiv:<%= div_id %>-->

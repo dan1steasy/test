@@ -1,0 +1,12 @@
+<% @page_title = "Search results" -%>
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2>Search results</h2>
+  <p>Here are the contacts matching your search phrase, "<%= @search_phrase %>".</p>
+  <table>
+    <%= render :partial => 'listing' %>
+  </table>
+  <%= will_paginate @contact_pages %>
+</div>
+<!--[eodiv:contentfull]-->

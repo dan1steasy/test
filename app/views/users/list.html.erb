@@ -1,0 +1,33 @@
+<% @page_title = "Listing users" %>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Users</h2>
+  <table>
+    <tr>
+    <% for column in User.content_columns %>
+      <% if column.name =~ /(name|real_name|email|is_in_finance)/ %>
+        <th><%= column.human_name %></th>
+      <% end %>
+    <% end %>
+    </tr>
+    
+    <% for user in @users %>
+    <tr class="<%= cycle('list-even', 'list-odd') %>">
+    <% for column in User.content_columns %>
+      <% if column.name =~ /(name|real_name|email|is_in_finance)/ %>
+        <td><%=h user.send(column.name) %></td>
+      <% end %>
+    <% end %>
+      <td><%= link_to(image_tag('show.gif', :title => 'Show user'), :action => 'show', :id => user) %></td>
+      <% if session[:user] == 1 -%>
+        <td><%= link_to(image_tag('edit.gif', :title => 'Edit user'), :action => 'edit', :id => user) %></td>
+      <% end -%>
+    </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate @users %>
+  <p><%= link_to "New", :action => 'new' %> - add a new user.</p>
+</div>
+<!--[eodiv:contentleft]-->

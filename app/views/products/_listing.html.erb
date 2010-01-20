@@ -1,0 +1,26 @@
+    <tr>
+      <th>Category</th>
+      <th>Product Code</th>
+      <th>Name</th>
+      <th>Price</th>
+    </tr>
+
+    <% for product in @products -%>
+    <tr class="<%= cycle('list-even', 'list-odd')%>">
+      <td><%= product.category.name %></td>
+      <td><%= product.code %></td>
+      <td><%= product.name %></td>
+      <td><%= product.formatted_price %></td>
+      <td><%= link_to(image_tag('show.gif', :title => 'Show product'),
+                      :controller => 'products', :action => 'show', :id => product) %></td>
+      <% if controller.action_name == 'list' -%>
+      <td><%= link_to(image_tag('edit.gif', :title => 'Edit product'),
+                      :controller => 'products', :action => 'edit', :id => product) %></td>
+      <td><%= link_to(image_tag('delete.gif', :title => 'Delete product' ),
+                      { :controller => 'products', :action => 'destroy', :id => product },
+                      :confirm => "Are you sure you want to delete the product '#{product.name} [#{product.code}]'?",
+                      :method => 'post') %></td>
+      <% end -%>
+    </tr>
+    <% end -%>
+

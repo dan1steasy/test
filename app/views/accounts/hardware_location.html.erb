@@ -1,0 +1,41 @@
+<% @page_title = 'Hardware location' -%>
+<% onload_action = remote_function(:update => 'free_cabinet_bays',
+               :before => "Element.show('spinner')", :complete => "Element.hide('spinner')",
+               :url => {:action => 'check_available_cabinet_bays'}, 
+               :with => "'id=' + $F('hardware_cabinet_id') + '&hardware_id=#{@hardware.id.to_s}'")-%>
+<% @body_options = ' onLoad="' + onload_action + '"' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Choose a location for this hardware</h2>
+  <p>Use the fields below to choose where this hardware will be located.</p>
+  <% form_for :hardware, :html => {:name => 'hardware', :id => 'hardware'} do |f| %>
+  <table>
+    <tr>
+      <td><label for="hardware_cabinet_id">Cabinet</label></td>
+      <td>
+        <select id="hardware_cabinet_id" name="hardware[cabinet_id]">
+        <%= option_groups_from_collection_for_select(Cabinet.cabinet_list_by_datacentre,
+                                                     :options, :type_name,
+                                                     :id, :name) %>
+        </select>
+      </td>
+      <td>
+        <div id="spinner" style="display: none;"><%= image_tag('spinner.gif') %></div>
+      </td>
+      <%= observe_field :hardware_cabinet_id, :update => 'free_cabinet_bays',
+                        :before => "Element.show('spinner')",
+                        :complete => "Element.hide('spinner')",
+                        :url => {:action => 'check_available_cabinet_bays'},
+                        :with => "'id=' + $F('hardware_cabinet_id') + '&hardware_id=#{@hardware.id.to_s}'" %>
+    </tr>
+    <tr id="free_cabinet_bays">
+      <!-- Free cabinet bays will be displayed here -->
+    </tr>
+    <tr>
+      <td><%= submit_tag "Assign to cabinet bay(s)" %></td>
+    </tr>
+  </table>
+  <% end -%>
+</div>
+<!--[div:contentleft]-->

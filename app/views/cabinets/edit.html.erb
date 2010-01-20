@@ -1,0 +1,21 @@
+<% @page_title = "Edit cabinet" -%>
+<% @body_options = focus_first_field -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Edit cabinet details</h2>
+  <p>Use the form below to edit the details of this cabinet.</p>
+  <% form_tag({:action => :update, :id => @cabinet}, {:name => 'cabinet', :id => 'cabinet'}) do %>
+    <table>
+      <%= render :partial => 'dc/cabinet_form' %>
+      <tr>
+        <td><label for="cabinet_datacentre_id">Datacentre</label></td>
+        <td><%= collection_select :cabinet, :datacentre_id, @datacentres, :id, :name %></td>
+      </tr>
+      <tr>
+        <td><%= submit_tag 'Update cabinet' %></td>
+      </tr>
+    </table>
+  <% end -%>
+</div>
+<!--[eodiv:contentleft]-->

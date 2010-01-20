@@ -1,0 +1,14 @@
+<% @page_title = "Asset values" -%>
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2>Asset values</h2>
+  <p>
+    <%= pluralize @total_hardware, 'hardware asset' %> in the database, with a total value of
+    <%= number_to_currency(@total_value, :unit => '&pound;') %>
+  </p>
+  <%= will_paginate @hardware %>
+  <%= render :partial => 'listing' %>
+  <%= will_paginate @hardware %>
+</div>
+<!--[eodiv:contentfull]-->

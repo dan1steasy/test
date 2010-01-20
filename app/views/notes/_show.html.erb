@@ -1,0 +1,22 @@
+<div id="<%= @div_id %>">
+<div class="note">
+    <div class="options">
+      <%= link_to_remote(image_tag('edit.gif', :title => 'Edit note'), :update => @div_id,
+                         :url => {:controller => 'notes', :action => 'edit', :id => @note}) %>
+      <%= link_to(image_tag('delete.gif', :title => 'Delete note'), 
+                  {:controller => 'notes', :action => 'destroy', :id => @note },
+                  :confirm => "Are you sure you want to delete this note?",
+                  :method => 'post') %>
+    </div>
+    <p>
+      <%= simple_format(@note.decrypt_note(decryption_key)) unless @note.encrypted_note == nil %>
+    </p>
+  
+    <div class="audit">
+      <p>Created <%= @note.created_at %> by <%= User.find(@note.created_by).real_name %></p>
+      <% if @note.updated_by != nil -%>
+      <p>Last updated <%= @note.updated_at %> by <%= User.find(@note.updated_by).real_name %></p>
+      <% end -%>
+    </div>
+</div>
+</div>

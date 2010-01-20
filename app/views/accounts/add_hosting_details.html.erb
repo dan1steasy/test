@@ -1,0 +1,46 @@
+<% @page_title = 'New hosting account' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Add new account - step 2</h2>
+  <p><%= @account.fqdn %> is a hosting account. Please provide hosting-specific details below.</p>
+  <p>You must provide the hosting server, but all other information is optional.</p>
+  <%= error_messages_for :account %>
+  <% form_tag :action => 'create_hosting', :id => @account do %>
+  <table>
+    <tr>
+      <td><label for="account_hardware_id">Hosting server</label></td>
+      <td><%= collection_select :account, :hardware_id, @hosting_servers, :id, :name %></td>
+    </tr>
+    <tr>
+      <td><label for="account_secure_link">Secure symlink</label></td>
+      <td><%= text_field :account, :secure_link %></td>
+    </tr>
+  </table>
+  <h2>Login details</h2>
+  <p>Login details can be added to an account at any time, but one can be added at creation time. Use the fields below to add any login details now.</p>
+  <table>
+    <tr>
+      <td><label for="account_login_description">Login description</label></td>
+      <td><%= text_field :account_login, :description %></td>
+    </tr>
+    <tr>
+      <td><label for="account_login_decrypted_username">Username</label></td>
+      <td><%= text_field :account_login, :decrypted_username %></td>
+    </tr>
+    <tr>
+      <td><label for="account_login_decrypted_password">Password</label></td>
+      <td><%= text_field :account_login, :decrypted_password %></td>
+    </tr>
+  </table>
+  <h2>Account notes</h2>
+  <p>Notes can be added to an account at any time, but you can use the section below to add one now.</p>
+  <p><%= text_area :account_note, :decrypted_note, :rows => 5 %></p>
+  <p><%= submit_tag 'Add account' %></p>
+  <% end %>
+</div>
+<!--[eodiv:contentleft]-->
+
+<div id="contentright">
+  <%= debug(params) %>
+</div>

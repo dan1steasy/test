@@ -1,0 +1,13 @@
+<%= error_messages_for :ssl %>
+<tr>
+  <td valign="top"><label for="ssl_key">SSL key:</label></td>
+  <td><%= text_area :ssl, :key, :cols => 65, :rows => 10 %></td>
+</tr>
+<tr>
+  <td valign="top"><label for="ssl_request">SSL request:</label></td>
+  <td><%= text_area :ssl, :request, :cols => 65, :rows => 10 %></td>
+</tr>
+<tr>
+  <td valign="top"><label for="ssl_certificate">SSL certificate:</label></td>
+  <td><%= text_area :ssl, :certificate, :cols => 65, :rows => 10 %></td>
+</tr>

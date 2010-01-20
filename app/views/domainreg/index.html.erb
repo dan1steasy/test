@@ -1,0 +1,27 @@
+<% @page_title = 'Domain Registration' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Domain Registrations</h2>
+  <p><%= pluralize @total_domains, 'domain registration' %> in the database.</p>
+  <p>Manage domain registrations using the options below.</p>
+  <h2>Find domain</h2>
+  <p>Domain name starts with:</p>
+  <%= starting_character_table %>
+  <p>Use the search forms below to search for a domain.</p>
+  <table>
+    <%= start_form_tag :action => :search %>
+    <tr>
+      <th><label for="domain_registration_domain_name">Domain name (not TLD):</label></th>
+      <td><%= text_field_with_auto_complete :domain_registration, :domain_name %></td>
+      <td><%= submit_tag "Search" %></td>
+    </tr>
+    <%= end_form_tag %>
+  </table>
+
+  <h2>Options</h2>
+  <ul>
+    <li><%= link_to 'Register', :action => 'new' %> - register a new domain.</li>
+  </ul>
+</div>
+<!--[eodiv:contentleft]-->

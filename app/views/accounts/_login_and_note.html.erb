@@ -1,0 +1,26 @@
+  <h2>Login details - optional</h2>
+  <p>Login details can be added to an account at any time, but one can be added at creation time. Use the fields below to add any login details now.</p>
+  <table>
+    <tr>
+      <td><label for="account_login_description">Login description</label></td>
+      <td><%= select :account_login, :example_description, LoginDetail::EXAMPLE_DESCRIPTIONS %></td>
+      <td>or:</td>
+      <td><%= text_field :account_login, :description, :size => 20 %></td>
+      <td>
+        <%= help_message %{You can either provide a login description or select one of the
+                           pre-defined ones from the selection. Any custom login description
+                           overrides the selection.} %>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="account_login_decrypted_username">Username</label></td>
+      <td><%= text_field :account_login, :decrypted_username, :size => 20 %></td>
+    </tr>
+    <tr>
+      <td><label for="account_login_decrypted_password">Password</label></td>
+      <td><%= text_field :account_login, :decrypted_password, :size => 20 %></td>
+    </tr>
+  </table>
+  <h2>Account notes - optional</h2>
+  <p>Notes can be added to an account at any time, but you can use the section below to add one now.</p>
+  <p><%= text_area :account_note, :decrypted_note, :rows => 5, :cols => 35 %></p>

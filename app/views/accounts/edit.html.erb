@@ -1,0 +1,80 @@
+<% @page_title = 'Edit account' -%>
+<% @topnav_info = {:object_id => @account.id.to_s} -%>
+<% if @hardware.blank? %>
+  <% @body_options = focus_first_field 'account' -%>
+<% else %>
+  <% @body_options = " onload=\"" + 
+                     remote_function(:update => 'free_cabinet_bays',
+                      :before => "Element.show('hw_spinner_2')",
+                      :complete => "Element.hide('hw_spinner_2')",
+                      :url => {:controller => 'cabinets', :action => 'check_available_cabinet_bays',
+                               :id => @hardware.cabinet, :u_size => @hardware.u_size,
+                               :starting_cabinet_bay => @hardware.starting_cabinet_bay,
+                               :hardware_id => @hardware.id}) + ';"' -%>
+<% end -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Edit account</h2>
+  <p>Use the form below to edit the details of this account.</p>
+  <%= error_messages_for :account %>
+  <% form_for :account,
+              :url => {:action => 'update', :id => @account},
+              :html => {:name => 'account', :id => 'account'} do |f| %>
+  <table>
+    <tr>
+      <td><label for="account_company_id">Company</label></td>
+      <td><%= f.collection_select :company_id, Company.find(:all, :order => 'name'), :id, :name,
+                                  :prompt => "CHOOSE A COMPANY..." %></td>
+    </tr>
+    <tr>
+      <td><label for="account_host_name">Host name</label></td>
+      <td><%= f.text_field :host_name %></td>
+    </tr>
+    <tr>
+      <td><label for="account_domain_name">Domain name</label></td>
+      <td><%= f.text_field :domain_name %></td>
+    </tr>
+    <tr>
+      <td><label for="account_support_level_id">Support level</label></td>
+      <td><%= f.collection_select(:support_level_id,
+                                  SupportLevel.find(:all, :order => 'name'), :id, :name) %></td>
+    </tr>
+    <% fields_for :disk_quota do |dq| -%>
+    <tr>
+      <td><label for="disk_quota_value">Disk quota</label></td>
+      <td><%= dq.text_field :value %></td>
+      <td>GB</td>
+    </tr>
+    <% end -%>
+    <% fields_for :bandwidth_quota do |bwq| -%>
+    <tr>
+      <td><label for="bandwidth_quota_value">Bandwidth quota</label></td>
+      <td><%= bwq.text_field :value %></td>
+      <td>GB</td>
+    </tr>
+    <% end -%>
+    <tr>
+      <td><label for="account_account_type_id">Account type</label></td>
+      <td><%= f.collection_select :account_type_id,
+                                  AccountType.find(:all, :order => 'name'),
+                                  :id, :name, :prompt => "CHOOSE ACCOUNT TYPE..." %></td>
+      <td>
+        <div id="spinner" style="display: none;"><%= image_tag('spinner.gif') %></div>
+      </td>
+      <%= observe_field :account_account_type_id, :update => 'relevant_details',
+                        :before => "Element.show('spinner')",
+                        :complete => "Element.hide('spinner')",
+                        :url => {:action => 'options_for_type'},
+                        :with => "'id=' + $F('account_account_type_id') + '&company_id=' + $F('account_company_id') + '&account_id=#{@account.id}'" %>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <%= render :partial => 'relevant_details' %>
+      </td>
+    </tr>
+  </table>
+  <p><%= submit_tag "Update account" %></p>
+  <% end -%>
+</div>
+<!--[eodiv:contentleft]-->

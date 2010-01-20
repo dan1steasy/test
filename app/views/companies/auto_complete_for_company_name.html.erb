@@ -1,0 +1,7 @@
+<ul class="auto_complete">
+  <% for company in @companies -%>
+  <li>
+    <%= link_to(highlight(company.name, @search_phrase), :controller => 'companies', :action => 'show', :id => company) %>
+  </li>
+  <% end -%>
+</ul>

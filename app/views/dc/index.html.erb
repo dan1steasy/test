@@ -1,0 +1,41 @@
+<% @page_title = "Datacentres" -%>
+<% @topnav_info = {:object_name => 'datacentre'} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Datacentres</h2>
+  <p><%= pluralize @total_datacentres, 'datacentre' %> in the database.</p>
+  <p>Find &amp; view datacentres using any of the methods below.</p>
+  <h2>Find datacentre</h2>
+  <p>Datacentre name starts with:</p>
+  <%= starting_character_table %>
+
+  <% if(@total_datacentres < 500) and (@total_datacentres > 0) -%>
+  <br />
+  <h3>Select a datacentre:</h3>
+  <p>Choose a datacentre using the drop-down below,</p>
+  <% form_tag :action => 'show' do %>
+    <%= collection_select :datacentre, :id, @datacentres, :id, :name %>
+    <%= submit_tag 'Show datacentre' %>
+  <% end -%>
+  <% end -%>
+  <br />
+  <h3>View all cabinets</h3>
+  <p>To view all cabinets, click <%= link_to 'here', :action => 'show_all_cabinets' %>.</p>
+</div>
+<!--[eodiv:contentleft]-->
+
+<!--[div:contentleft]-->
+<div id="contentright">
+  <h2>Add new datacentre</h2>
+  <p>Use the form below to add a new datacentre.</p>
+  <% form_tag :action => 'create' do %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag 'Add datacentre' %></td>
+    </tr>
+  </table>
+  <% end -%>
+</div>
+<!--[eodiv:contentright]-->

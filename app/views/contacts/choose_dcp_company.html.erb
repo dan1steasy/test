@@ -1,0 +1,16 @@
+<em><%= @contact.forename %> <%= @contact.surname %></em>
+is associated with mulitple companies.<br />
+Please select a company to use for the DCP account below:<br />
+<% form_tag :action => 'create_dcp_account', :id => @contact do -%>
+  <table>
+    <% for company in @contact.companies %>
+      <tr>
+        <td><%= label_tag "company_id_#{company.id}", company.name %></td>
+        <td><%= radio_button_tag :company_id, company.id %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td><%= submit_tag 'Create' %></td>
+    </tr>
+  </table>
+<% end %>

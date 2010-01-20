@@ -1,0 +1,16 @@
+<% @page_title = 'Edit licence type' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Edit licence type</h2>
+  <p>Use the form below to edit this licence type.</p>
+  <% form_tag :action => 'update', :id => @licence_type do -%>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag 'Update licence type' %></td>
+    </tr>
+  </table>
+  <% end -%>
+</div>
+<!--[eodiv:contentleft]-->

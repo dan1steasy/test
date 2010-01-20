@@ -1,0 +1,131 @@
+<% @page_title = @contact.full_name -%>
+<% @topnav_info = {:object_id => @contact.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Contact details</h2>
+  <%= edit_and_delete_options @contact %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <td><%= @contact.full_name %></td>
+    </tr>
+    <tr>
+      <th>Phone</th>
+      <td><%= in_place_editor_field :contact, :phone1, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Alt. phone</th>
+      <td><%= in_place_editor_field :contact, :phone2, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Fax</th>
+      <td><%= in_place_editor_field :contact, :fax, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Email</th>
+      <td><%= in_place_editor_field :contact, :email, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Position</th>
+      <td><%= in_place_editor_field :contact, :position, {}, {:rows => 1} %></td>
+    </tr>
+  </table>
+  <br />
+  <% if @contact.is_subscribed? -%>
+    <% if (@contact.is_general_contact?) or (@contact.is_billing_contact?) or (@contact.is_technical_contact?) -%>
+    <p>This contact is subscribed to the following type(s) of email announcement(s):</p>
+    <ul>
+      <% if @contact.is_general_contact? -%>
+      <li>General announcements</li>
+      <% end -%>
+      <% if @contact.is_billing_contact? -%>
+      <li>Billing &amp; accounting related announcements</li>
+      <% end -%>
+      <% if @contact.is_technical_contact? -%>
+      <li>Technical announcements</li>
+      <% end -%>
+    </ul>
+    <% else -%>
+      <p>This contact is subscribed to email announcements, but does not have any announcement types selected.
+      All email announcement types will be sent to this contact.</p>
+    <% end -%>
+  <% else -%>
+    <p>This contact is not subscribed to email announcements.</p>
+  <% end -%>
+
+  <%= audit_div @contact %>
+
+  <% if @contact.companies.count == 1 -%>
+  <h2>Contact's company</h2>
+  <% else -%>
+  <h2>Contact's companies</h2>
+  <% end -%>
+  <p><em><%= @contact.full_name %></em> is associated with <%= pluralize @contact.companies.count, 'company' %>:</p>
+  <% @contact.companies.each do |@company| -%>
+    <p><%= link_to @company.name, :controller => 'companies', :action => 'show', :id => @company %>
+    <%= render :partial => 'companies/company_info' %></p>
+  <% end -%>
+  <% if @colleagues.length > 0 -%>
+  <h2>Contact's colleagues</h2>
+    <% @contacts = @colleagues -%>
+    <table class="listing">
+      <%= render :partial => 'listing' %>
+    </table>
+  <% end -%>
+
+  <% unless @accounts.blank? -%>
+  <% if @accounts.size > 0 -%>
+  <h2>Accounts</h2>
+  <p><em><%= @contact.full_name %></em> is associated with <%= pluralize @accounts.size, 'account' %>.</p>
+  <% if @accounts.size < 6 -%>
+    <p>Use the links below to view detailed information about an account.</p>
+    <table class="listing">
+    <%= render :partial => 'accounts/listing' %>
+    </table>
+  <% elsif @accounts.size >= 6 -%>
+    <p>Use the drop-down below to view detailed information about an account.</p>
+    <p><% form_for :account, :url => {:controller => 'accounts', :action => 'show'} do |form| %>
+    <%= form.collection_select :id, @accounts, :id, :fqdn_with_status %>
+    <%= submit_tag "Show account" %>
+    <% end %></p>
+  <% end -%>
+  <% end -%>
+  <% end -%>
+
+  <h2>Options</h2>
+  <ul>
+    <li><%= link_to "Edit", :action => 'edit', :id => @contact %> - edit this contact's details</li>
+    <li><%= link_to "Delete", {:action => 'destroy', :id => @contact},
+                    :confirm => "Are you sure you want to delete the contact '#{@contact.full_name}'?",
+                    :method => 'post' %> - remove this contact from the database</li>
+    <li><%= link_to_remote "Add note", :update => 'add_note_div',
+                           :url => {:controller => 'notes',
+                                    :action => 'new_contact_note',
+                                    :id => @contact} %> - add a note about this contact</li>
+    <div id="add_note_div"></div>
+    <li>
+    <% if @contact.companies.count > 1 -%>
+      <%= link_to_remote "Create DCP account", :update => 'dcp_company_div',
+                         :url => {:action => 'choose_dcp_company', :id => @contact} %>
+    <% else -%>
+      <%= link_to "Create DCP account", :action => 'create_dcp_account', :id => @contact %>
+    <% end -%>
+      - create a domain control panel account for this user</li>
+    <div id="dcp_company_div"></div>
+  </ul>
+
+</div>
+<!--[eodiv:contentleft]-->
+
+<% if @contact_notes.size > 0 -%>
+<!--[div:contentright]-->
+<div id="contentright">
+  <h2>Contact notes</h2>
+  <% for @note in @contact_notes -%>
+    <% @div_id = "note_div_" + @note.id.to_s -%>
+    <%= render :partial => 'notes/show' %>
+  <% end -%>
+</div>
+<!--[eodiv:contentright]-->
+<% end -%>

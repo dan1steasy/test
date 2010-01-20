@@ -1,0 +1,12 @@
+<% @page_title = "Search results" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Search results</h2>
+  <p>Here are the products matching your search phrase, "<%= @search_phrase %>".</p>
+  <table>
+    <%= render :partial => 'listing' %>
+  </table>
+  <%= pagination_links @product_pages %>
+</div>
+<!--[eodiv:contentleft]-->

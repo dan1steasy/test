@@ -1,0 +1,46 @@
+<% @page_title = "Email for #{@account.fqdn}" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Compose email</h2>
+  <p>Compose an email to the relevant contacts for this account.</p>
+  
+  <% form_tag :action => 'send_for_account', :id => @account do -%>
+    <table>
+      <tr>
+        <th colspan="3">Send this email to:</th>
+      </tr>
+      <tr>
+        <td><%= check_box :email, :use_general %></td>
+        <td>General contact(s)</td>
+        <td>(<%= @account.general_contact_addresses.join(', ') %>)</td>
+      </tr>
+      <tr>
+        <td><%= check_box :email, :use_technical %></td>
+        <td>Technical contact(s)</td>
+        <td>(<%= @account.technical_contact_addresses.join(', ') %>)</td>
+      </tr>
+      <tr>
+        <td><%= check_box :email, :use_billing %></td>
+        <td>Billing contact(s)</td>
+        <td>(<%= @account.billing_contact_addresses.join(', ') %>)</td>
+      </tr>
+      <tr>
+        <td><%= check_box :email, :use_other %></td>
+        <td>Other address(es):</td>
+        <td><%= text_field :email, :other_addresses, :size => 50 %></td>
+        <td><%= help_message "Separate addresses with spaces, commas or semi-colons." %></td>
+      </tr>
+      <tr>
+        <th colspan="2">Use template</th>
+        <td><%= collection_select :email, :template_id, @email_templates, :id, :template_name %></td>
+        <%= observe_field :email_template_id, :update => 'email_fields',
+                          :url => {:action => 'load_template_for_account'},
+                          :with => "'account_id=#{@account.id}&template_id=' + $F('email_template_id')" %>
+      </tr>
+    </table>
+    <%= render :partial => 'email_fields', :locals => {:email => @email} %>
+    <p style="text-align: right;"><%= submit_tag "Send email", :id => 'send_email_button' %></p>
+  <% end -%>
+</div>
+<!--[eodiv:contentleft]-->

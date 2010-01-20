@@ -1,0 +1,77 @@
+<%= error_messages_for :contact %>
+<!--[form:contact]-->
+<% unless @company_select_off -%>
+<tr>
+  <td><label for="company_id">Associated companies</label></td>
+  <td>
+    <% if @contact -%>
+      <%= company_multiple_select @companies, @contact.company_ids %>
+    <% else -%>
+      <%= company_multiple_select @companies %>
+    <% end -%>
+  </td>
+  <td>
+    <%= help_message %{To associate a contact with multiple companies, hold down
+    CTRL while selecting each company name.} %>
+  </td>
+</tr>
+<% end -%>
+<tr>
+  <td><label for="contact_title">Title</label></td>
+  <td><%= select :contact, :title, %w{ Mr. Mrs. Miss Ms. Dr. } %></td>
+</tr>
+<tr>
+  <td><label for="contact_name">Name</label></td>
+  <td><%= text_field :contact, :forename, :size => "20" %></td>
+  <td><%= text_field :contact, :surname, :size => "20" %></td>
+</tr>
+<tr>
+  <td><label for="contact_phone1">Phone</label></td>
+  <td><%= text_field :contact, :phone1, :size => "20" %></td>
+</tr>
+<tr>
+  <td><label for="contact_phone2">Alt. Phone</label></td>
+  <td><%= text_field :contact, :phone2, :size => "20" %></td>
+</tr>
+<tr>
+  <td><label for="contact_fax">Fax</label></td>
+  <td><%= text_field :contact, :fax, :size => "20" %></td>
+</tr>
+<tr>
+  <td><label for="contact_email">Email</label></td>
+  <td><%= text_field :contact, :email, :size => "20" %></td>
+</tr>
+<tr>
+  <td><label for="contact_postion">Position</label></td>
+  <td><%= text_field :contact, :position, :size => "20" %></td>
+</tr>
+<tr>
+  <td colspan="2">Subscribe to announcements</td>
+</tr>
+<tr>
+  <td><label for="contact_is_subscribed_true">Yes</label></td>
+  <td><%= radio_button :contact, :is_subscribed, true %></td>
+</tr>
+<tr>
+  <td><label for="contact_is_subscribed_false">No</label></td>
+  <td><%= radio_button :contact, :is_subscribed, false %></td>
+</tr>
+<tr>
+  <td colspan="2">Relevant mail announcement types</td>
+</tr>
+<tr>
+  <td><label for="contact_is_general_contact">General</label></td>
+  <% if controller.action_name == 'new' -%>
+    <td><%= check_box :contact, :is_general_contact, :checked => 'checked' %></td>
+  <% else -%>
+    <td><%= check_box :contact, :is_general_contact %></td>
+  <% end -%>
+</tr>
+<tr>
+  <td><label for="contact_is_billing_contact">Billing</label></td>
+  <td><%= check_box :contact, :is_billing_contact %></td>
+</tr>
+<tr>
+  <td><label for="contact_is_technical_contact">Technical</label></td>
+  <td><%= check_box :contact, :is_technical_contact %></td>
+</tr>

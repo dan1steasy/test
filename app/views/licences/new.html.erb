@@ -1,0 +1,32 @@
+<% @page_title = "Add new licences" -%>
+<% @body_options = focus_first_field 'licence' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Add licence(s)</h2>
+  <% if @licence_types.size < 1 -%>
+  <p>No licence types exist. You must <%= link_to 'add a licence type', :controller => 'licence_types', :action => 'new' %>
+  before adding any licences!</p>
+  <% else -%>
+  <p>Use the form below to add one or more new licences. If you are adding mulitple licences, put 
+  each licence on a new line. If a licence is valid for several instances, put the licence in the
+  text area multiple times. Any expiry dates will be applied to all licences added into the text
+  area.</p>
+
+  <!--[form:licence]-->
+  <% form_tag({:action => 'create'}, {:name => 'licence', :id => 'licence'}) do %>
+  <table>
+    <tr>
+      <td><label for="licence_licence_type_id">Licence type</label></td>
+      <td><%= collection_select :licence, :licence_type_id, @licence_types, :id, :name %></td>
+    </tr>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag 'Add licence(s)' %></td>
+    </tr>
+  </table>
+  <% end -%>
+  <!--[eoform:licence]-->
+  <% end -%>
+</div>
+<!--[eodiv:contentleft]-->

@@ -1,0 +1,38 @@
+<% @page_title = "Show category" -%>
+<% @topnav_info = {:object_id => @category.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Category details</h2>
+  <%= edit_and_delete_options @category %>
+  <table>
+    <% for column in Category.content_columns %>
+    <tr>
+      <th><%= column.human_name %>:</th>
+      <td><%= in_place_editor_field :category, column.name, {}, {:rows => 1} %></td>
+    </tr>
+    <% end %>
+  </table>
+  <h2>Category products</h2>
+  <p>The <%= @category.name %> product category contains
+  <%= pluralize @category.products.length, 'product' %></p>
+  
+  <% if @category.products.length > 0 -%>
+  <p>Select a product from the drop-down list to view more details.</p>
+  <%= start_form_tag :controller => 'products', :action => 'show' %>
+    <%= collection_select :product, :id, @category.products, :id, :name_and_price %>
+    <%= submit_tag 'Show product' %>
+  <%= end_form_tag %>
+  <% end -%>
+
+  <h2>Options</h2>
+  <ul>
+    <li><%= link_to 'Add product', :action => 'new_product', :id => @category %> - add a new product to this category.</li>
+    <li><%= link_to 'Edit', :action => 'edit', :id => @category %> - edit this category's details</li>
+    <li><%= link_to 'Delete', {:action => 'destroy', :id => @category},
+                    :confirm => "Are you sure you want to delete the category '#{@category.name}'?\n" +
+                                "ALL ASSOCIATED PRODUCTS WILL BE DELETED!",
+                                :method => 'post' %> - remove this category from the database</li>
+  </ul>
+</div>
+<!--[eodiv:contentleft]-->

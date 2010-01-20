@@ -1,0 +1,41 @@
+<% @page_title = "Listing domain registrars" -%>
+<% @manual_topnav = {'List registrars' => '/domainreg/registrars/',
+                     'Add registrar' => '/domainreg/registrars/new'} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Domain Registrars</h2>
+  <% if @search_phrase -%>
+  <p><%= pluralize @registrars.size, 'registrar' %> in the database beginning with
+  "<%= @search_phrase %>".</p>
+  <% else -%>
+  <p><%= pluralize @registrars.size, 'registrar' %> in the database.</p>
+  <% end -%>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Web address</th>
+    </tr>
+    <% for registrar in @registrars -%>
+    <tr>
+      <td><%= registrar.name %></td>
+      <td><%= registrar.url %></td>
+      <td><%= link_to(image_tag('show', :title => 'Show registrar'),
+                      :controller => 'domainreg', :action => 'registrars',
+                      :r_action => 'show', :id => registrar) %></td>
+      <td><%= link_to(image_tag('edit', :title => 'Edit registrar'),
+                      :controller => 'domainreg', :action => 'registrars',
+                      :r_action => 'edit', :id => registrar) %></td>
+      <td><%= link_to(image_tag('delete', :title => 'Delete registrar' ),
+                      {:controller => 'domainreg', :action => 'registrars',
+                      :r_action => 'destroy', :id => registrar},
+                      :confirm => "Are you sure you want to delete the registrar '#{registrar.name}'?",
+                      :method => 'post') %></td>
+    </tr>
+    <% end -%>
+  </table>
+  <%= pagination_links @registrar_pages %>
+  <p><%= link_to 'New', {:action => 'registrars', :r_action => 'new'} %> - add a new registrar.</p>
+</div>
+<!--[eodiv:contentleft]-->

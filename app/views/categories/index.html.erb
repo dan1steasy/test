@@ -1,0 +1,59 @@
+<% @page_title = 'Categories' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Categories</h2>
+  <p><%= pluralize @total_categories, 'category' %> in the database.</p>
+  <p>Find &amp; view categories using any of the methods below.</p>
+  <h2>Find category</h2>
+  <p>Category name starts with:</p>
+  <%= starting_character_table %>
+
+  <% if(@total_categories < 500) and (@total_categories > 0) %>
+  <br />
+  <h3>Select a category:</h3>
+  <p>Choose a category to view using the drop-down below.</p>
+  <% form_tag :action => 'show' do %>
+    <%= collection_select :category, :id, @categories, :id, :name %>
+    <%= submit_tag "Show category" %>
+  <% end %>
+  <% end -%>
+  <br />
+  <h3>Searches</h3>
+  <p>Use the search fields below to find categories.</p>
+  <table>
+    <% form_tag :action => 'search' do %>
+    <tr>
+      <th><label for="category_name">Name:</label></th>
+      <td><%= text_field_with_auto_complete :category, :name %></td>
+      <td><%= submit_tag "Search" %></td>
+    </tr>
+    <% end %>
+    <% form_tag :action => 'search' do %>
+    <tr>
+      <td colspan="3">Search for a category containing a certain product.</td>
+    </tr>
+    <tr>
+      <th><label for="category_products">Product:</label></th>
+      <td><%= text_field_tag :category, :products, :value => "Needs implementing", :size => "30" %></td>
+      <td><%= submit_tag "Search" %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+<!--[eodiv:contentleft]-->
+
+<!--[div:contentright]-->
+<div id="contentright">
+  <h2>Add new category</h2>
+  <p>Use the form below to add a new category.</p>
+  <% form_tag :action => 'create' do %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag "Create" %></td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+<!--[eodiv:contentright]-->

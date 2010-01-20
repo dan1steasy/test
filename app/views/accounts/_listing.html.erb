@@ -1,0 +1,105 @@
+  <table class="listing">
+    <tr>
+      <% unless controller.action_name =~ /(show|list_by_type|list_by_company)/ -%>
+        <th><%= link_to('Domain name', {:page => params[:page], :order_by => 'domain_name',
+                                        :order => @order}) %></th>
+        <th>Go to</th>
+        <% if controller.action_name == 'list_deactivated' -%>
+          <th><%= link_to('Deactivation date', {:page => params[:page], :order_by => 'deactivated_on',
+                                                :order => @order}) %></th>
+        <% else -%>
+          <th><%= link_to('Creation date', {:page => params[:page], :order_by => 'created_at',
+                                            :order => @order}) %></th>
+        <% end -%>
+        <th>Account type</th>
+        <% unless controller.action_name =~ /(show|list_by_company)/ -%>
+          <th>Comany</th>
+        <% end -%>
+      <% else -%>
+        <th>Domain name</th>
+        <th>Go to</th>
+        <% if controller.action_name == 'list_deactivated' -%>
+          <th>Deactivated date</th>
+        <% else -%>
+          <th>Creation date</th>
+        <% end -%>
+        <th>Account type</th>
+        <% unless controller.action_name =~ /(show|list_by_company)/ -%>
+        <th>Company</th>
+        <% end -%>
+      <% end -%>
+    </tr>
+
+    <% if @accounts -%>
+    <% for account in @accounts -%>
+      <% if @account -%>
+        <% if @account.fqdn != account.fqdn -%>
+          <% show_account = true -%>
+        <% else -%>
+          <% show_account = false -%>
+        <% end -%>
+      <% else -%>
+        <% show_account = true -%>
+      <% end -%>
+
+      <% if show_account -%>
+      <tr class="<%= cycle('list-even', 'list-odd') %>">
+        <td><%= link_to account.fqdn_with_status, account_url(:fqdn => account.fqdn) %></td>
+        <td><%= link_to(image_tag('go.gif', :title => "Go to #{account.fqdn}"),
+                        "http://#{account.fqdn}", :popup => true) %></td>
+        <% if controller.action_name == 'list_deactivated' -%>
+          <td><%= account.deactivated_on.to_s(:long) %></td>
+        <% else -%>
+          <td><%= account.created_at.to_s(:long) %></td>
+        <% end -%>
+        <td>
+          <%= account.account_type.name %>
+          <% if account.is_hardware? -%>
+            <% if account.hardware.is_hostable -%>
+              <em>(Hosts <%= pluralize(account.hardware.accounts.count - 1, 'account') %>)</em>
+            <% end -%>
+          <% end -%>
+        </td>
+        <% unless controller.action_name =~ /(show|list_by_company)/ -%>
+        <td><%= link_to account.company.name,
+                        {:controller => 'companies', :action => 'show', :id => account.company} %></td>
+        <% end -%>
+        <td><%= link_to(image_tag('show.gif', :title => 'Show account'),
+                        :controller => 'accounts', :action => 'show', :id => account) %></td>
+        <% if controller.action_name =~ /(list|list_deactivated)/ -%>
+        <td><%= link_to(image_tag('edit.gif', :title => 'Edit account'),
+                        :controller => 'accounts', :action => 'edit', :id => account) %></td>
+        <td><%= link_to(image_tag('delete.gif', :title => 'Delete account'),
+                        {:controller => 'accounts', :action => 'destroy', :id => account},
+                        :confirm => "Are you sure you want to delete the account '#{account.fqdn}'?",
+                        :method => 'post') %></td>
+         <% end -%>
+      </tr>
+      <% end -%>
+    <% end -%>
+    <% elsif @hardware -%>
+    <% @hardware.each do |hardware| -%>
+      <% account = Account.find_by_fqdn(hardware.name) -%>
+      <tr class="<%= cycle('list-even', 'list-odd') %>">
+        <td><%= link_to account.fqdn_with_status, account_url(:fqdn => account.fqdn) %></td>
+        <td><%= link_to(image_tag('go.gif', :title => "Go to #{account.fqdn}"),
+                        "http://#{account.fqdn}", :popup => true) %></td>
+        <td><%= account.account_type.name %></td>
+        <% if controller.action_name != 'show' -%>
+        <td><%= link_to account.company.name,
+                        {:controller => 'companies', :action => 'show', :id => account.company} %></td>
+        <% end -%>
+        <td><%= link_to(image_tag('show.gif', :title => 'Show account'),
+                        :controller => 'accounts', :action => 'show', :id => account) %></td>
+        <% if controller.action_name == 'list' -%>
+        <td><%= link_to(image_tag('edit.gif', :title => 'Edit account'),
+                        :controller => 'accounts', :action => 'edit', :id => account) %></td>
+        <td><%= link_to(image_tag('delete.gif', :title => 'Delete account'),
+                        {:controller => 'accounts', :action => 'destroy', :id => account},
+                        :confirm => "Are you sure you want to delete the account '#{account.fqdn}'?",
+                        :method => 'post') %></td>
+        <% end -%>
+      </tr>
+    <% end-%>
+    <% end -%>
+  </table>

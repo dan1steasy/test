@@ -1,0 +1,35 @@
+<% @page_title = "Listing categories" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Categories</h2>
+  <% if @search_phrase -%>
+    <p>There are <%= pluralize @total_categories, 'category' %> in the database beginning with
+    "<%= @search_phrase %>".</p>
+  <% else -%>
+    <p>There are <%= pluralize @total_categories, 'category' %> in the database.</p>
+  <% end -%>
+
+  <table>
+    <%= render :partial => 'listing' %>
+  </table>
+
+  <%= will_paginate @categories %>
+  <p><%= link_to "New", :action => 'new' %> - add a new category.</p>
+</div>
+<!--[eodiv:contentleft]-->
+
+<% if(@total_categories < 500) and (@total_categories > 0) -%>
+<!--[div:contentright]-->
+<div id="contentright">
+  <h2>Select category</h2>
+  <p>Choose a category to view using the drop-down below.</p>
+  <% form_tag :action => 'show' do %>
+    <select id="category_id" name="category[id]">
+      <%= options_from_collection_for_select @categories, :id, :name %>
+    </select>
+    <%= submit_tag "Show category" %>
+  <% end %>
+</div>
+<!--[eodiv:contentright]-->
+<% end -%>

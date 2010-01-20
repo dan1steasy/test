@@ -1,0 +1,24 @@
+<% @page_title = @account.fqdn + ' SSL' -%>
+<% @topnav_info = {:object_id => @account.id.to_s} -%>
+<% @body_options = focus_first_field 'ssl' unless @account.has_ssl? -%>
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2>Add SSL</h2>
+  <p>Use the fields below to add an SSL key, request and certificate.</p>
+  <table>
+    <% form_tag({:action => :create_ssl, :id => @account}, {:name => 'ssl', :id => 'ssl'}) do -%>
+    <%= render :partial => 'ssl_form' %>
+    <tr>
+      <td><%= submit_tag 'Add details' %></td>
+    </tr>
+  <% end -%>
+  </table>
+
+  <h2>Options</h2>
+  <ul>
+    <li><%= link_to 'Back', account_url(:fqdn => @account.fqdn) %> - go back to
+    <%= @account.fqdn %> page</li>
+  </ul>
+</div>
+<!--[eodiv:contentfull]-->

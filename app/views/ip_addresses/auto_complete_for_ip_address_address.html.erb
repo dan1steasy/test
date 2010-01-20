@@ -1,0 +1,8 @@
+<ul class="auto_complete">
+  <% for ip in @ip_addresses -%>
+  <li class="auto_complete">
+    <%= link_to(ip.address, :controller => 'ip_addresses', :action => 'show', :id => ip) %>
+    <%= if @resolve_ptr then "<br />(#{truncate(ip.ptr, 30)})" end %>
+  </li>
+  <% end -%>
+</ul>

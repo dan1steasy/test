@@ -1,0 +1,17 @@
+<% @page_title = "Listing accounts" -%>
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2>Accounts</h2>
+  <% if @search_phrase -%>
+  <p><%= pluralize @total_accounts, 'account' %> in the database beginning with
+  "<%= @search_phrase %>".</p>
+  <% else -%>
+  <p><%= pluralize @total_accounts, 'account' %> in the database.</p>
+  <% end -%>
+  <%= render :partial => 'listing' %>
+
+  <%= will_paginate @accounts %>
+  <p><%= link_to 'New', :action => 'new' %> - add a new account.</p>
+</div>
+<!--[eodiv:contentfull]-->

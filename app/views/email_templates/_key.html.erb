@@ -1,0 +1,60 @@
+<h2>Dynamic values</h2>
+<p>You can add dynamic values to your template, which will be replaced with valid information when used with a relevant account, domain or company. These values are listed below.</p>
+<dl>
+  <dt><code>[[DOMAIN]]</code></dt>
+  <dd>The domain name of the account.</dd>
+  
+  <dt><code>[[FQDN]]</code></dt>
+  <dd>The fully qualified domain name (host name and domain name) of the account.</dd>
+
+  <dt><code>[[SITE_ADMIN_USER]]</code></dt>
+  <dd>The site admin username* for the account.</dd>
+
+  <dt><code>[[SITE_ADMIN_PASS]]</code></dt>
+  <dd>The site admin password* for the account.</dd>
+
+  <dt><code>[[MIVA_ADMIN_USER]]</code></dt>
+  <dd>The Miva username** for the account.</dd>
+
+  <dt><code>[[MIVA_ADMIN_PASS]]</code></dt>
+  <dd>The Miva user password** for the account.</dd>
+
+  <dt><code>[[SERVER_ADMIN_USER]]</code></dt>
+  <dd>The server admin username*** for the account.</dd>
+
+  <dt><code>[[SERVER_ADMIN_PASS]]</code></dt>
+  <dd>The server admin password*** for the account.</dd>
+
+  <dt><code>[[ROOT_USER]]</code></dt>
+  <dd>The root username**** for the account.</dd>
+
+  <dt><code>[[ROOT_PASS]]</code></dt>
+  <dd>The root password**** for the account.</dd>
+
+  <dt><code>[[HOSTING_SERVER]]</code></dt>
+  <dd>The fully qualified domain name of the server that the account is hosted on.</dd>
+
+  <dt><code>[[SECURE_URL]]</code></dt>
+  <dd>The secure URL of the account.</dd>
+
+  <dt><code>[[COMPANY]]</code></dt>
+  <dd>The name of a company.</dd>
+</dl>
+<ul>
+  <li>
+    * <em>The site admin login details will only be picked up if the login description
+    is the default: <strong>Site admin</strong></em>
+  </li>
+  <li>
+    ** <em>The Miva admin login details will only be picked up if the login description
+    is the default: <strong>Miva admin</strong></em>
+  </li>
+  <li>
+    *** <em>The server admin login details will only be picked up if the login description
+    is the default: <strong>Server admin</strong></em>
+  </li>
+  <li>
+    **** <em>The root details will only be picked up if the login description is the
+    default: <strong>Root user</strong</em>
+  </li>
+</ul>

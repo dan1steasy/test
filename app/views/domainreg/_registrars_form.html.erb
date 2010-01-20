@@ -1,0 +1,34 @@
+<%= error_messages_for :registrar %>
+<!--[form:registrar]-->
+<tr>
+  <td><label for="registrar_name">Registrar name</label></td>
+  <td><%= text_field :registrar, :name %></td>
+</tr>
+<tr>
+  <td><label for="registrar_url">Web site</label></td>
+  <td><%= text_field :registrar, :url %></td>
+</tr>
+<tr>
+  <td><label for="registrar_valid_tlds">Valid TLDs</label></td>
+  <td><%= text_area :registrar, :valid_tlds %></td>
+  <td><%= help_message %{List the top level domains that this registrar can control (e.g.: .com, .net).
+                         Add each one on a separate line.} %></td>
+</tr>
+<tr>
+  <td colspan="2">If you have login details for this registrar, add them below.</td>
+<tr>
+  <td><label for="registrar_decrypted_username">Username</label></td>
+  <td><%= text_field :registrar, :decrypted_username %></td>
+</tr>
+<tr>
+  <td><label for="registrar_decrypted_password">Password</label></td>
+  <td><%= text_field :registrar, :decrypted_password %></td>
+</tr>
+<tr>
+  <td colspan="2">If this registrar has an associated API that we can use, tick the box below.</td>
+</tr>
+<tr>
+  <td><label for="registrar_has_api">API</label></td>
+  <td><%= check_box :registrar, :has_api %></td>
+</tr>
+<!--[form:registrar]-->

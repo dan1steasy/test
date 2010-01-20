@@ -1,0 +1,17 @@
+<%= error_messages_for 'datacentre' %>
+
+<!--[form:datacentre]-->
+<tr>
+  <td><label for="datacentre_name">Name</label></td>
+  <td><%= text_field 'datacentre', 'name'  %></td>
+</tr>
+<tr>
+  <td><label for="datacentre_description">Description</label></td>
+  <td><%= text_area 'datacentre', 'description', :rows => 4 %></td>
+</tr>
+<tr>
+  <td><label for="datacentre_cabinet_space">Cabinet space</label></td>
+  <td><%= text_field 'datacentre', 'cabinet_space'  %></td>
+</tr>
+<!--[eoform:datacentre]-->
+

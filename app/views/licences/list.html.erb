@@ -1,0 +1,46 @@
+<% @page_title = "#{@licence_type.name} licences" -%>
+<% @topnav_info = {:object_id => @licence_type.id.to_s} -%>
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2><%= @licence_type.name %> licences</h2>
+  <p><%= pluralize @total_licences, 'licence' %>
+  stored in the <%= @licence_type.name %> group.</p>
+  <p><%= link_to 'Add licence(s)', :controller => 'licences', :action => 'new', :id => @licence_type %> - add one or more licences.</p>
+  <% if @licences.size > 0 -%>
+  <table>
+    <tr>
+      <th><%= link_to 'Licence', {:page => params[:page], :order_by => 'value',
+                                  :order => @order} %></th>
+      <th><%= link_to 'Expiry date', {:page => params[:page], :order_by => 'expires_on',
+                                      :order => @order} %></th>
+      <th><%= link_to 'Created on', {:page => params[:page], :order_by => 'created_on',
+                                     :order => @order} %></th>
+      <th>In use by</th>
+    </tr>
+    <% for @licence in @licences -%>
+    <tr class="<%= cycle('list-even', 'list-odd') %>">
+      <!--<td><%= #in_place_editor_field :licence, :value, {},
+                #{:url => url_for(:controller => 'licences', :action => 'set_licence_value',
+                #:id => @licence)}
+                %></td> -->
+      <td><%= truncate(simple_format(@licence.value), 150) %></td>
+      <td><%= if @licence.expires_on.blank? then "None" else @licence.expires_on.to_s(:long) end %></td>
+      <td><%= @licence.created_on.to_s(:long) %></td>
+      <td>
+        <%= render :partial => 'show_assigned' %>
+      </td>
+      <td><%= link_to(image_tag('edit.gif', :title => 'Edit licence'),
+                      :action => 'edit', :id => @licence) %></td>
+      <td><%= link_to(image_tag('delete.gif', :title => 'Delete licence'),
+                      {:action => 'destroy', :id => @licence},
+                      :confirm => "Are you sure you want to delete this licence?",
+                      :method => :post) %></td>
+    </tr>
+    <% end -%>
+  </table>
+
+  <%= will_paginate @licences, :params => {:order_by => params[:order_by], :order => params[:order]} %>
+  <% end -%>
+</div>
+<!--[eodiv:contentfull]-->

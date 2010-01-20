@@ -1,0 +1,17 @@
+<% form_for :account_note, :url => {:controller => 'notes', :action => 'create_account_note'} do |f| %>
+<table>
+  <%= f.hidden_field :account_id %>
+  <%= f.hidden_field :created_by %>
+  <tr>
+    <td><%= f.text_area :decrypted_note, :rows => "5" %></td>
+  </tr>
+  <% if User.find(session[:user]).is_in_finance %>
+    <tr>
+      <td>Financial note? <%= check_box :account_note, :is_financial %></td>
+    </tr>
+  <% end -%>
+  <tr>
+    <td><%= submit_tag "Add note" %></td>
+  </tr>
+</table>
+<% end %>

@@ -1,0 +1,19 @@
+<% @page_title = "Listing companies" -%>
+
+<!--[div;contentfull]-->
+<div id="contentfull">
+  <h2>Companies</h2>
+  <% if @search_phrase %>
+    <p><%= pluralize @total_companies, 'company' %> in the database beginning with
+    "<%= @search_phrase %>".</p>
+  <% else %>
+    <p><%= pluralize @total_companies, 'company' %> in the database.</p>
+  <% end -%>
+  <table width="95%">
+    <%= render :partial => 'listing' %>
+  </table>
+
+  <%= will_paginate @companies %>
+  <p><%= link_to "New", :action => 'new' %> - add a new company.</p>
+</div>
+<!--[eodiv:contentfull]-->

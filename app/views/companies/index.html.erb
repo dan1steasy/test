@@ -1,0 +1,63 @@
+<% @page_title = "Companies" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Companies</h2>
+  <p><%= pluralize @total_companies, 'company' %> in the database.</p>
+  <p>Find &amp; view companies using any of the methods below.</p>
+  <h2>Find company</h2>
+  <p>Company name starts with:</p>
+  <%= starting_character_table %>
+
+  <% if(@total_companies < 500) and (@total_companies > 0) %>
+  <br />
+  <h3>Select a company:</h3>
+    <p>Choose a company to view using the drop-down below.</p>
+    <% form_tag :action => :show do %>
+      <%= collection_select :company, :id, @companies, :id, :name %>
+      <%= submit_tag "Show company" %>
+    <% end %>
+  <% end -%>
+  <br />
+  <h3>Searches</h3>
+    <p>Use the search forms below to find companies.</p>
+    <table>
+      <% form_tag :action => :search do %>
+      <tr>
+        <th><label for="company_name">Name:</label></th>
+        <td><%= text_field_with_auto_complete :company, :name %></td>
+        <td><%= submit_tag "Search" %></td>
+      </tr>
+      <% end %>
+      <% form_tag :action => :search do %>
+      <tr>
+        <th><label for="company_number">Phone or fax:</label></th>
+        <td><%= text_field_tag "company_number", nil, :size => "30" %></td>
+        <td><%= submit_tag "Search" %></td>
+      </tr>
+    <% end %>
+      <% form_tag :action => :search do %>
+      <tr>
+        <th><label for="company_postcode">Postcode:</label></th>
+        <td><%= text_field_with_auto_complete :company, :postcode %></td>
+        <td><%= submit_tag "Search" %></td>
+      </tr>
+      <% end %>
+    </table>
+</div>
+<!--[eodiv:contentleft]-->
+
+<!--[div:contentright]-->
+<div id="contentright">
+  <h2>Add new company</h2>
+  <p>Use the form below to add a new company.</p>
+  <% form_tag :action => 'create' do %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag "Add company" %></td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+<!--[eodiv:contentright]-->

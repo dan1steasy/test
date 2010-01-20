@@ -1,0 +1,13 @@
+<% @page_title = "Search results" -%>
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2>Search results</h2>
+  <p>Here are the accounts matching your search phrase, "<em><%= @search_phrase %></em>".</p>
+  <table class="listing">
+    <%= render :partial => 'listing' %>
+  </table>
+  <%= will_paginate @accounts if @accounts %>
+  <%= will_paginate @hardware if @hardware %>
+</div>
+<!--[eodiv:contentfull]-->

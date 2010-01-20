@@ -1,0 +1,58 @@
+<%= error_messages_for :company %>
+<!--[form:company]-->
+<tr>
+  <td><label for="company_name">Company name</label></td>
+  <td><%= text_field :company, :name %></td>
+</tr>
+<tr>
+  <td><label for="company_address1">Address</label></td>
+  <td><%= text_field :company, :address1 %></td>
+</tr>
+<tr>
+  <td><label for="company_address2">Address</label></td>
+  <td><%= text_field :company, :address2 %></td>
+</tr>
+<tr>
+  <td><label for="company_town">Town</label></td>
+  <td><%= text_field :company, :town %></td>
+</tr>
+<tr>
+  <td><label for="company_county">County</label></td>
+  <td><%= text_field :company, :county %></td>
+</tr>
+<tr>
+  <td><label for="company_postcode">Postcode</label></td>
+  <td><%= text_field :company, :postcode %></td>
+</tr>
+<tr>
+  <td><label for="company_country">Country</label></td>
+  <td>
+    <select name="company[country]">
+      <%= country_options_for_select("United Kingdom", ["United Kingdom", "United States"]) %>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td><label for="company_phone1">Phone</label></td>
+  <td><%= text_field :company, :phone1 %></td>
+</tr>
+<tr>
+  <td><label for="company_phone2">Alt. phone</label></td>
+  <td><%= text_field :company, :phone2 %></td>
+</tr>
+<tr>
+  <td><label for="company_fax">Fax</label></td>
+  <td><%= text_field :company, :fax %></td>
+</tr>
+<tr>
+  <td><label for="company_url">Web address</label></td>
+  <td><%= text_field :company, :url %></td>
+</tr>
+<tr>
+  <td><label for="company_vat_code">VAT code</label></td>
+  <td><%= text_field :company, :vat_code %></td>
+</tr>
+<tr>
+  <td><label for="company_created_at">Date added</label></td>
+  <td><%= date_select :company, :created_at, :order => [:day, :month, :year] %></td>
+</tr>

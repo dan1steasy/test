@@ -1,0 +1,16 @@
+<% @page_title = "New category" -%>
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2>Add new category</h2>
+  <p>Use the form below to add a new category.</p>
+  <%= start_form_tag :action => 'create' %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag "Create" %></td>
+    </tr>
+  </table>
+  <%= end_form_tag %>
+</div>
+<!--[eodiv:contentfull]-->

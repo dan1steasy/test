@@ -1,0 +1,21 @@
+<%= error_messages_for 'account' %>
+
+<!--[form:account]-->
+<tr>
+  <td><label for="account_host_name">Host name</label></td>
+  <td><%= text_field 'account', 'host_name'  %></td>
+</tr>
+<tr>
+  <td><label for="account_domain_name">Domain name</label></td>
+  <td><%= text_field 'account', 'domain_name'  %></td>
+</tr>
+<tr>
+  <td><label for="account_secure_link">Secure link</label></td>
+  <td><%= text_field 'account', 'secure_link'  %></td>
+</tr>
+<tr>
+  <td><label for="account_created_on">Created on</label></td>
+  <td><%= date_select 'account', 'created_on'  %></td>
+</tr>
+<!--[eoform:account]-->
+

@@ -1,0 +1,34 @@
+<% @page_title = "View licence" -%>
+<% @topnav_info = {:object_id => @licence.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Licence details</h2>
+  <%= edit_and_delete_options @licence %>
+  <table>
+    <tr>
+      <th>Licence type</th>
+      <td><%= @licence.licence_type.name %></td>
+    </tr>
+    <tr>
+      <th>Licence</th>
+      <td><%=h @licence.value %></td>
+    </tr>
+    <tr>
+      <th>Expiry date</th>
+      <td><%= @licence.expires_on || "None" %></td>
+    </tr>
+    <tr>
+      <th>Assigned to</th>
+      <% if @licence.in_use && @licence.account -%>
+        <td><%= @licence.account.fqdn %></td>
+      <% elsif @licence.account.blank? -%>
+        <td>Account deleted.</td>
+      <% else -%>
+        <td>Not assigned</td>
+      <% end -%>
+    </tr>
+  </table>
+</div>
+<!--[eodiv:contentleft]-->
+

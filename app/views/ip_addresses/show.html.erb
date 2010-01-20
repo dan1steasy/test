@@ -1,0 +1,8 @@
+<% for column in IpAddress.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @ip_address.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @ip_address %> |
+<%= link_to 'Back', :action => 'list' %>

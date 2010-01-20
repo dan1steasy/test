@@ -1,0 +1,17 @@
+<% @page_title = "Edit #{@account.fqdn} SSL" -%>
+<% @body_options = focus_first_field 'ssl' -%>
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2>Edit account SSL</h2>
+  <p>Use the form below to edit the SSL details for this account.</p>
+  <% form_tag({:action => :update_ssl, :id => @account}, {:name => 'ssl', :id => 'ssl'}) do -%>
+  <table>
+    <%= render :partial => 'ssl_form' %>
+    <tr>
+      <td><%= submit_tag 'Update SSL' %></td>
+    </tr>
+  </table>
+  <% end -%>
+</div>
+<!--[eodiv:contentfull]-->

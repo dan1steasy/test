@@ -1,0 +1,48 @@
+<% @page_title = 'IP address management' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>IP addresses</h2>
+  <p>Use this section to manage IP address allocations. IP addresses are
+  assigned to companies and hardware.</p>
+  <p><%= pluralize @total_ips, 'IP address' %>
+  in the database.</p>
+  <p><%= pluralize @unassigned_ips, 'IP address' %> unassigned and free to use.</p>
+
+  <h2>Find an IP address</h2>
+  <p>IP address starts with:</p>
+  <table>
+    <tr>
+      <%
+      starting_digit_table = ''
+      (1..9).each do |digit|
+        starting_digit_table += "<td><a href=\"/ip_addresses/list/#{digit}\">#{digit}</a></td>"
+      end -%>
+      <%= starting_digit_table %>
+    </tr>
+  </table>
+  <h3>List by network</h3>
+  <p>Use the links below to view a list of IPs on a specific network.</p>
+  <ul>
+  <% for ip_network in @ip_networks -%>
+  <li><%= link_to ip_network['network'], :action => 'list', :ip => ip_network['network'] %></li>
+  <% end -%>
+  </ul>
+  <h3>Search</h3>
+  <% form_for :ip_address, :url => {:action => 'search'} do |f| -%>
+  <table>
+    <tr>
+      <td><label for="ip_address_address">IP address:</label></td>
+      <td><%= text_field_with_auto_complete :ip_address, :address %></td>
+      <td><%= submit_tag 'Search' %></td>
+    </tr>
+  </table>
+  <% end -%>
+
+  <h2>Options</h2>
+  <ul>
+    <li><%= link_to 'Add IP addresses', :action => 'new' %> - add 1 or more IP addresses</li>
+    <li><%= link_to 'List IP addresses', :action => 'list' %> - view listings of IP addresses</li>
+  </ul>
+</div>
+<!--[eodiv:contentleft]-->

@@ -1,0 +1,32 @@
+<% @page_title = 'Listing products' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Products</h2>
+  <% if @search_phrase -%>
+    <p><%= pluralize @total_products, 'product' %> in the database beginning with
+    "<%= @search_phrase %>".</p>
+  <% else -%>
+    <p><%= pluralize @total_products, 'product' %> in the database.</p>
+  <% end -%>
+  <table>
+    <%= render :partial => 'listing' %>
+  </table>
+
+  <%= pagination_links @product_pages %>
+  <p><%= link_to "New", :action => 'new' %> - add a new product.</p>
+</div>
+<!--[eodiv:contentleft]-->
+
+<% if(@total_products < 500) and (@total_products > 0) -%>
+<!--[div:contentright]-->
+<div id="contentright">
+  <h2>Select product</h2>
+  <p>Choose a product to view using the drop-down below.</p>
+  <%= start_form_tag :action => :show %>
+    <%= collection_select :product, :id, @products, :id, :name_and_price %>
+    <%= submit_tag "Show product" %>
+  <%= end_form_tag %>
+</div>
+<!--[eodiv:contentright]-->
+<% end %>

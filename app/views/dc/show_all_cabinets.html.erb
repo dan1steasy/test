@@ -1,0 +1,36 @@
+<% @page_title = "All cabinets" -%>
+<% @javascripts = ['portalloc'] -%>
+<% onload_action = remote_function(:update => 'cabinet_view', :url => {:action => 'show_all_cabinets'}) -%>
+<% @body_options = " onload=\"#{onload_action}\"" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <a id="top"><h2>All cabinets</h2></a>
+  <table>
+    <% @datacentres.each do |dc| -%>
+      <tr>
+        <th>Cabinets (<%= dc.name %>)</th>
+        <td><%= cabinet_link_display dc.cabinets %></td>
+      </tr>
+    <% end -%>
+  </table>
+  <br />
+  <h3>Statistics</h3>
+  <table>
+    <% for hw_type in @hardware_types -%>
+      <tr>
+        <td><%= pluralize(hw_type.count_hardware, hw_type.name) %></td>
+      </tr>
+    <% end -%>
+  </table>
+</div>
+<!--[eodiv:contentleft]-->
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2>Port allocation</h2>
+  <div id="cabinet_view">
+    <p><%= image_tag 'spinner.gif' %> Loading cabinets (this may take some time)...</p>
+  </div>
+</div>
+<!--[eodiv:contentfull]-->

@@ -1,0 +1,53 @@
+<% @page_title = "Listing licence types" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Licence types</h2>
+  <% if @search_phrase -%>
+    <p><%= pluralize @total_licence_types, 'licence type' %> in the database beginning with
+    "<%= @search_phrase %>".</p>
+  <% else -%>
+    <p><%= pluralize @total_licence_types, 'licence type' %> in the database.</p>
+  <% end -%>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Licence count</th>
+      <th>Available licences</th>
+    </tr>
+    <% @licence_types.each do |licence_type| -%>
+    <tr class="<%= cycle('list-even', 'list-odd') %>">
+      <td><%= h licence_type.name %></td>
+      <td><%= h(truncate(licence_type.description, 50)) %></td>
+      <td><%= licence_type.licences.length %></td>
+      <td><%= licence_type.available_licences %></td>
+      <td><%= link_to(image_tag('show.gif', :title => 'Show licences'),
+                      :action => 'show', :id => licence_type) %></td>
+      <td><%= link_to(image_tag('edit.gif', :title => 'Edit licence type'),
+                      :action => 'edit', :id => licence_type) %></td>
+      <td><%= link_to(image_tag('delete.gif', :title => 'Delete licence type'),
+                      {:action => 'destroy', :id => licence_type},
+                      :confirm => "Are you sure you want to delete the #{licence_type.name} licence type?\nALL LICENCES OF THIS TYPE WILL ALSO BE DELETED!",
+                      :method => 'post') %></td>
+    </tr>
+    <% end -%>
+  </table>
+
+  <%= will_paginate @licence_types %>
+  <p><%= link_to "New", :action => 'new' %> - add a new licence type.</p>
+</div>
+<!--[eodiv:contentleft]-->
+
+<% if(@total_licence_types < 500) and (@total_licence_types > 0) -%>
+<!--[div:contentright]-->
+<div id="contentright">
+  <h2>Select licence type</h2>
+  <p>Choose a licence type to view from the drop-down below.</p>
+  <% form_tag :action => 'show' do -%>
+    <%= collection_select :licence_type, :id, @licence_types, :id, :name %>
+    <%= submit_tag "Show licence type" %>
+  <% end -%>
+</div>
+<!--[eodiv:contentright]-->
+<% end -%>

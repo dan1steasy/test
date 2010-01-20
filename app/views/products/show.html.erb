@@ -1,0 +1,54 @@
+<% @page_title = "Show product" -%>
+<% @topnav_info = {:object_id => @product.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Product details</h2>
+  <%= edit_and_delete_options @product %>
+  <table>
+    <tr>
+      <th>Category</th>
+      <td colspan="2"><%= in_place_select_editor_field(:product, :category_name, {},
+              :select_options => options_from_collection_for_select(@categories, :id, :name, @product.category_id)) %>
+      </td>
+    </tr>
+    <tr>
+      <th>Product code</th>
+      <td colspan="2"><%= in_place_editor_field :product, :code, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Name</th>
+      <td colspan="2"><%= in_place_editor_field :product, :name, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Description</th>
+      <td colspan="2"><%= in_place_editor_field :product, :description, {}, {:rows => 4} %></td>
+    </tr>
+    <tr>
+      <th>Price (&pound;)</th>
+      <td><%= in_place_editor_field :product, :price, {}, {:rows => 1} %></td>
+    </tr>
+  </table>
+  <ul>
+  <% if @product.requires_hardware -%>
+  <li>This product requires hardware.</li>
+  <% else -%>
+  <li>There are no hardware requirements for this product.</li>
+  <% end -%>
+  <% if @product.requires_hosting -%>
+  <li>This product requires hosting.</li>
+  <% else -%>
+  <li>This product does not require hosting.</li>
+  <% end -%>
+  </ul>
+
+  <h2>Options</h2>
+  <ul>
+    <li><%= link_to "View category", :controller => 'categories', :action => 'show', :id => @product.category %> - view this product's category</li>
+    <li><%= link_to "Edit", :action => 'edit', :id => @product %> - edit this product's details</li>
+    <li><%= link_to "Delete", {:action => 'destroy', :id => @product},
+                              :confirm => "Are you sure you want to delete the product 
+                                          '#{@product.name} [#{@product.code}]'",
+                              :method => 'post' %> - remove this product from the database</li>
+  </ul>
+</div>

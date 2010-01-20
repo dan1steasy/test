@@ -1,0 +1,49 @@
+<% @page_title = "Emails" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Email management</h2>
+  <p>Use this form to send emails to multiple contacts in the database. If you need to send an email using
+  details for a specific account, use the relevant 'compose email' links from the account view pages.</p>
+  <p>Compose your email to customers using the fields below (you should make sure you fill in both an HTML
+  and text version of the email).</p>
+
+  <% form_tag :action => 'send_out' do -%>
+    <table>
+      <tr>
+        <th colspan="3">Send this email to:</th>
+      </tr>
+      <tr>
+        <td><%= check_box :email, :use_general %></td>
+        <td colspan="2">All general contacts (<%= @total_general_contacts %>)</td>
+      </tr>
+      <tr>
+        <td><%= check_box :email, :use_technical %></td>
+        <td colspan="2">All technical contacts (<%= @total_technical_contacts %>)</td>
+      </tr>
+      <tr>
+        <td><%= check_box :email, :use_billing %></td>
+        <td colspan="2">All billing contacts (<%= @total_billing_contacts %>)</td>
+      </tr>
+      <tr>
+        <td><%= check_box :email, :use_other %></td>
+        <td>Other address(es):</td>
+        <td><%= text_area :email, :other_addresses, :cols => 50, :rows => 10 %></td>
+        <td><%= help_message "Separate addresses with spaces, commas, semi-colons, or put each address on a separate line." %></td>
+      </tr>
+      <tr>
+        <th colspan="4">Only send to subscribed contacts <%= check_box :email, :subscribers_only %></th>
+      </tr>
+      <tr>
+        <th colspan="2">Use template</th>
+        <td><%= collection_select :email, :template_id, @email_templates, :id, :template_name %></td>
+        <%= observe_field :email_template_id, :update => 'email_fields',
+                          :url => {:action => 'load_template'},
+                          :with => "'template_id=' + $F('email_template_id')" %>
+      </tr>
+    </table>
+    <%= render :partial => 'email_fields', :locals => {:email => @email} %>
+    <p style="text-align: right;"><%= submit_tag "Send email", :id => 'send_email_button' %></p>
+  <% end -%>
+</div>
+<!--[eodiv:contentleft]-->

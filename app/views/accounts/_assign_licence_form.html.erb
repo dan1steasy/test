@@ -1,0 +1,25 @@
+  <% fields_for :licence_type do |l| %>
+  <table>
+    <tr>
+      <td><label for="licence_type_id">Assign licence</label></td>
+      <td><%= l.collection_select(:id, LicenceType.find(:all, :order => 'name'),
+                                  :id, :name, :prompt => 'CHOOSE LICENCE TYPE...') %></td>
+      <%= observe_field :licence_type_id, :update => 'licence_checker',
+                        :url => {:controller => 'licences', :action => 'availability_check' },
+                        :before => "Element.show('checking')",
+                        :complete => "Element.hide('checking')",
+                        :with => "'id=' + $F('licence_type_id')" %>
+      <% if controller.action_name == 'new' -%>                  
+      <td>
+        <%= help_message %{If you need to create a new licence to use with this account,
+                           you can either do this after the account is created from the
+                           options, or via the licence manager} %>
+      </td>
+      <% end -%>
+      <td>
+        <div id="checking" style="display: none;">Checking availability...</div>
+        <div id="licence_checker"></div>
+      </td>
+    </tr>
+  </table>
+  <% end -%>

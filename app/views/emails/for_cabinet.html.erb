@@ -1,0 +1,87 @@
+<% @page_title = "Email customers in #{@cabinet.name}" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Compose email</h2>
+  <p>
+    Compose an email to the relevant contacts for this account. <strong>Any addresses
+    highlighted in red are NOT subscribed to announcements</strong> - you can toggle
+    the subscription settings below to control whether unsubscribed email addresses
+    are still sent to.
+  </p>
+  
+  <% form_tag :action => 'send_for_cabinet', :id => @cabinet do -%>
+  <h2>Hardware owners</h2>
+  <p>
+    <%= check_box :hw_email, :use_general %> <strong>General contacts</strong>
+    <%= contact_emails(@hw_contacts, :general) %>
+  </p>
+  <br />
+  <p>
+    <%= check_box :hw_email, :use_technical %> <strong>Technical contacts</strong>
+    <%= contact_emails(@hw_contacts, :technical) %>
+  </p>
+  <br />
+  <p>
+    <%= check_box :hw_email, :use_billing %> <strong>Billing contacts</strong>
+    <%= contact_emails(@hw_contacts, :billing) %>
+  </p>
+  <br />
+  <% unless @hosted_contacts[:billing].blank? && @hosted_contacts[:general].blank? && @hosted_contacts[:technical].blank? %>
+    <h2>Hosted customers</h2>
+    <% unless @hosted_contacts.blank? %>
+    <p>
+      <%= check_box :hosted_email, :use_general %> <strong>General contacts</strong>
+      <%= hosted_contact_emails(@hosted_contacts, :general) %>
+    </p>
+    <br />
+    <% end -%>
+    <% unless @hosted_contacts[:technical].blank? -%>
+    <p>
+      <%= check_box :hosted_email, :use_technical %> <strong>Technical contacts</strong>
+      <%= hosted_contact_emails(@hosted_contacts, :technical) %>
+    </p>
+    <br />
+    <% end -%>
+    <% unless @hosted_contacts[:billing].blank? -%>
+    <p>
+      <%= check_box :hosted_email, :use_billing %> <strong>Billing contacts</strong>
+      <%= hosted_contact_emails(@hosted_contacts, :billing) %>
+    </p>
+    <% end -%>
+  <% end -%>
+  <h2>Other addresses</h2>
+  <p>
+    <%= check_box :hw_email, :use_other %> <strong>Other address(es):</strong>
+    (<em>Separate addresses with spaces, commas, semi-colons or new lines</em>)
+  </p>
+  <p>
+    <%= text_area :hw_email, :other_addresses, :rows => 10 %>
+  </p>
+  <h2>Subscribers</h2>
+  <p>
+    <strong>Honour subscription settings?</strong>
+    <label for="hw_email_subscribers_only_true">Yes</label>
+    <%= radio_button :hw_email, :subscribers_only, true %>
+    <label for="hw_email_subscribers_only_false">No</label>
+    <%= radio_button :hw_email, :subscribers_only, false %>
+  </p>
+  <p>
+    If this is set to <em>yes</em>, email addresses shown above in
+    <span class="error">red</span> will not be sent to.
+  </p>
+  <h2>Email contents</h2>
+  <table>
+    <tr>
+      <th colspan="2">Use template</th>
+      <td><%= collection_select :hw_email, :template_id, @email_templates, :id, :template_name %></td>
+      <%= observe_field :hw_email_template_id, :update => 'email_fields',
+                        :url => {:action => 'load_template'},
+                        :with => "'template_id=' + $F('hw_email_template_id')" %>
+    </tr>
+  </table>
+  <%= render :partial => 'email_fields', :locals => {:email => @hw_email} %>
+  <p style="text-align: right;"><%= submit_tag "Send email", :id => 'send_email_button' %></p>
+  <% end -%>
+</div>
+<!--[eodiv:contentleft]-->

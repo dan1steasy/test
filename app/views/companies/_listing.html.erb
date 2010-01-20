@@ -1,0 +1,25 @@
+    <tr>
+      <th>Name</th>
+      <th>Town</th>
+      <th>Postcode</th>
+      <th>Contacts</th>
+      <th>Accounts</th>
+    </tr>
+
+    <% for company in @companies -%>
+    <tr class="<%= cycle('list-even', 'list-odd')%>">
+      <td>
+        <%= link_to company.name,
+                    :controller => :companies, :action => :show, :id => company %>
+      </td>
+      <td><%= company.town %></td>
+      <td><%= company.postcode %></td>
+      <td><%= company.contacts.count %></td>
+      <td><%= company.accounts.count %></td>
+      <td class="sed"><%= link_to(image_tag('show.gif', :title => 'Show company'), :action => 'show', :id => company) %></td>
+      <td class="sed"><%= link_to(image_tag('edit.gif', :title => 'Edit company'), :action => 'edit', :id => company) %></td>
+      <td class="sed"><%= link_to(image_tag('delete.gif', :title => 'Delete company'), {:action => 'destroy', :id => company},
+                                  :confirm => "Are you sure you want to delete the company '#{company.name}'?",
+                                  :method => 'post') %></td>
+    </tr>
+    <% end -%>

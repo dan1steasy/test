@@ -1,0 +1,68 @@
+  <a id="cabinet_<%= cabinet.id %>"><h3><%= cabinet.name %> <a href="#top">(top)</a></h3></a>
+  <div class="options">
+    <%= link_to(image_tag('mail.gif', :title => 'Email contacts relevant to this cabinet'),
+                :controller => :emails, :action => :for_cabinet, :id => cabinet.id) %>
+    <%= link_to(image_tag('edit.gif', :title => 'Edit cabinet'),
+                :controller => :cabinets, :action => :edit, :id => cabinet.id) %>
+    <% if cabinet.is_empty? -%>
+      <%= link_to(image_tag('delete.gif', :title => 'Delete cabinet'),
+                  {:controller => :cabinets, :action => :destroy, :id => cabinet.id},
+                  :confirm => "Are you sure you wish to delete #{cabinet.name} (in #{cabinet.datacentre.name})?",
+                  :method => 'post') %>
+    <% end -%>
+  </div>
+  <div id="cabinet_view_<%= cabinet.id %>">
+    <% h4 = ''
+       h4 += cabinet.description unless cabinet.description.blank?
+       h4 += "(#{cabinet.datacentre.name})" if controller.action_name == 'show_all_cabinets'-%>
+    <%= "<h4>#{h4}</h4>" unless h4.blank? %>
+    <table class="portalloc">
+      <tr>
+        <th>Bay</th><th>Name</th><th>Switch/PSU</th><th>IP Address(es)</th><th>Model</th><th>Serial</th><th>Description</th><th>Company</th>
+      </tr>
+      <% cab_bay = 1 -%>
+      <% until cab_bay > cabinet.u_space -%>
+        <% if @hardware[cabinet.id][cab_bay].blank? -%>
+        <tr class="<%=cycle('list-even', 'list-odd', :name => 'row_class')%>" onMouseOver="cOn(this);" onMouseOut="cOut(this, '<%=cycle('#eee', '#fff', :name => 'orig_colour')%>');">
+          <td><%= cab_bay %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <% elsif @hardware[cabinet.id][cab_bay].is_a?(Hardware) -%>
+        <% hw = @hardware[cabinet.id][cab_bay] -%>
+        <% bg_colour = hw.hardware_type.colour -%>
+        <tr class="<%=cycle('list-even', 'list-odd', :name => 'row_class')%>" style="background-color: <%= bg_colour %>;" onMouseOver="cOn(this);" onMouseOut="cOut(this, '<%= bg_colour %>');">
+          <td><%= cab_bay %></td>
+          <td><%= (hw.is_active) ? (link_to(hw.name, account_url(:fqdn => hw.name))) : (link_to(hw.name + ' (deactivated)', account_url(:fqdn => hw.name))) %></td>
+          <td><%= hw.connections %></td>
+          <td><%= hw.ip_addresses.map {|ip| ip.address}.join(' ') %></td>
+          <td><%= hw.model_number %></td>
+          <td><%= hw.serial_number %></td>
+          <td><%= hw.description %></td>
+          <% if hw.company.blank? -%>
+          <td>No associated company</td>
+          <% else -%>
+          <td><%= link_to(hw.company.name, :controller => :companies, :action => :show, :id => hw.company) %></td>
+          <% end -%>
+        </tr>
+        <% else -%>
+        <tr class="<%= cycle('list-even', 'list-odd') %>" style="background-color: <%= bg_colour %>;" onMouseOver="cOn(this);" onMouseOut="cOut(this, '<%= bg_colour %>');">
+          <td><%= cab_bay %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <% end -%>
+      <% cab_bay += 1 -%>
+      <% end -%>
+    </table>
+  </div>

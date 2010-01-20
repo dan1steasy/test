@@ -1,0 +1,26 @@
+<% @page_title = "Edit hardware type" -%>
+<% @topnav_info = {:object_id => @hardware_type.id.to_s} -%>
+<% @body_options = focus_first_field -%>
+<% @javascripts = ['AnchorPosition', 'PopupWindow', 'colorpicker'] -%>
+
+<script type="text/javascript">
+  var cp = new ColorPicker();
+</script>
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Edit hardware type</h2>
+
+  <% form_tag({:action => 'update', :id => @hardware_type},
+              {:name => 'hardware_type', :id => 'hardware_type'}) do %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td colspan="2"><%= submit_tag 'Update hardware type' %></td>
+    </tr>
+  </table>
+  <% end %>
+  <script type="text/javascript">
+    cp.writeDiv();
+  </script>
+</div>
+<!--[eodiv:contentleft]-->

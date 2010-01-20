@@ -1,0 +1,22 @@
+<%= error_messages_for :email_template %>
+<tr>
+  <td><label for="email_templates_template_name">Template name</label></td>
+  <td><%= form.text_field :template_name %></td>
+</tr>
+<tr>
+  <td><label for="email_template_subject">Email subject</label></td>
+  <td><%= form.text_field :subject %></td>
+</tr>
+<tr>
+  <td><label for="email_template_html_body">Email HTML body</label></td>
+  <td><%= form.text_area :html_body %></td>
+  <td><%= help_message "Put an HTML version of your email template here." %></td>
+</tr>
+<tr>
+  <td><label for="email_template_text_body">Email text body</label></td>
+  <td><%= form.text_area :text_body %></td>
+  <td>
+    <%= help_message %{You should provide a text-only version of your email template here,
+                       which will be used by email applications that do not support HTML messages.} %>
+  </td>
+</tr>

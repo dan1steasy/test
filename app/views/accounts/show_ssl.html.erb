@@ -1,0 +1,55 @@
+<% @page_title = @account.fqdn + ' SSL' -%>
+<% @topnav_info = {:object_id => @account.id.to_s} -%>
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2>Account SSL</h2>
+  <p>The SSL details for <%= @account.fqdn %> are displayed below.</p>
+  <div class="options">
+    <%= link_to(image_tag('edit.gif', :title => 'Edit SSL'),
+                {:action => 'edit_ssl', :id => @account}) %>
+    <%= link_to(image_tag('delete.gif', :title => 'Delete SSL'), 
+                 {:action => 'destroy_ssl', :id => @account},
+                 :confirm => "Are you sure you want to delete the SSL details for #{@account.fqdn}?",
+                 :method => "post") %>
+  </div>
+  <table>
+    <tr>
+      <th>Certificate expiry</th>
+      <td><%= @account.ssl.expires_on.to_s(:db) %></td>
+    </tr>
+    <tr>
+      <th>Certificate domain</th>
+      <td><%= @account.ssl.domain %></td>
+    </tr>
+    <tr>
+      <th>Certificate issuer</th>
+      <td><%= @account.ssl.issuer %></td>
+    </tr>
+    <tr>
+      <th valign="top">SSL key</th>
+      <td>
+        <%= simple_format @account.ssl.key %>
+      </td>
+    </tr>
+    <tr>
+      <th valign="top">SSL request</th>
+        <td><%= simple_format @account.ssl.request %></td>
+    </tr>
+    <tr>
+      <th valign="top">SSL certificate</th>
+        <td><%= simple_format @account.ssl.certificate %></td>
+    </tr>
+  </table>
+
+  <h2>Options</h2>
+  <ul>
+    <li><%= link_to 'Back', account_url(:fqdn => @account.fqdn) %> - go back to
+    <%= @account.fqdn %> page</li>
+    <li><%= link_to 'Edit', :action => :edit_ssl, :id => @account %> - edit these SSL details</li>
+    <li><%= link_to 'Delete', {:action => :destroy_ssl, :id => @account},
+                     :confirm => "Are you sure you want to remove the SSL details for #{@account.fqdn}?",
+                     :method => 'post' %> - remove these SSL details from this account</li>
+  </ul>
+</div>
+<!--[eodiv:contentfull]-->

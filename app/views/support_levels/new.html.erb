@@ -1,0 +1,18 @@
+<% @page_title = "Add support level" -%>
+<% @topnav_info = {:object_id => @support_level.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Add a new support level</h2>
+  <p>Use the form below to add a new support level.</p>
+
+  <% form_tag :action => 'create' do %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td colspan="2"><%= submit_tag "Add support level" %></td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+<!--[eodiv:contentleft]-->

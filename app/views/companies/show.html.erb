@@ -1,0 +1,165 @@
+<% @page_title = @company.name -%>
+<% @topnav_info = {:object_id => @company.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Company details</h2>
+  <%= edit_and_delete_options @company %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <td><%= in_place_editor_field :company, :name, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Address 1</th>
+      <td><%= in_place_editor_field :company, :address1, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Address 2</th>
+      <td><%= in_place_editor_field :company, :address2, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Town</th>
+      <td><%= in_place_editor_field :company, :town, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>County</th>
+      <td><%= in_place_editor_field :company, :county, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Country</th>
+      <td><%= in_place_select_editor_field :company, :country, {},
+                                           :select_options => country_options_for_select %></th>
+    </tr>
+    <tr>
+      <th>Postcode</th>
+      <td><%= in_place_editor_field :company, :postcode, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Phone</th>
+      <td><%= in_place_editor_field :company, :phone1, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Alt. Phone</th>
+      <td><%= in_place_editor_field :company, :phone2, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Fax</th>
+      <td><%= in_place_editor_field :company, :fax, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>Web</th>
+      <td><%= in_place_editor_field :company, :url, {}, {:rows => 1} %></td>
+    </tr>
+    <tr>
+      <th>VAT Code</th>
+      <td><%= in_place_editor_field :company, :vat_code, {}, {:rows => 1} %></td>
+    </tr>
+  </table>
+
+  <%= audit_div @company %>
+
+  <h2>Quotas</h2>
+  <table>
+    <tr>
+      <th>Power quota</th>
+      <th>Traffic quota</th>
+      <th colspan="2">Bandwidth quota</th>
+      <th colspan="2">Disk quota</th>
+    </tr>
+    <tr>
+      <td><%= @company.total_power_quota %></td>
+      <td><%= @company.total_traffic_quota %></td>
+      <td><%= @company.total_bandwidth_quota %></td>
+      <td><%= link_to_remote 'View breakdown', :update => 'bandwidth_breakdown',
+                             :url => {:action => 'bandwidth_quota_breakdown', :id => @company} %></td>
+      <td><%= @company.total_disk_quota %></td>
+      <td><%= link_to_remote 'View breakdown', :update => 'disk_breakdown',
+                             :url => {:action => 'disk_quota_breakdown', :id => @company} %></td>
+    </tr>
+  </table>
+
+  <% if @company.ip_addresses.count > 0 -%>
+  <h2>IP Allocations</h2>
+  <p>
+    <%= pluralize @company.ip_addresses.count, 'IP address' %> associated with this company, on the
+    following network(s):
+  </p>
+  <ul>
+    <% @company.allocated_ip_networks.each do |ip_net| -%>
+      <li><%= link_to ip_net['network'],
+                      :controller => :ip_addresses, :action => :list, :ip => ip_net['network'],
+                      :company_id => @company %></li>
+    <% end -%>
+  </ul>
+  <p>
+    <%= link_to 'List all', :controller => :ip_addresses, :action => :list, :company_id => @company %>
+    - view all allocated IP addresses
+  </p>
+  <% end -%>
+
+  <% if @company.contacts.length > 0 -%>
+  <h2>Company contacts</h2>
+    <p><em><%= @company.name %></em> has <%= pluralize @company.contacts.size, 'contact' %>.</p>
+    <table class="listing">
+    <%= render :partial => 'contacts/listing' %>
+    </table>
+  <% end -%>
+
+  <% if @accounts.size > 0 -%>
+  <h2>Company accounts</h2>
+  <p><em><%= @company.name %></em> has <%= pluralize @accounts.size, 'account' %>.</p>
+  <% if @accounts.size < 6 -%>
+    <p>Use the links below to view detailed information about an account.</p>
+    <%= render :partial => 'accounts/listing' %>
+  <% elsif @accounts.size >= 6 -%>
+    <p>Use the drop-down below to view detailed information about an account, or
+    <%= link_to_remote "click", :update => 'account_listing',
+                       :url => {:controller => :accounts, :action => :list_by_company,
+                                :id => @company} %>
+    to view a listing of these accounts here.</p>
+    <p>
+      <div id="account_listing">
+      <% form_for :account, :url => {:controller => 'accounts', :action => 'show'} do |form| %>
+      <%= form.collection_select :id, @accounts, :id, :fqdn_with_status %>
+      <%= submit_tag "Show account" %>
+      <% end %>
+      </div>
+    </p>
+  <% end -%>
+  <% end -%>
+
+  <h2>Options</h2>
+  <ul>
+    <li><%= link_to "Edit", :action => 'edit', :id => @company %> - edit this company's details</li>
+    <li><%= link_to "Delete", {:action => 'destroy', :id => @company},
+                    :confirm => "Are you sure you want to delete the company '#{@company.name}'?",
+                    :method => 'post' %> - remove this company from the database</li>
+    <li><%= link_to "Add contact", :action => 'new_contact', :id => @company %> - add a new contact to this company</li>
+    <!-- TODO: Add order action -->
+    <li><%= link_to "Add order", :action => 'new_order' %> - add a new order for this company (NOT YET WORKING)</li>
+    <li><%= link_to "Add account", :action => 'new_account', :id => @company %> - add a new account for this company</li>
+    <li><%= link_to_remote "Add note", :update => 'add_note_div',
+                           :url => {:controller => 'notes',
+                                    :action => 'new_company_note',
+                                    :id => @company} %> - add a note about this company</li>
+    <div id="add_note_div"></div>
+    <li>Assign address space - assign new or existing IP addresses to this company</li>
+  </ul>
+</div>
+<!--[eodiv:contentleft]-->
+
+<!--[div:contentright]-->
+<% if @company_notes.size <= 0 then style = ' style="display; none;"' else style = '' end -%>
+<div id="contentright"<%= style %>>
+<% if @company_notes.size > 0 -%>
+  <h2>Company notes</h2>
+  <% for @note in @company_notes -%>
+    <% @div_id = "note_div_" + @note.id.to_s -%>
+    <%= render :partial => 'notes/show' %>
+  <% end -%>
+<% end -%>
+  <div id="bandwidth_breakdown" style="display: none;"></div>
+  <div id="disk_breakdown" style="display: none;"></div>
+</div>
+<!--[eodiv:contentright]-->

@@ -1,0 +1,80 @@
+<% @page_title = "Control Panel" %>
+<% @manual_topnav = {"Main" => "/"} %>
+
+<% cache do -%>
+  <!--[div:contentleft]-->
+  <div id="contentleft">
+    <h2>Control Panel</h2>
+    <p>You can configure various settings and view statistics within this area.</p>
+
+    <h2>User management</h2>
+    <p>Manage system users.</p>
+    <ul>
+      <li><%= link_to "View users", :controller => "users" %>
+      - View, Edit or Delete existing users.</li>
+      <% if session[:user] == 1 %>
+      <li><%= link_to "Add user", :controller => "users", :action => "new" %>
+      - Add a new user.</li>
+      <% end -%>
+      <li><%= link_to "Edit user details", { :controller => "users", :action => "edit",
+                                          :id => session[:user] } %>
+      - Edit your user details.</li>
+    </ul>
+    <h2>Support levels</h2>
+    <p>Manage support levels for customer accounts.</p>
+    <ul>
+      <li><%= link_to "View", :controller => "support_levels", :action => 'list' %>
+      - view, edit or delete existing support levels.</li>
+      <li><%= link_to "Add", :controller => 'support_levels', :action => 'new' %>
+      - add a new support level.</li>
+    </ul>
+
+    <h2>Account Types</h2>
+    <p>Manage account types for customer accounts.</p>
+    <ul>
+      <li><%= link_to "View", :controller => "account_types", :action => 'list' %>
+      - view, edit or delete existing account types.</li>
+      <li><%= link_to "Add", :controller => "account_types", :action => 'new' %>
+      - add a new account type.</li>
+    </ul>
+
+    <h2>Hardware Types</h2>
+    <p>Manage hardware types and colour codes for port allocation.</p>
+    <ul>
+      <li><%= link_to "View", :controller => 'hardware_types' %>
+      - view, edit or delete existing hardware types.</li>
+      <li><%= link_to "Add", :controller => 'hardware_types', :action => 'new' %>
+      - add a new hardware type.</li>
+    </ul>
+
+    <h2>Email templates</h2>
+    <p>Create, edit and delete templates to use for customer emails.</p>
+    <ul>
+      <li><%= link_to 'Email templates', :controller => 'email_templates' %> - manage email templates.</li>
+    </ul>
+
+  </div>
+  <!--[eodiv:contentleft]-->
+<% end -%>
+
+<!--[div:contentright]-->
+<div id="contentright">
+  <h2>Statistics</h2>
+  <p>The Autoeasy database currently contains:</p>
+  <table>
+    <tr>
+      <th>Total system users:</th><td><%= @user_total %></td>
+      <th>Total IP addresses:</th><td><%= @ip_address_total %></td>
+    </tr>
+    <tr>
+      <th>Total companies:</th> <td><%= @company_total %></td>
+      <th>Total contacts:</th> <td><%= @contact_total %></td>
+    </tr>
+    <tr>
+      <th>Total accounts:</th> <td><%= @account_total %></td>
+      <th>Total licences:</th> <td><%= @licence_total %></td>
+    </tr>
+  </table>
+  <p>More... - View more statistics and reports.</p>
+</div>
+<!--[eodiv:contentright]-->

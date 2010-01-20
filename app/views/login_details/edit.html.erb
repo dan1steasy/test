@@ -1,0 +1,41 @@
+<div id="<%= @div_id %>">
+  <div class="login_detail">
+    <div class="options">
+      <%= link_to_remote(image_tag('edit.gif', :title => 'Edit login details'), :update => @div_id,
+                         :url => {:controller => 'login_details', :action => 'show', :id => @account_login}) %>
+
+      <%= link_to(image_tag('delete.gif', :title => 'Delete login details'),
+                  {:controller => 'login_details', :action => 'destroy', :id => @account_login},
+                  :confirm => 
+                  "Are you sure you want to delete the login details for #{@account_login.description}?",
+                  :method => 'post') %>
+    </div>
+    <% form_tag :controller => 'login_details', :action => 'update', :id => @account_login do %>
+    <table>
+      <tr>
+        <th><label for="account_login_description">Description</label></th>
+        <td><%= text_field :account_login, :description %></td>
+      </tr>
+      <tr>
+        <th><label for="account_login_decrypted_username">Username</label></th>
+        <td><%= text_field :account_login, :decrypted_username %></td>
+      </tr>
+      <tr>
+        <th><label for="account_login_decrypted_password">Password</label></th>
+        <td><%= text_field :account_login, :decrypted_password %></td>
+      </tr>
+      <tr>
+        <th><label for="account_login_url">URL</label></th>
+        <td><%= text_field :account_login, :url %></td>
+      <tr>
+        <td><%= submit_tag "Update" %></td>
+        <td align="left">
+          <%= link_to_remote 'Cancel', :update => @div_id,
+                             :url => {:controller => 'login_details', :action => 'show',
+                                      :id => @account_login} %>
+        </td>
+      </tr>
+    </table>
+    <% end -%>
+  </div>
+</div>

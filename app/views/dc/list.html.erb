@@ -1,0 +1,18 @@
+<% @page_title = 'Listing datacentres' -%>
+<% @topnav_info = {:object_name => 'datacentre'} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Datacentres</h2>
+  <% if @search_phrase -%>
+    <p><%= pluralize @total_datacentres, 'datacentre' %> in the database beginning with "<%= @search_phrase %>".</p>
+  <% else -%>
+    <p><%= pluralize @total_datacentres, 'datacentre' %> in the database.</p>
+  <% end -%>
+  <table>
+    <%= render :partial => 'listing' %>
+  </table>
+  <%= will_paginate @datacentres %>
+  <p><%= link_to 'New', :action => 'new' %> - add a new datacentre</p>
+</div>
+<!--[eodiv:contentleft]-->

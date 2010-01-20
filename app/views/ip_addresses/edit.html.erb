@@ -1,0 +1,36 @@
+<% @page_title = "Edit IP Addresses" -%>
+<% @body_options = " onload=\"#{focus_first_field('ip_address', true)}; toggleIpCompany(); toggleIpHardware();\"" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Editing IP address</h2>
+  <%= error_messages_for 'ip_address' %>
+  <% form_for :ip_address, :url => {:action => 'update', :id => @ip_address},
+              :html => {:name => 'ip_address', :id => 'ip_address'} do |form| -%>
+  <table>
+    <tr>
+      <td><label for="ip_address_address">Address</label></td>
+      <td><%= form.text_field :address %></td>
+    </tr>
+    <tr>
+      <td><label for="ip_address_company_id">Assigned company</label></td>
+      <td>
+        <%= form.collection_select :company_id, @companies, :id, :name %>
+        Do not assign <%= form.check_box :no_company, {:onclick => 'toggleIpCompany();'} %>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="ip_address_hardware_id">Assigned hardware</label></td>
+      <td>
+        <%= form.collection_select :hardware_id, @hardware, :id, :name %>
+        Do not assign <%= form.check_box :no_hardware, {:onclick => 'toggleIpHardware();'} %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= submit_tag 'Edit' %></td>
+    </tr>
+  </table>
+  <% end -%>
+
+</div>
+<!--[eodiv:contentleft]-->

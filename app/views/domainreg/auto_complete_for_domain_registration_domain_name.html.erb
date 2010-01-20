@@ -1,0 +1,6 @@
+<ul class="auto_complete">
+  <% for domain_registration in @domain_registrations -%>
+  <li><%= link_to domain_registration.fqdn, :controller => 'domainreg',
+                  :action => 'show', :id => domain_registration %></li>
+  <% end -%>
+</ul>

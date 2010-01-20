@@ -1,0 +1,18 @@
+<% @page_title = "Edit support level" -%>
+<% @topnav_info = {:object_id => @support_level.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Edit support level</h2>
+  <p>Use the form below to edit the details of this support level.</p>
+
+  <% form_tag :action => 'update', :id => @support_level do %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag 'Update' %></td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+<!--[div:contentleft]-->

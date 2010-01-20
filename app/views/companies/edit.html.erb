@@ -1,0 +1,18 @@
+<% @page_title = "Edit company" -%>
+<% @topnav_info = {:object_id => @company.id.to_s} -%>
+<% @body_options = focus_first_field -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Edit company details</h2>
+  <p>Use the form below to edit the details of this company.</p>
+  <% form_tag({:action => 'update', :id => @company}, {:name => 'company', :id => 'company'}) do %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag "Update company" %></td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+<!--[eodiv:contentleft]-->

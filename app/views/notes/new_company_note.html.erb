@@ -1,0 +1,17 @@
+<% form_tag :controller => 'notes', :action => 'create_company_note' do %>
+<table>
+  <%= hidden_field :company_note, :company_id %>
+  <%= hidden_field :company_note, :created_by %>
+  <tr>
+    <td><%= text_area :company_note, :decrypted_note, :rows => "5" %></td>
+  </tr>
+  <% if User.find(session[:user]).is_in_finance %>
+    <tr>
+      <td>Financial note? <%= check_box :company_note, :is_financial %></td>
+    </tr>
+  <% end -%>
+  <tr>
+    <td><%= submit_tag "Add note" %></td>
+  </tr>
+</table>
+<% end %>

@@ -1,0 +1,60 @@
+<%= error_messages_for 'user' %>
+
+<!--[form:user]-->
+<tr>
+  <td><label for="user_name">Name</label></td>
+  <td><%= text_field 'user', 'name'  %></td>
+</tr>
+<tr>
+  <td><label for="user_real_name">Real name</label></td>
+  <td><%= text_field 'user', 'real_name'  %></td>
+</tr>
+<tr>
+  <td><label for="user_email">Email</label></td>
+  <td><%= text_field 'user', 'email'  %></td>
+</tr>
+<tr>
+  <td><label for="user_list_limit">Items per page</label></td>
+  <td><%= text_field 'user', 'list_limit' %></td>
+</tr>
+<tr>
+  <td><label for="user_password">Password</label></td>
+  <td><%= password_field 'user', 'password'  %></td>
+</tr>
+<tr>
+  <td><label for="user_password_confirmation">Password again</label></td>
+  <td><%= password_field 'user', 'password_confirmation' %></td>
+</tr>
+<tr>
+  <td><label for="user_pin">PIN</label></td>
+  <td><%= password_field 'user', 'pin'  %></td>
+</tr>
+<tr>
+  <td><label for="user_pin_confirmation">PIN again</label></td>
+  <td><%= password_field 'user', 'pin_confirmation'  %></td>
+</tr>
+<% if controller.action_name == 'edit' %>
+<tr>
+  <td colspan="2"><em>If you are changing the PIN, you must provide the decryption key in the fields below.</em></td>
+</tr>
+<% end %>
+<tr>
+  <td><label for="user_decrypted_key">Key</label></td>
+  <td><%= password_field 'user', 'decrypted_key' %></td>
+</tr>
+<tr>
+  <td><label for="user_decrypted_key_confirmation">Key again</label></td>
+  <td><%= password_field 'user', 'decrypted_key_confirmation' %></td>
+</tr>
+<% if session[:user] == 1 %>
+<tr>
+  <td><label for="user_is_in_finance">User can access financial notes?</label></td>
+  <td>
+    <%= radio_button 'user', 'is_in_finance', true %>Yes
+    &nbsp;&nbsp;
+    <%= radio_button 'user', 'is_in_finance', false %>No
+  </td>
+</tr>
+<% end -%>
+<!--[eoform:user]-->
+

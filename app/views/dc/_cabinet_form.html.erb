@@ -1,0 +1,16 @@
+<%= error_messages_for 'cabinet' %>
+
+<!--[form:cabinet]-->
+<tr>
+  <td><label for="cabinet_name">Name</label></td>
+  <td><%= text_field 'cabinet', 'name' %></td>
+</tr>
+<tr>
+  <td><label for="cabinet_description">Description</label></td>
+  <td><%= text_area 'cabinet', 'description', :rows => 4 %></td>
+</tr>
+<tr>
+  <td><label for="cabinet_u_space">U Space</label></td>
+  <td><%= text_field 'cabinet', 'u_space' %></td>
+</tr>
+<!--[eoform:cabinet]-->

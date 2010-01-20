@@ -1,0 +1,35 @@
+<% @page_title = "Listing #{@hardware_type.name} accounts" -%>
+
+<!--[div:contentfull]-->
+<div id="contentfull">
+  <h2>Accounts</h2>
+  <p><%= pluralize @total_hardware, 'account' %> in the database of hardware type <em><%= @hardware_type.name %></em>.</p>
+  <table class="listing">
+    <tr>
+      <th>Domain name</th>
+      <th>Go to</th>
+      <th>Hosted accounts</th>
+      <th>Company</th>
+    </tr>
+    <% for hardware in @hardware -%>
+      <tr class="<%= cycle('list-even', 'list-odd') %>">
+        <td><%= link_to hardware.name, account_url(:fqdn => hardware.name) %></td>
+        <td><%= link_to(image_tag('go.gif', :title => "Go to #{hardware.name}"),
+                        "http://#{hardware.name}", :popup => true) %></td>
+        <td>
+          <% if hardware.is_hostable -%>
+            <em>(Hosts <%= pluralize((hardware.accounts.count -1), 'account') %>)</em>
+          <% else -%>
+            <em>N/A</em>
+          <% end -%>
+        </td>
+        <td><%= link_to hardware.company.name,
+                        {:controller => 'companies', :action => 'show', :id => hardware.company} %></td>
+        <td><%= link_to(image_tag('show.gif', :title => 'Show account'),
+                        account_url(:fqdn => hardware.name)) %></td>
+      </tr>
+    <% end -%>
+  </table>
+  <%= will_paginate @hardware, :params => {:hardware_type_id => @hardware_type} %>
+</div>
+<!--[eodiv:contentfull]-->

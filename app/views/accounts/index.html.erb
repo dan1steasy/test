@@ -1,0 +1,115 @@
+<% @page_title = "Accounts" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Customer Accounts</h2>
+  <p><%= pluralize @total_accounts, 'customer account' %> in the database.</p>
+  <p>Find &amp; view customer accounts using any of the methods below.</p>
+
+  <h2>Find account</h2>
+  <p>Account domain starts with:</p>
+  <%= starting_character_table %>
+
+  <br />
+  <h3>List accounts</h3>
+  <p>View account listings.</p>
+  <ul>
+    <li><%= link_to 'List all accounts', :action => :list %></li>
+    <li><%= link_to 'List all deactivated accounts', :action => :list_deactivated %></li>
+  </ul>
+
+  <% if(@total_accounts < 500) and (@total_accounts > 0) %>
+  <br />
+  <h3>Select an account:</h3>
+  <p>Choose an account using the drop-down below.</p>
+  <% form_for :account, :url => {:action => 'show'} do |form| %>
+    <%= form.collection_select :id, @accounts, :id, :fqdn %>
+    <%= submit_tag "Show account" %>
+  <% end %>
+  <% end %>
+  <br />
+
+  <h3>Account types</h3>
+  <p>List accounts of a specific type.</p>
+  <table>
+    <% form_tag :action => 'list_by_type' do -%>
+      <tr>
+        <th><label for="account_type_id">Account type:</label></th>
+        <td><%= collection_select :account_type, :id, @account_types, :id, :name,
+                                  :prompt => 'SELECT ACCOUNT TYPE...' %></td>
+        <td><%= submit_tag 'List' %></td>
+      </tr>
+    <% end -%>
+  </table>
+  <br />
+
+  <h3>Hardware types</h3>
+  <p>List hardware accounts of a specific type.</p>
+  <table>
+    <% form_tag :action => 'list_by_hardware_type' do -%>
+      <tr>
+        <th><label for="hardware_type_id">Hardware type:</label></th>
+        <td><%= collection_select :hardware_type, :id, @hardware_types, :id, :name,
+                                  :prompt => 'SELECT HARDWARE TYPE...' %></td>
+        <td><%= submit_tag 'List' %></td>
+      </tr>
+    <% end -%>
+  </table>
+  <br />
+
+  <h3>Searches</h3>
+  <p>Use the search fields below to find accounts.</p>
+  <table>
+    <% form_tag :action => 'search' do %>
+    <tr>
+      <th><label for="account_fqdn">Domain name:</label></th>
+      <td><%= text_field :account, :fqdn %></td>
+      <div class="auto_complete" id="account_fqdn_auto_complete"></div>
+      <%= auto_complete_field "account_fqdn",
+                              :url => {:controller => 'accounts',
+                                       :action => 'auto_complete_for_account_fqdn'} %>
+      <td><%= submit_tag "Search" %></td>
+    </tr>
+    <% end -%>
+    <% form_tag :controller => 'ip_addresses', :action => 'search' do %>
+    <tr>
+      <th><label for="ip_address_address">IP address:</label></th>
+      <td><%= text_field :ip_address, :address %></td>
+      <div class="auto_complete" id="ip_address_address_auto_complete"></div>
+      <%= auto_complete_field "ip_address_address",
+                              :url => {:controller => 'ip_addresses',
+                              :action => 'auto_complete_for_ip_address_address'},
+                              :min_chars => 4 %>
+      <td><%= submit_tag "Search" %></td>
+    </tr>
+    <% end -%>
+    <% form_tag :action => 'search' do %>
+    <tr>
+      <th><label for="account_mac_address">MAC address:</label></th>
+      <td><%= text_field :account, :mac_address %></td>
+      <div class="auto_complete" id="account_mac_address_auto_complete"></div>
+      <%= auto_complete_field "account_mac_address",
+                              :url => {:action => 'auto_complete_for_hardware_mac_address'} %>
+      <td><%= submit_tag "Search" %></td>
+    </tr>
+    <% end -%>
+    <% form_tag :action => 'search' do %>
+      <tr>
+        <th><label for="account_serial_number">Serial number:</label></th>
+        <td><%= text_field :account, :serial_number %></td>
+        <td><%= submit_tag "Search" %></td>
+      </tr>
+    <% end -%>
+    <% form_tag :action => 'search' do %>
+    <tr>
+      <th><label for="account_created_on">Date added:</label></th>
+      <td>
+        <%= select :account, :date_range, ['On', 'After', 'Before'] %>
+        <%= date_select :account, :created_on, :order => [:day, :month, :year] %>
+      </td>
+      <td><%= submit_tag "Search" %></td>
+    </tr>
+    <% end -%>
+  </table>
+</div>
+<!--[eodiv:contentleft]-->

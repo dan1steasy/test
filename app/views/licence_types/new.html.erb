@@ -1,0 +1,16 @@
+<% @page_title = 'Add licence type' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Add new licence type</h2>
+  <p>Use the form below to create a new licence type.</p>
+  <% form_tag :action => 'create' do -%>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag 'Add licence type' %></td>
+    </tr>
+  </table>
+  <% end -%>
+</div>
+<!--[eodiv:contentleft]-->

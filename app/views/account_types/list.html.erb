@@ -1,0 +1,32 @@
+<% @page_title = "Listing account types" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Account types</h2>
+  <p>Current account types are displayed below.</p>
+
+  <table>
+    <tr>
+    <% for column in AccountType.content_columns %>
+      <th><%= column.human_name %></th>
+    <% end %>
+    </tr>
+    
+    <% for account_type in @account_types %>
+    <tr class="<%= cycle('list-even', 'list-odd') %>">
+    <% for column in AccountType.content_columns %>
+      <td><%=h account_type.send(column.name) %></td>
+    <% end %>
+      <td><%= link_to(image_tag('show.gif', :title => 'Show account type'), :action => 'show', :id => account_type) %></td>
+      <td><%= link_to(image_tag('edit.gif', :title => 'Edit account type'), :action => 'edit', :id => account_type) %></td>
+      <td><%= link_to(image_tag('delete.gif', :title => 'Delete account type'),
+                      {:action => 'destroy', :id => account_type},
+                      :confirm => 'Are you sure you want to delete this account type?',
+                      :method => :post) %></td>
+    </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @account_types %>
+  <p><%= link_to 'New account type', :action => 'new' %></p>
+</div>
+<!--[eodiv:contentleft]-->

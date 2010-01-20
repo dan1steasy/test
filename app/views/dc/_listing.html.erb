@@ -1,0 +1,23 @@
+    <tr>
+      <% for column in Datacentre.content_columns -%>
+      <th><%= column.human_name %></th>
+      <% end -%>
+      <th>Installed cabinets</th>
+    </tr>
+    
+    <% for datacentre in @datacentres %>
+    <tr class="<%= cycle('list-even', 'list-odd') %>">
+      <% for column in Datacentre.content_columns %>
+        <td><%=h datacentre.send(column.name) %></td>
+      <% end %>
+      <td><%= datacentre.cabinets.count %></td>
+      <td><%= link_to(image_tag('show.gif', :title => 'Show datacentre'),
+                      :action => 'show', :id => datacentre) %></td>
+      <td><%= link_to(image_tag('edit.gif', :title => 'Edit datacentre'),
+                      :action => 'edit', :id => datacentre) %></td>
+      <td><%= link_to(image_tag('delete.gif', :title => 'Delete datacentre'),
+                      {:action => 'destroy', :id => datacentre },
+                      :confirm => "Are you want to delete the datacentre '#{datacentre.name}'?",
+                      :method => :post) %></td>
+    </tr>
+    <% end %>

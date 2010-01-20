@@ -1,0 +1,72 @@
+<% @page_title = "Contacts" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Contacts</h2>
+  <p><%= pluralize @total_contacts, 'contact' %> in the database.</p>
+  <p>Find &amp; view contacts using any of the methods below.</p>
+  <h2>Find contact</h2>
+  <p>Contact name or surname starts with:</p>
+  <%= starting_character_table %>
+
+  <% if(@total_contacts < 500) and (@total_contacts > 0) %>
+  <br />
+  <h3>Select a contact:</h3>
+    <p>Choose a contact to view using the drop-down below.</p>
+    <% form_tag :action => :show do %>
+      <%= collection_select :contact, :id, @contacts, :id, :full_name %>
+      <%= submit_tag "Show contact" %>
+    <% end %>
+  <% end -%>
+  <br />
+  <h3>Searches</h3>
+    <p>Use the search forms below to find contacts.</p>
+    <table>
+      <% form_tag :action => :search do %>
+      <tr>
+        <th><label for="contact_full_name">Name:</label></th>
+        <td><%= text_field_tag "contact_full_name", nil, :size => "30" %></td>
+        <div class="auto_complete", id="contact_full_name_auto_complete"></div>
+        <%= auto_complete_field "contact_full_name",
+                                :url => {:action => "auto_complete_for_contact_full_name"},
+                                :tokens => ' ' %>
+        <td><%= submit_tag "Search" %></td>
+      </tr>
+      <% end %>
+      <% form_tag :action => :search do %>
+      <tr>
+        <th><label for="contact_number">Phone or fax:</label></th>
+        <td><%= text_field_tag "contact_number", nil, :size => "30" %></td>
+        <div class="auto_complete", id="contact_number_autocomplete"></div>
+        <%= auto_complete_field "contact_number",
+                                :url => {:action => "auto_complete_for_contact_number"} %>
+        <td><%= submit_tag "Search" %></td>
+      </tr>
+      <% end %>
+      <% form_tag :action => :search do %>
+      <tr>
+        <th><label for="contact_email">Email:</label></th>
+        <td><%= text_field_with_auto_complete :contact, :email %></td>
+        <td><%= submit_tag "Search" %></td>
+      </tr>
+      <% end %>
+    </table>
+</div>
+<!--[eodiv:contentleft]-->
+
+<% if @companies.size > 0 %>
+<!--[div:contentright]-->
+<div id="contentright">
+  <h2>Add new contact</h2>
+  <p>Use the form below to add a new contact.</p>
+  <% form_tag({:action => 'create'}, {:name => 'contact', :id => 'contact'}) do %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag "Add contact" %></td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+<!--[eodiv:contentright]-->
+<% end %>

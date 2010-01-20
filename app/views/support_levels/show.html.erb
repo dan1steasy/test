@@ -1,0 +1,17 @@
+<% @page_title = @support_level.name + " (#{@support_level.code})" -%>
+<% @topnav_info = {:object_id => @support_level.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Support level details</h2>
+  <%= edit_and_delete_options @support_level %>
+  <table>
+    <% for column in SupportLevel.content_columns %>
+    <tr>
+      <th><%= column.human_name %>:</th>
+      <td><%= @support_level.send(column.name) %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+<!--[eodiv:contentleft]-->

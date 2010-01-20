@@ -1,0 +1,140 @@
+<% if @account_type.blank? -%>
+  <table id="relevant_details" style="display: none;" class="inner_table">
+    <!-- Details relevant to the account_type will appear here -->
+  </table>
+<% else -%>
+  <% if @account_type.requires_hosting -%>
+  <table id="relevant_details" class="inner_table">
+    <tr>
+      <th colspan="2">Hosting account details</th>
+    <tr>
+      <td><label for="account_hardware_id">Hosting server</label></td>
+      <td><%= collection_select(:account, :hardware_id,
+              Hardware.find(:all, :conditions => 'is_hostable = true', :order => 'name'),
+              :id, :name) %></td>
+    </tr>
+    <tr>
+      <td><label for="account_secure_link">Secure symlink</label></td>
+      <td><%= text_field :account, :secure_link %></td>
+      <td>
+        <%= help_message %{Just provide the actual symlink name here, do not
+        add any leading or trailing slashes.} %>
+      </td>
+    </tr>
+  </table>
+  <% end -%>
+  <% if @account_type.requires_hardware -%>
+  <%= error_messages_for :hardware %>
+  <% fields_for :hardware do |hw| %>
+  <table id="relevant_details" class="inner_table">
+    <tr>
+      <th colspan="2">Hardware details</th>
+    </tr>
+    <tr>
+      <td><label for="hardware_hardware_type_id">Hardware type</label></td>
+      <td><%= hw.collection_select(:hardware_type_id, HardwareType.find(:all, :order => 'name'),
+                                   :id, :name) %></td>
+    </tr>
+    <tr>
+      <td><label for="hardware_description">Hardware description</label></td>
+      <td><%= hw.text_area :description, :rows => 3, :cols => 30 %></td>
+    </tr>
+    <tr>
+      <td><label for="hardware_model_number">Model number</label></td>
+      <td><%= hw.text_field :model_number %></td>
+    </tr>
+    <tr>
+      <td><label for="hardware_serial_number">Serial number</label></td>
+      <td><%= hw.text_field :serial_number %></td>
+    </tr>
+    <tr>
+      <td><label for="hardware_mac_address">MAC address</label></td>
+      <td><%= hw.text_field :mac_address %></td>
+    </tr>
+    <tr>
+      <td><label for="hardware_asset_tag">Asset tag</label></td>
+      <td><%= hw.text_field :asset_tag %></td>
+    </tr>
+    <tr>
+      <td><label for="hardware_asset_value">Purchase price (&pound;)</label></td>
+      <td><%= hw.text_field :asset_value %></td>
+    </tr>
+    <tr>
+      <td><label for="hardware_u_size">Hardware U size</label></td>
+      <td><%= hw.text_field :u_size, :size => 5, :maxlength => 2 %></td>
+      <td>
+        <div id="hw_spinner_1" style="display: none;"><%= image_tag('spinner.gif') %></div>
+      </td>
+      <%= observe_field :hardware_u_size, :update => 'free_cabinet_bays',
+                        :before => "Element.show('hw_spinner_1')",
+                        :complete => "Element.hide('hw_spinner_1')",
+                        :condition => "$F('hardware_u_size') != ''",
+                        :url => {:controller => 'cabinets',
+                                 :action => 'check_available_cabinet_bays'},
+                        :with => "'id=' + $F('hardware_cabinet_id') + '&u_size=' + $F('hardware_u_size')" %>
+    </tr>
+    <tr>
+      <td><label for="hardware_cabinet_id">Cabinet</label></td>
+      <td>
+        <select id="hardware_cabinet_id" name="hardware[cabinet_id]">
+        <%= option_groups_from_collection_for_select(Cabinet.cabinet_list_by_datacentre,
+                                                     :options, :type_name,
+                                                     :id, :name,
+                                                     @hardware.cabinet_id) %>
+        </select>
+      </td>
+      <td>
+        <div id="hw_spinner_2" style="display: none;"><%= image_tag('spinner.gif') %></div>
+      </td>
+      <%= observe_field :hardware_cabinet_id, :update => 'free_cabinet_bays',
+                        :before => "Element.show('hw_spinner_2')",
+                        :complete => "Element.hide('hw_spinner_2')",
+                        :url => {:controller => 'cabinets',
+                                 :action => 'check_available_cabinet_bays'},
+                        :with => "'id=' + $F('hardware_cabinet_id') + '&u_size=' + $F('hardware_u_size') + '&hardware_id=#{@hardware.id}'" %>
+    </tr>
+    <tr>
+      <td>Cabinet bay(s)</td>
+      <td>
+        <div id="free_cabinet_bays">
+        <% if @hardware.starting_cabinet_bay.blank? -%>
+          <%= hw.select :starting_cabinet_bay,
+                        ['Provide a U size and select a cabinet to see available bays.'] %>
+        <% else -%>
+          <%= select(:hardware, :starting_cabinet_bay, @free_cabinet_bay_list) %>
+        <% end -%>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <label for="is_hostable">Can this hardware be used for hosting other accounts?</label>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <label for="hardware_is_hostable_true">Yes</label>
+        <%= hw.radio_button :is_hostable, true, :checked => 'checked' %>
+        <label for="hardware_is_hostable_false">No</label>
+        <%= hw.radio_button :is_hostable, false %>
+      </td>
+    </tr>
+      <%= render :partial => 'ip_addresses/available_ip_addresses'  %> 
+      <%= observe_field :account_company_id, :update => 'available_ips',
+                        :before => "Element.show('hw_spinner_3')",
+                        :complete => "Element.hide('hw_spinner_3')",
+                        :url => {:controller => 'ip_addresses', :action => 'available_ip_addresses'},
+                        :with => "'id=' + $F('account_company_id') + '&hardware_id=#{@hardware.id}'" %>
+    <tr>
+      <td><label for="hardware_connections">Switch &amp; power ports</label></td>
+      <td><%= hw.text_field :connections, :size => 12 %></td>
+      <td>
+        <%= help_message %{Enter the switch and remote power unit that this hardware is connected to.
+                           This should be of the form Kx.xx/Ax.x (e.g.: K7.24/A3.2 = Cisco K7, port 24
+                           and APC3, port 2)} %>
+      </td>
+    </tr>
+  </table>
+  <% end -%>
+  <% end -%>
+<% end -%>

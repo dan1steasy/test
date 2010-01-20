@@ -1,0 +1,88 @@
+  <% img_id = "company_#{@company.id}_img" -%>
+  <% div_id = "company_#{@company.id}_div" -%>
+  <img id="<%= img_id %>" src="/images/more.gif" title="More/Less" onClick="Effect.toggle('<%= div_id %>', 'slide'); imgSwap('<%= img_id %>')" />
+  </p>
+  <div id="<%= div_id %>" style="display: none;">
+    <div>
+    <table>
+      <tr>
+        <th>Address:</th>
+        <td><%= in_place_editor_field :company, :address1, {},
+                  {:rows => 1,
+                    :url => {:controller => 'companies',
+                             :action => 'set_company_address1', :id => @company}} %></td>
+      </tr>
+      <tr>
+        <th>Address:</th>
+        <td><%= in_place_editor_field :company, :address2, {},
+                  {:rows => 1,
+                    :url => {:controller => 'companies',
+                             :action => 'set_company_address2', :id => @company}} %></td>
+      </tr>
+      <tr>
+        <th>Town:</th>
+        <td><%= in_place_editor_field :company, :town, {},
+                  {:rows => 1,
+                    :url => {:controller => 'companies',
+                             :action => 'set_company_town', :id => @company}} %></td>
+      </tr>
+      <tr>
+        <th>County:</th>
+        <td><%= in_place_editor_field :company, :county, {},
+                  {:rows => 1,
+                    :url => {:controller => 'companies',
+                             :action => 'set_company_county', :id => @company}} %></td>
+      </tr>
+      <tr>
+        <th>Country:</th>
+        <td><%= in_place_select_editor_field :company, :country, {},
+                  {:select_options => country_options_for_select,
+                   :url => {:controller => 'companies',
+                            :action => 'set_company_country', :id => @company}} %></td>
+      </tr>
+      <tr>
+        <th>Postcode:</th>
+        <td><%= in_place_editor_field :company, :postcode, {},
+                  {:rows => 1,
+                   :url => {:controller => 'companies',
+                            :action => 'set_company_postcode', :id => @company}} %></td>
+      </tr>
+      <tr>
+        <th>Phone:</th>
+        <td><%= in_place_editor_field :company, :phone1, {},
+                  {:rows => 1,
+                   :url => {:controller => 'companies',
+                            :action => 'set_company_phone1', :id => @company}} %></td>
+      </tr>
+      <tr>
+        <th>Alt. phone:</th>
+        <td><%= in_place_editor_field :company, :phone2, {},
+                  {:rows => 1,
+                   :url => {:controller => 'companies',
+                            :action => 'set_company_phone2', :id => @company}} %></td>
+      </tr>
+      <tr>
+        <th>Fax:</th>
+        <td><%= in_place_editor_field :company, :fax, {},
+                  {:rows => 1,
+                   :url => {:controller => 'companies',
+                            :action => 'set_company_fax', :id => @company}} %></td>
+      </tr>
+      <tr>
+        <th>Web:</th>
+        <td><%= in_place_editor_field :company, :url, {},
+                  {:rows => 1,
+                   :url => {:controller => 'companies',
+                            :action => 'set_company_url', :id => @company}} %></td>
+      </tr>
+      <tr>
+        <th>VAT code:</th>
+        <td><%= in_place_editor_field :company, :vat_code, {},
+                  {:rows => 1,
+                   :url => {:controller => 'companies',
+                            :action => 'set_company_vat_code', :id => @company}} %></td>
+      </tr>
+    </table>
+    <%= audit_div @company %>
+    </div>
+  </div>

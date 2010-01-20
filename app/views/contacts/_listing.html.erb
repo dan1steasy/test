@@ -1,0 +1,28 @@
+    <tr>
+      <th>Name</th>
+      <th colspan="2">Email</th>
+      <th>Company</th>
+    </tr>
+
+    <% for contact in @contacts -%>
+    <tr class="<%= cycle('list-even', 'list-odd')%>">
+      <td><%= link_to contact.full_name, :controller => :contacts, :action => :show, :id => contact %></td>
+      <td><%= truncate(contact.email, :length => 30) %>
+      <td><%= mail_to(contact.email, image_tag('mail.gif', :title => 'Send email')) %></td>
+      <td>
+        <% if contact.companies.count > 0 -%>
+          <%= contact.companies.map {|comp| link_to comp.name, :controller => 'companies', :action => 'show', :id => comp}.join(', ') %>
+        <% end -%>
+      </td>
+      <td><%= link_to(image_tag('show.gif', :title => 'Show contact'),
+                      :controller => 'contacts', :action => 'show', :id => contact) %></td>
+      <% if controller.action_name == 'list' -%>
+      <td><%= link_to(image_tag('edit.gif', :title => 'Edit contact'),
+                      :controller => 'contacts', :action => 'edit', :id => contact) %></td>
+      <td><%= link_to(image_tag('delete.gif', :title => 'Delete contact' ),
+                      { :controller => 'contacts', :action => 'destroy', :id => contact },
+                      :confirm => "Are you sure you want to delete the contact '#{contact.full_name}'?",
+                      :method => 'post') %></td>
+       <% end -%>
+    </tr>
+    <% end -%>

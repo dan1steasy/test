@@ -1,0 +1,25 @@
+<% @page_title = "Email template - #{@email_template.template_name}" -%>
+<% @topnav_info = {:object_id => @email_template.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Email template</h2>
+  <%= edit_and_delete_options @email_template %>
+  <h3>Template name</h3>
+  <p><%= @email_template.template_name %></p>
+  <h3>Email subject</h3>
+  <p><%= @email_template.subject %></p>
+  <h3>Email HTML body</h3>
+  <p><%= h(@email_template.html_body || "No HTML version available.") %></p>
+  <h3>Email text body</h3>
+  <p><%= h(@email_template.text_body || "No text version available.") %></p>
+
+  <h2>Preview</h2>
+  <ul>
+    <li>
+    <%= link_to 'Preview', {:action => 'preview', :id => @email_template}, :popup => true %>
+      - view a preview of your email template in a new window (previews HTML version only).
+    </li>
+  </ul>
+</div>
+<!--[eodiv:contentleft]-->

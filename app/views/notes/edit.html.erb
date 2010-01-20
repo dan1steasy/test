@@ -1,0 +1,29 @@
+<div id="<%= @div_id %>">
+<div class="note">
+  <div class="options">
+    <%= link_to_remote(image_tag('edit.gif', :title => 'Edit note'), :update => @div_id,
+                       :url => {:controller => 'notes', :action => 'show', :id => @note}) %>
+    <%= link_to(image_tag('delete.gif', :title => 'Delete note'), 
+                {:controller => 'notes', :action => 'destroy', :id => @note },
+                :confirm => "Are you sure you want to delete this note?",
+                :method => 'post') %>
+  </div>
+<% form_tag :controller => 'notes', :action => 'update', :id => @note do %>
+<table>
+  <tr>
+    <td colspan="2"><%= text_area :note, :decrypted_note, :rows => 5, :cols => 60 %></td>
+  </tr>
+  <% if User.find(session[:user]).is_in_finance -%>
+    <tr>
+      <td>Financial note? <%= check_box :note, :is_financial %></td>
+    </tr>
+  <% end -%>
+  <tr>
+    <td><%= submit_tag "Update" %></td>
+    <td align="left"><%= link_to_remote 'Cancel', :update => @div_id,
+                           :url => {:controller => 'notes', :action => 'show', :id => @note} %></td>
+  </tr>
+</table>
+<% end %>
+</div>
+</div>

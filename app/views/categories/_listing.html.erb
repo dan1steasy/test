@@ -1,0 +1,15 @@
+    <tr>
+      <th>Category</th>
+      <th>Products</th>
+    </tr>
+    <% for category in @categories -%>
+    <tr class="<%= cycle('list-even', 'list-odd')%>">
+      <td><%= category.name %></td>
+      <td><%= category.products.count %></td>
+      <td><%= link_to(image_tag('show.gif', :title => 'Show category'), :action => 'show', :id => category) %></td>
+      <td><%= link_to(image_tag('edit.gif', :title => 'Edit category'), :action => 'edit', :id => category) %></td>
+      <td><%= link_to(image_tag('delete.gif', :title => 'Delete category'), {:action => 'destroy', :id => category},
+                      :confirm => "Are you sure you want to delete the category '#{category.name}'?",
+                      :method => 'post') %>
+    </tr>
+    <% end -%>

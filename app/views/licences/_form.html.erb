@@ -1,0 +1,21 @@
+<%= error_messages_for :licence %>
+<tr>
+  <td><label for="licence_value">Licence(s)</label></td>
+  <td><%= text_area :licence, :value, :rows => 8 %></td>
+</tr>
+<tr>
+  <td colspan="2">If you have inserted multiple, single-line licences, tick the <em>Multiple Licences</em>
+    box below. If your licence requires multiple lines, do not tick the box as you can only enter one
+    licence at a time.</td>
+</tr>
+<tr>
+  <td><label for="licence_multiple">Multiple licences <%= check_box :licence, :multiple %></label></td>
+</tr>
+<tr>
+  <td><label for="licence_expires_on">Expiry date</label></td>
+  <td><%= date_select :licence, :expires_on, :order => [:day, :month, :year] %>
+    No expiry date
+    <%= check_box :licence, :no_expiry,
+                  {:name => 'licence_no_expiry', :onclick => 'toggleExpiry();'} %>
+  </td>
+</tr>

@@ -1,0 +1,16 @@
+# == Schema Information
+# Schema version: 82
+#
+# Table name: datacentres
+#
+#  id            :integer(11)   not null, primary key
+#  name          :string(255)   
+#  description   :text          
+#  cabinet_space :integer(11)   
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+first:
+  id: 1
+another:
+  id: 2

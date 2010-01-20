@@ -1,0 +1,57 @@
+<% @page_title = "Show registrar" -%>
+<% @topnav_info = {:object_id => @registrar.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Registrar details</h2>
+  <div class="options">
+    <%= link_to(image_tag('edit', :title => 'Edit registrar'),
+                {:action => 'registrars', :r_action => 'edit', :id => @registrar}) %>
+    <%= link_to(image_tag('delete', :title => 'Delete registrar'), 
+                {:action => 'registrars', :r_action => 'destroy', :id => @registrar},
+                :confirm => "Are you sure you want to delete this registrar?",
+                :method => 'post') %>
+  </div>
+  <table>
+    <tr>
+      <th>Registrar name</th>
+      <td><%= @registrar.name %></td>
+    </tr>
+    <tr>
+      <th>Web site</th>
+      <td><%= @registrar.url %></td>
+    </tr>
+    <tr>
+      <th>Username</th>
+      <td><%= @registrar.decrypted_username %></td>
+    </tr>
+    <tr>
+      <th>Password</th>
+      <td><%= @registrar.decrypted_password %></td>
+    </tr>
+  </table>
+  <% if @registrar.has_api? -%>
+    <p>This registrar has an associated API.</p>
+  <% end -%>
+
+  <h2>Domains registered</h2>
+  <p><%= pluralize @registrar.domain_registrations.size, 'domain' %> registered by this registrar in the database.</p>
+  <% if @registrar.has_api? -%>
+    <p>API statistics:</p>
+    <ul>
+      <li><%= pluralize @registrar.registered_domain_count, 'domain' %> registered.</li>
+      <li><%= pluralize @registrar.expired_domain_count, 'domain' %> expired.</li>
+    </ul>
+  <% end -%>
+
+  <h2>Options</h2>
+  <ul>
+    <li><%= link_to "Edit", {:action => 'registrars', :r_action => 'edit', :id => @registrar} %>
+    - edit this registrar's details</li>
+    <li><%= link_to "Delete", {:action => 'registrars', :r_action => 'destroy', :id => @registrar},
+                    :confirm => "Are you sure you want to delete the registrar '#{@registrar.name}'?",
+                    :method => 'post' %> - remove this registrar from the database</li>
+    <li><%= link_to "Register domain", :action => 'new' %> - register a domain with this registrar</li>
+  </ul>
+</div>
+<!--[eodiv:contentleft]-->

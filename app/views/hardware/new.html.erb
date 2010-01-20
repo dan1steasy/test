@@ -1,0 +1,121 @@
+<!-- NOT DOING THIS ANY MORE - TOO DIFFICULT TO DIFFERENTIATE HARDWARE FROM ACCOUNTS -->
+<% @page_title = 'New hardware' -%>
+<% if controller.action_name == 'create' -%>
+  <% @body_options = " onLoad=\"" -%>
+  <% @body_options += remote_function(:update => 'free_cabinet_bays',
+                        :before => "Element.show('hw_spinner_2')",
+                        :complete => "Element.hide('hw_spinner_2')",
+                        :condition => "!/^Provide/.test($F('hardware_starting_cabinet_bay'))",
+                        :url => {:controller => 'cabinets',
+                                 :action => 'check_available_cabinet_bays',
+                                 :id => @hardware.cabinet, :u_size => @hardware.u_size,
+                                 :starting_cabinet_bay => @hardware.starting_cabinet_bay}) -%>
+  <% @body_options = @body_options + '; ' + focus_first_field('hardware', true) + '"' -%>
+<% else -%>
+  <% @body_options = focus_first_field -%>
+<% end -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Add new hardware</h2>
+  <p>If you need to add hardware to a cabinet that is not associated with a hosting account
+  or dedicated server, use the form below. If you need to add a dedicated server or colocation
+  account, use the <%= link_to 'new account', :controller => :accounts, :action => :new %>
+  form.</p>
+  <%= error_messages_for :hardware %>
+  <% form_for :hardware, :url => {:action => :create},
+              :html => {:name => 'hardware', :id => 'hardware'} do |f| %>
+  <table>
+    <tr>
+      <td><label for="hardware_company_id">Company</label></td>
+      <td><%= f.collection_select :company_id, @companies, :id, :name,
+                                  :prompt => "CHOOSE A COMPANY..." %></td>
+    </tr>
+    <tr>
+      <td><label for="hardware_name">Name</label></td>
+      <td><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <td><label for="hardware_hardware_type_id">Hardware type</label></td>
+      <td>
+        <%= f.collection_select(:hardware_type_id, HardwareType.find(:all, :order => 'name'),
+                                :id, :name) %>
+      </td>
+    <tr>
+      <td><label for="hardware_description">Description</label></td>
+      <td><%= f.text_area :description, :rows => 3, :cols => 30 %></td>
+    </tr>
+    <tr>
+      <td><label for="hardware_model_number">Model number</label></td>
+      <td><%= f.text_field :model_number %></td>
+    </tr>
+    <tr>
+      <td><label for="hardware_serial_number">Serial number</label></td>
+      <td><%= f.text_field :serial_number %></td>
+    </tr>
+    <tr>
+      <td><label for="hardware_mac_address">MAC address</label></td>
+      <td><%= f.text_field :mac_address %></td>
+    </tr>
+    <tr>
+      <td><label for="hardware_u_size">Hardware U size</label></td>
+      <td><%= f.text_field :u_size, :size => 5, :maxlength => 2 %></td>
+      <td>
+        <div id="hw_spinner_1" style="display: none;"><%= image_tag('spinner.gif') %></div>
+      </td>
+      <%= observe_field :hardware_u_size, :update => 'free_cabinet_bays',
+                        :before => "Element.show('hw_spinner_1')",
+                        :complete => "Element.hide('hw_spinner_1')",
+                        :condition => "$F('hardware_u_size') != ''",
+                        :url => {:controller => 'cabinets',
+                                 :action => 'check_available_cabinet_bays'},
+                        :with => "'id=' + $F('hardware_cabinet_id') + '&u_size=' + $F('hardware_u_size')" %>
+    </tr>
+    <tr>
+      <td><label for="hardware_cabinet_id">Cabinet</label></td>
+      <td>
+        <select id="hardware_cabinet_id" name="hardware[cabinet_id]">
+        <%= option_groups_from_collection_for_select(Cabinet.cabinet_list_by_datacentre,
+                                                     :options, :type_name,
+                                                     :id, :name,
+                                                     @hardware.cabinet_id) %>
+        </select>
+      </td>
+      <td>
+        <div id="hw_spinner_2" style="display: none;"><%= image_tag('spinner.gif') %></div>
+      </td>
+      <%= observe_field :hardware_cabinet_id, :update => 'free_cabinet_bays',
+                        :before => "Element.show('hw_spinner_2')",
+                        :complete => "Element.hide('hw_spinner_2')",
+                        :url => {:controller => 'cabinets',
+                                 :action => 'check_available_cabinet_bays'},
+                        :with => "'id=' + $F('hardware_cabinet_id') + '&u_size=' + $F('hardware_u_size') + '&hardware_id=#{@hardware.id}'" %>
+    </tr>
+    <% if @hardware.starting_cabinet_bay.blank? || @hardware.starting_cabinet_bay.to_i == 0 -%>
+    <tr id="free_cabinet_bays">
+      <td>Cabinet bay(s)</td>
+      <td>
+        <%= f.select :starting_cabinet_bay,
+                      ['Provide a U size and select a cabinet to see available bays.'] %>
+      </td>
+    </tr>
+    <% else -%>
+      <%= render :partial => 'shared/free_cabinet_bays' %>
+    <% end -%>
+    <%= render :partial => 'ip_addresses/available_ip_addresses'  %> 
+    <%= observe_field :hardware_company_id, :update => 'available_ips',
+                      :before => "Element.show('hw_spinner_3')",
+                      :complete => "Element.hide('hw_spinner_3')",
+                      :url => {:controller => 'ip_addresses', :action => 'available_ip_addresses'},
+                      :with => "'id=' + $F('account_company_id') + '&hardware_id=#{@hardware.id}'" %>
+    <tr>
+      <td><label for="hardware_connections">Switch &amp; power ports</label></td>
+      <td><%= f.text_field :connections %></td>
+    </tr>
+    <tr>
+      <td colspan="2"><%= submit_tag 'Add hardware' %></td>
+    </tr>
+  </table>
+  <% end -%>
+</div>
+<!--[eodiv:contentleft]-->

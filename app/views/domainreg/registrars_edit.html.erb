@@ -1,0 +1,17 @@
+<% @page_title = "Edit registrar" -%>
+<% @manual_topnav = {'List registrars' => '/domainreg/registrars/'} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Edit registrar</h2>
+  <p>Use the form below to edit the details of this registrar.</p>
+  <%= start_form_tag :action => 'registrars', :r_action => 'update', :id => @registrar %>
+  <table>
+    <%= render :partial => 'registrars_form' %>
+    <tr>
+      <td><%= submit_tag 'Update registrar' %></td>
+    </tr>
+  </table>
+  <%= end_form_tag %>
+</div>
+<!--[eodiv:contentleft]-->

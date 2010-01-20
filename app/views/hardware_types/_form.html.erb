@@ -1,0 +1,27 @@
+<%= error_messages_for 'hardware_type' %>
+
+<!--[form:hardware_type]-->
+<tr>
+  <td><label for="hardware_type_name">Name</label></td>
+  <td><%= text_field 'hardware_type', 'name'  %></td>
+</tr>
+<tr>
+  <td><label for="hardware_type_colour">Colour code</label></td>
+  <td><%= text_field 'hardware_type', 'colour' %></td>
+  <td>
+    <a href="#" onClick="cp.select(document.forms['hardware_type'].hardware_type_colour,'pick');return false;" name="pick" id="pick">
+      Pick colour
+    </a>
+  </td>
+</tr>
+<tr>
+  <td><label for="hardware_type_admin_url">Admin URL</label></td>
+  <td><%= text_field 'hardware_type', 'admin_url' %></td>
+  <td>
+    <%= help_message(%{If this hardware type has an admin URL, provide it here. You must include
+    either an http or https protocol and you can use $DOMAIN to represent the
+    hardware's domain in the address.}) %>
+  </td>
+</tr>
+<!--[eoform:hardware_type]-->
+

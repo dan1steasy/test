@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>1st Easy Ltd: Domain name management</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="Language" content="english" />
+    <style type="text/css">
+    <!--
+    body, li, p {
+      color: #000;
+      font: 12px/17px Arial, Helvetica, Tahoma, Verdana, sans-serif;
+      line-height: 17px;
+    }
+
+    body {
+      text-align: center;
+    }
+
+    img {
+      border: 0;
+    }
+
+    #wrap {
+      margin: 0 auto;
+      text-align: left;
+      width: 80%;
+      margin-top: 30px;
+    }
+
+    th {
+      text-align: left;
+    }
+
+    h1 {
+      font-size: 1.2em;
+      height: 18px;
+      margin: 30px 0 20px 0;
+      padding: 2px 0 0 23px;
+      background: url(http://www.1steasy.com/2008/exports/h3_bgrd.gif) no-repeat;
+      background-position: 0 2px;
+    }
+
+    .shout {
+      padding: 8px 15px 8px 8px;
+      background: #e6e6ff url(http://www.1steasy.com/2008/exports/shout_bgrd.png) repeat-x;
+      background-position: top left;
+      border: 1px solid #b0b0ff;
+      margin: 25px 0 25px 0;
+    }
+
+    .shout p {
+      background: url(http://www.1steasy.com/2008/exports/bullet_info.png) no-repeat;
+      background-position: 0 1px;
+      padding: 0 !important;
+      margin: 0 !important;
+      padding-left: 25px !important;
+    }
+
+    #h1_sig {
+      height: 35px;
+      width: 100%;
+      background: #cfcfff url(http://www.1steasy.com/2008/exports/h1_sig2.png) repeat-x;
+      background-position: top right;
+    }
+
+    #h1_sig h1 {
+      color: #000;
+      height: 35px;
+      font-size: 13px;
+      background: url(http://www.1steasy.com/2008/exports/h1_sig1.png) no-repeat;
+      background-position: top left;
+      padding: 10px 0 0 35px;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 1.2em;
+      height: 18px;
+      margin: 30px 0 3px 0;
+      padding: 2px 0 0 23px;
+      background: url(http://www.1steasy.com/2008/exports/h3_bgrd.gif) no-repeat;
+      background-position: 0 2px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 5px 20px 5px 22px;
+    }
+
+    li {
+      background: url(http://www.1steasy.com/2008/exports/bullet_li_jump.gif) no-repeat !important;
+      background-position: 0 8px !important;
+      padding: 0 0 10px 13px;
+    }
+
+    #footer {
+      margin: 0;
+      padding: 0 15px 5px 15px;
+      background: #213967 url(http://www.1steasy.com/2008/exports/footer_bgrd_sig.png) repeat-x bottom;
+      border-top: 10px solid #132e48;
+    }
+
+    #footer p {
+      color: #b0cdea;
+      font: 11px/15px Arial, Helvetica, Tahoma, Verdana, sans-serif;
+    }
+
+    a:link {
+      font: Arial, Helvetica, Tahoma, Verdana, sans-serif;
+      text-decoration: underline;
+    }
+
+    a:visited {
+      font: Arial, Helvetica, Tahoma, Verdana, sans-serif;
+      text-decoration: underline;
+    }
+
+    a:hover {
+      font: Arial, Helvetica, Tahoma, Verdana, sans-serif;
+      text-decoration: none;
+    }
+    -->
+    </style>
+  </head>
+  <body>
+    <div id="wrap">
+    <a href="http://www.1steasy.com"><img src="http://www.1steasy.com/2008/exports/logo.png" alt="1st Easy Ltd" /></a>
+    <h1>1st Easy DCP Login Details</h1>
+    <p>Dear <%= @contact.full_name %></p>
+    <div class="shout">
+    <p>Welcome to the Domain Control Panel (DCP) from 1st Easy. The DCP provides functionality for you to make it easier for you to both manage existing domains and add new ones. Please read carefully the information below as it contains crucial information needed for accessing the DCP.</p>
+    </div>
+
+    <h2>Management of your domains is easy!</h2>
+    <p>Quick, simple and secure. Key features of your new renewal and registration system include:</p>
+    <ul>
+      <li>Renewal of multiple domains with a single transaction.</li>
+      <li>Search and purchase of new domain names.</li>
+      <li>The ability to make adjustments to your existing domain settings (e.g. DNS, contact details).</li>
+      <li>The incorporation of a token purchase system, whereby you purchase tokens that can be used to renew and purchase domains. As long as you're in credit, you no longer need to use your payment card each time you need to make a transaction.</li></p>
+    </ul>
+
+    <h2>Getting started: Domain control panel login and password recovery:</h2>
+
+    <div class="shout">
+    <p>An account has automatically been created for you. You can login to your new domain control panel to manage your domains by clicking on the link below and logging in. In order to register or renew domains, you first need to pay for tokens, either by the provided (recommended) online method, or by manual payment by cheque or bank transfer (minimum £30.00 + VAT for 30 tokens).</p>
+    <p>Once in your Account, please check your details and update accordingly. Please also review the terms and conditions of use, which can be found through the My Account drop down menu.</p>
+    </div>
+
+    <ul>
+      <li><strong>Domain control panel login:</strong> <a href="https://secure.1steasy.com/domains/login.php">https://secure.1steasy.com/domains/login.php</a></li>
+      <li><strong>Login Name:</strong> <%= @dcp_user.User_Name %></li>
+      <li><strong>Password:</strong> <%= @password %></li>
+      <li><strong>Memorable Word:</strong> <%= @dcp_user.Memory %></li>
+    </ul>
+
+    <p>If you forget your password, please go to <a href="https://secure.1steasy.com/domains/lost_pass.php">https://secure.1steasy.com/domains/lost_pass.php</a> and enter the details above. Your new password will be automatically emailed to you.</p>
+    <p><strong>Many thanks in advance,</strong></p>
+    <p><strong>1st Easy Domain Renewal Team</strong></p>
+    <p><strong>Freephone:</strong> 0808 222 2221</p>
+    <p><a href="http://www.1steasy.com">www.1stEasy.com</a></p>
+    <p>1st Easy Limited are an <a href="http://www.1steasy.com/about.htm#investor">Investor in People</a></p>
+    <div id="h1_sig">
+    <h1>Make the most of your host!</h1>
+    </div>
+    <ul>
+      <li><strong>Expert technical support:</strong> Stuck or need advice? Use our <a href="http://support.1steasy.com">ticket system</a> to get prompt support from our professional team.</li>
+      <li><strong>Did you know?</strong> 1st Easy offer email filtering, domain registration, dedicated servers, colocation and connectivity.</li>
+      <li><strong>Resellers and referrers:</strong> Up to 20% discount is available for <a href="http://www.1steasy.com/resellers.htm">resellers</a>, and you can earn commission by <a href="http://www.1steasy.com/resellers.htm#refer">making a referral</a>.</li>
+    </ul>
+    <div id="footer">
+    <p>This email is confidential and intended solely for the use of the individual to whom it is addressed. Any views or opinions presented are solely those of the author, and do not necessarily represent those of 1st Easy Limited.</p>
+    <p>If you are not the intended recipient be advised that you have received this email in error, and that any use, dissemination, forwarding, printing or copying of this email is strictly prohibited. If you have received this email in error, please contact the sender.</p>
+    <p>1st Easy Limited is a company registered in England and Wales with company number 384 1912; VAT No: 738 7670 86</p>
+    <p>Registered Address: Lower Washford Mill, Mill Street, Buglawton, Congleton, Cheshire, CW12 2AD</p>
+    </div>
+    </div>
+  </body>
+</html>

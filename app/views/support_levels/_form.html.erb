@@ -1,0 +1,16 @@
+<%= error_messages_for 'support_level' %>
+<!--[form:support_level]-->
+<tr>
+  <td><label for="support_level_code">Code</label></td>
+  <td><%= text_field 'support_level', 'code'  %></td>
+</tr>
+<tr>
+  <td><label for="support_level_name">Name</label></td>
+  <td><%= text_field 'support_level', 'name'  %></td>
+</tr>
+<tr>
+  <td><label for="support_level_description">Description</label></td>
+  <td><%= text_area 'support_level', 'description', :rows => 5 %></td>
+</tr>
+<!--[eoform:support_level]-->
+

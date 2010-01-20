@@ -1,0 +1,38 @@
+<table class="listing">
+  <tr>
+    <th>
+      <%= link_to('Name', {:page => params[:page], :order_by => 'name', :order => @order, :not_tagged => @not_tagged}) %>
+    </th>
+    <th>
+      <%= link_to('Model number', {:page => params[:page], :order_by => 'model_number', :order => @order, :not_tagged => @not_tagged}) %>
+    </th>
+    <th>
+      <%= link_to('Serial number', {:page => params[:page], :order_by => 'serial_number', :order => @order, :not_tagged => @not_tagged}) %>
+    </th>
+    <th>
+      <%= link_to('Purchase date', {:page => params[:page], :order_by => 'created_at', :order => @order, :not_tagged => @not_tagged}) %>
+    </th>
+    <th>
+      Company
+    </th>
+    <th>
+      <%= link_to('Asset tag', {:page => params[:page], :order_by => 'asset_tag', :order => @order, :not_tagged => @not_tagged}) %>
+    </th>
+    <th>
+      <%= link_to('Purchase price', {:page => params[:page], :order_by => 'asset_value', :order => @order, :not_tagged => @not_tagged}) %>
+    </th>
+  </tr>
+  <% for hw in @hardware -%>
+    <tr class="<%= cycle('list-even', 'list-odd') %>">
+      <td><%= link_to hw.name, account_url(:fqdn => hw.name) %></td>
+      <td><%= hw.model_number %></td>
+      <td><%= hw.serial_number %></td>
+      <td><%= hw.created_at.to_s(:db) %></td>
+      <td><%= link_to hw.company.name, :controller => 'companies', :action => 'show', :id => hw.company %></td>
+      <td><%= hw.asset_tag.blank? ? 'No tag assigned' : hw.asset_tag %></td>
+      <td>
+        <%= hw.asset_value.blank? ? '&pound;0.00 (No value set)' : number_to_currency(hw.asset_value, :unit => "&pound;") %>
+      </td>
+    </tr>
+  <% end -%>
+</table>

@@ -1,0 +1,11 @@
+<% div_id = "assign_div_#{@licence.id.to_s}" -%>
+<!--[div:<%= div_id %>]-->
+<div id="assign_div_<%= @licence.id %>">
+  <% form_remote_tag(:url => {:action => 'update_assign', :id => @licence}, :update => div_id) do -%>
+  <%= collection_select :licence, :account_id, @accounts, :id, :fqdn %>
+  <%= submit_tag 'Assign' %>
+  <%= link_to_remote('Cancel', :url => {:action => 'show_assigned', :id => @licence},
+                     :update => div_id) %>
+  <% end -%>
+</div>
+<!--[eodiv:<%= div_id %>-->

@@ -1,0 +1,14 @@
+<% @page_title = "User - #{@user.name}" %>
+<% @topnav_info = {:object_id => @user.id.to_s} -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>User details</h2>
+
+  <% for column in User.content_columns %>
+    <% if column.name =~ /(name|real_name|email)/ %>
+      <p><strong><%= column.human_name %>:</strong> <%=h @user.send(column.name) %></p>
+    <% end %>
+  <% end %>
+</div>
+<!--[eodiv:contentleft]-->

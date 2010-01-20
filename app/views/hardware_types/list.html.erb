@@ -1,0 +1,33 @@
+<% @page_title = "Listing hardware types" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Hardware types</h2>
+  <p>Current hardware types are displayed below.</p>
+  <table>
+    <tr>
+    <% for column in HardwareType.content_columns %>
+      <th><%= column.human_name %></th>
+    <% end %>
+    </tr>
+    
+    <% for hardware_type in @hardware_types %>
+    <tr class="<%= cycle('list-even', 'list-odd') %>">
+    <% for column in HardwareType.content_columns %>
+      <td><%=h hardware_type.send(column.name) %></td>
+    <% end %>
+      <td><%= link_to(image_tag('show.gif', :title => 'Show hardware type'),
+                      :action => 'show', :id => hardware_type) %></td>
+      <td><%= link_to(image_tag('edit.gif', :title => 'Edit hardware type'),
+                      :action => 'edit', :id => hardware_type) %></td>
+      <td><%= link_to(image_tag('delete.gif', :title => 'Delete hardware type'),
+                      {:action => 'destroy', :id => hardware_type},
+                      :confirm => 'Are you sure you want to delete this hardware type?',
+                      :method => :post) %></td>
+    </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @hardware_types %>
+  <p><%= link_to 'New', :action => 'new' %> - add a new hardware type.</p>
+</div>
+<!--[eodiv:contentleft]-->

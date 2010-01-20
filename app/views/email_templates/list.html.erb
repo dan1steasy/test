@@ -1,0 +1,28 @@
+<% @page_title = "Listing email templates" -%>
+
+<!--[div;contentleft]-->
+<div id="contentleft">
+  <h2>Email templates</h2>
+  <p><%= pluralize @email_templates.size, 'Email template' -%> in the database.</p>
+  <table class="listing">
+    <tr>
+      <th>Template name</th>
+      <th>Email subject</th>
+    </tr>
+    <% @email_templates.each do |email_template| -%>
+      <tr class="<%= cycle('list-even', 'list-odd') %>">
+        <td><%= link_to(email_template.template_name, :action => 'show', :id => email_template) %></td>
+        <td><%= email_template.subject %></td>
+        <td><%= link_to(image_tag('show.gif', :title => 'Show email template'),
+                        :action => 'show', :id => email_template) %></td>
+        <td><%= link_to(image_tag('edit.gif', :title => 'Edit email template'),
+                        :action => 'edit', :id => email_template) %></td>
+        <td><%= link_to(image_tag('delete.gif', :title => 'Delete email template'),
+                        {:action => 'destroy', :id => email_template},
+                        :confirm => "Are you sure you want to delete the email template '#{email_template.template_name}'?",
+                        :method => 'post') %></td>
+      </tr>
+    <% end -%>
+  </table>
+</div>
+<!--[eodiv:contentleft]-->

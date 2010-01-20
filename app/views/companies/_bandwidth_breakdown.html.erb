@@ -1,0 +1,19 @@
+<div id="bandwidth_breakdown">
+  <h2>Bandwidth quota breakdown</h2>
+  <table>
+    <tr>
+      <th>Account</th><th>Bandwidth quota (<%= BandwidthQuota::UNIT %>)</th>
+    </tr>
+    <% @company.accounts.each do |account| -%>
+    <tr>
+      <td><%= account.fqdn %></td>
+      <td style="text-align: right;">
+        <%= if account.bandwidth_quota.blank? || account.bandwidth_quota.value.blank? then '0' else account.bandwidth_quota.value end %>
+      </td>
+    </tr>
+    <% end -%>
+    <tr>
+      <td>&nbsp;</td><td style="text-align: right;">Total: <%= @company.total_bandwidth_quota %></td>
+    </tr>
+  </table>
+</div>

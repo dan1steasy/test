@@ -1,0 +1,29 @@
+<% @page_title = "Listing support levels" -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft" -->
+  <h2>Support levels</h2>
+  <p>Current support levels are displayed below.</p>
+  <table>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+    <% for support_level in @support_levels -%>
+    <tr class="<%= cycle('list-even', 'list-odd')%>">
+      <td><%= h(support_level.code) %></td>
+      <td><%= h(support_level.name) %></td>
+      <td><%= h(support_level.description) %></td>
+      <td><%= link_to(image_tag('show.gif', :title => 'Show support level'), :action => 'show', :id => support_level) %></td>
+      <td><%= link_to(image_tag('edit.gif', :title => 'Edit support level'), :action => 'edit', :id => support_level) %></td>
+      <td><%= link_to(image_tag('delete.gif', :title => 'Delete support level'), {:action => 'destroy', :id => support_level},
+                      :confirm => "Are you sure you want to delete the support level '#{support_level.code}'?",
+                      :method => 'post') %></td>
+    </tr>
+    <% end -%>
+  </table>
+  <%= will_paginate @support_levels %>
+  <p><%= link_to 'New', :action => 'new' %> - add a new support level.</p>
+</div>
+<!--[eodiv:contentleft]-->

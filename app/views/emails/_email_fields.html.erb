@@ -1,0 +1,17 @@
+    <div id="email_fields">
+    <table>
+      <tr>
+        <th colspan="2">Subject</th>
+        <td><%= text_field :email, :subject, :size => 50 %></td>
+      </tr>
+      <tr>
+        <th colspan="2">HTML body</th>
+        <td><%= text_area :email, :html_body, :cols => 50 %></td>
+      </tr>
+      <tr>
+        <th colspan="2">Text body</th>
+        <td><%= text_area :email, :text_body, :cols => 50 %></td>
+      </tr>
+    </table>
+    </div>
+

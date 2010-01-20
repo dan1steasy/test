@@ -1,0 +1,2 @@
+module LicenceTypesHelper
+end

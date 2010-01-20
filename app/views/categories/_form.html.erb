@@ -1,0 +1,13 @@
+<%= error_messages_for 'category' %>
+<!--[form:category]-->
+<tr>
+  <td><label for="category_name">Name</label></td>
+  <td><%= text_field 'category', 'name'  %></td>
+</tr>
+<% if controller.action_name != 'edit' -%>
+<tr>
+  <td colspan="2">Provide some fields to add initial products with.</td>
+</tr>
+<% end -%>
+<!--[eoform:category]-->
+

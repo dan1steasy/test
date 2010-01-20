@@ -1,0 +1,25 @@
+<% @page_title = "Edit email template" -%>
+<% @topnav_info = {:object_id => @email_template.id.to_s} -%>
+<% @body_options = focus_first_field -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Edit email template</h2>
+  <p>Edit this email template using the form below.</p>
+  <% form_for :email_template, :url => {:action => :update, :id => @email_template},
+              :html => {:name => 'email_template', :id => 'email_template'} do |form| -%>
+    <table>
+      <%= render :partial => 'form', :object => @email_template, :locals => {:form => form} %>
+      <tr>
+        <td><%= submit_tag "Update template" %></td>
+      </tr>
+    </table>
+  <% end -%>
+</div>
+<!--[eodiv:contentleft]-->
+
+<!--[div:contentright]-->
+<div id="contentright">
+  <%= render :partial => 'key' %>
+</div>
+<!--[eodiv:contentright]-->

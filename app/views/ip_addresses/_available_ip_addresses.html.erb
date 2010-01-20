@@ -1,0 +1,15 @@
+<tr id="available_ips">
+  <td><label for="ip_address_ids">IP Address(es)</label></td>
+  <td>
+    <select id="ip_address_ids" name="ip_address_ids[]" size="10" multiple>
+      <% if @ip_addresses.blank? -%>
+        <%= option_groups_from_collection_for_select(@available_ips_for_select, :options, :type_name, :id, :address) %>
+      <% else -%>
+        <%= ip_address_multiple_select @available_ips_for_select %>
+      <% end -%>
+    </select>
+  </td>
+  <td>
+    <div id="hw_spinner_3" style="display: none;"><%= image_tag('spinner.gif') %></div>
+  </td>
+</tr>

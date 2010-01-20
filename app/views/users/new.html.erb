@@ -1,0 +1,17 @@
+<% @page_title = "New user" %>
+<% @topnav_items = { "List" => "/users/list" } %>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Add new user</h2>
+  <p>Use the form below to add a new user to AutoEasy.</p>
+  <% form_tag :action => 'create' do %>
+  <table>
+    <%= render :partial => 'form' %>
+    <tr>
+      <td><%= submit_tag "Add user" %></td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+<!--[eodiv:contentleft]-->

@@ -1,0 +1,26 @@
+<%= error_messages_for :product %>
+<!--[form:product]-->
+<tr>
+  <td><label for="product_code">Product code</label></td>
+  <td><%= text_field :product, :code %></td>
+</tr>
+<tr>
+  <td><label for="product_name">Name</label></td>
+  <td><%= text_field :product, :name %></td>
+</tr>
+<tr>
+  <td><label for="product_description">Description</label></td>
+  <td><%= text_area :product, :description, :rows => 4, :cols => 25 %></td>
+</tr>
+<tr>
+  <td><label for="product_price">Price (&pound;)</label></td>
+  <td><%= text_field :product, :price, :size => 10 %></td>
+</tr>
+<tr>
+  <td><label for="product_requires_hardware">Hardware product</label></td>
+  <td><%= check_box :product, :requires_hardware %></td>
+</tr>
+<tr>
+  <td><label for="product_requires_hosting">Hosted product</label></td>
+  <td><%= check_box :product, :requires_hosting %></td>
+</tr>

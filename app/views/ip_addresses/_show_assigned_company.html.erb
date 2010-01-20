@@ -1,0 +1,19 @@
+<% div_id = "assign_company_div_#{@ip_address.id.to_s}" -%>
+<!--[div:<%= div_id %>]-->
+<div id="<%= div_id %>">
+  <%=
+  if @ip_address.assigned_to_company?
+    @ip_address.company.name + " (" +
+      link_to_remote('Change', :url => {:action => 'assign_to_company', :id => @ip_address},
+      :update => div_id) + " or " +
+      link_to_remote('unassign', :url => {:action => 'unassign_company', :id => @ip_address},
+      :update => div_id) + ")"
+  else
+    "Not assigned " +
+      link_to_remote('Assign', :url => {:action => 'assign_to_company', :id => @ip_address},
+                       :update => div_id)
+                     
+  end
+  %>
+</div>
+<!--[eodiv:<%= div_id %>-->
