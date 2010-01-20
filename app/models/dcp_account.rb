@@ -1,4 +1,3 @@
-# A class to be used when creating DCP accounts
 class DcpAccount < ActiveRecord::Base
   DcpAccount.establish_connection :adapter => 'mysql',
                                   :host => 'secure.1steasy.com',

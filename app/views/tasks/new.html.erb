@@ -1,2 +1,20 @@
-<h1>Tasks#new</h1>
-<p>Find me in app/views/tasks/new.html.erb</p>
+<% @page_title = "New Datacentre Task" -%>
+<% @body_options = focus_first_field 'task' -%>
+
+<!--[div:contentleft]-->
+<div id="contentleft">
+  <h2>Add new datacentre task</h2>
+  <p>Use the form below to add a new datacentre task</p>
+  <% form_for(@task) do |f| %>
+    <table>
+      <tr>
+        <td><%= f.label :description, "Task description:" %></td>
+        <td><%= f.text_area :description, :rows => 3 %></td>
+      </tr>
+      <tr>
+        <td><%= f.submit "Add task" %></td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+<!--[eodiv:contentleft]-->

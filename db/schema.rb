@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091104121728) do
+ActiveRecord::Schema.define(:version => 20100120120153) do
 
   create_table "account_types", :force => true do |t|
     t.string  "name"
@@ -279,6 +279,16 @@ ActiveRecord::Schema.define(:version => 20091104121728) do
     t.text   "description"
   end
 
+  create_table "tasks", :force => true do |t|
+    t.text     "description"
+    t.boolean  "is_complete",  :default => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.integer  "completed_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "traffic_quotas", :force => true do |t|
     t.integer "company_id"
     t.float   "value"
@@ -293,6 +303,12 @@ ActiveRecord::Schema.define(:version => 20091104121728) do
     t.binary  "key"
     t.integer "list_limit",    :default => 15
     t.boolean "is_in_finance", :default => false
+  end
+
+  create_table "vrrp_groups", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "in_use"
   end
 
 end
