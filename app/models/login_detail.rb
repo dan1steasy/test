@@ -21,8 +21,8 @@
 
 class LoginDetail < ActiveRecord::Base
 
-  EXAMPLE_DESCRIPTIONS = ["Site admin", "Miva admin", "MySQL", "Server admin",
-                          "Root user", "osCommerce admin"]
+  EXAMPLE_LOGIN_DESCRIPTIONS = ["Site admin", "Miva admin", "MySQL", "Server admin",
+                                "Root user", "osCommerce admin"]
   
   attr_accessor :decrypted_username, :decrypted_password, :example_description
 

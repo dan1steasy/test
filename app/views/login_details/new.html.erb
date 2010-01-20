@@ -3,7 +3,7 @@
   <%= f.hidden_field :account_id %>
   <tr>
     <td><label for="account_login_description">Login description</label></td>
-    <td><%= select :account_login, :example_description, LoginDetail::EXAMPLE_DESCRIPTIONS %></td>
+    <td><%= select :account_login, :example_description, LoginDetail::EXAMPLE_LOGIN_DESCRIPTIONS %></td>
     <td>or:</td>
     <td><%= f.text_field :description %></td>
   </tr>
