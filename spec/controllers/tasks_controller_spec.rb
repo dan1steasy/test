@@ -36,4 +36,16 @@ describe TasksController do
                                :value => 'Add task')
     end
   end
+
+  describe "POST create" do
+    describe "with valid params" do
+      it "should assign a newly created @task"
+      it "should redirect to show the new @task"
+    end
+
+    describe "with invalid params" do
+      it "should assign a newly created but unsaved @task"
+      it "should re-render the 'new' template"
+    end
+  end
 end
