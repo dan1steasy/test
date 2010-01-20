@@ -262,10 +262,6 @@ ActiveRecord::Schema.define(:version => 20100120120153) do
     t.string  "valid_tlds"
   end
 
-  create_table "schema_info", :id => false, :force => true do |t|
-    t.integer "version"
-  end
-
   create_table "ssls", :force => true do |t|
     t.integer "account_id",  :null => false
     t.text    "key"
@@ -303,12 +299,6 @@ ActiveRecord::Schema.define(:version => 20100120120153) do
     t.binary  "key"
     t.integer "list_limit",    :default => 15
     t.boolean "is_in_finance", :default => false
-  end
-
-  create_table "vrrp_groups", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "in_use"
   end
 
 end
