@@ -1,0 +1,83 @@
+Your new server is ready - [[FQDN]]
+
+Welcome to 1st Easy!
+
+This email contains everything that you should need to get started: login details, how to get technical support, and other useful information.
+
+Many thanks again for choosing 1st Easy for your dedicated server - we hope that you will be delighted with the service that we provide.
+
+Best Regards,
+
+1st Easy technical support team
+--
+
+
+1. APPLIANCE ADMINISTRATOR DETAILS:
+
+Within the appliance administration (the Ensim Control Panel), you will have access to various server-wide configuration options. You will be able to add new sites to the server, view bandwidth usage for various sites and configure various services like the web server and mail server. There are comprehensive help files available to give you more info.
+
+	* Your System Admin User Name: [[SERVER_ADMIN_USER]]
+	* Your System Admin Password: [[SERVER_ADMIN_PASS]]
+	* Your Appliance admin site is at http://[[FQDN]]/admin (Use the above login and password)
+	* You can safely ignore any warning messages that your browser may display about the SSL certificate on the admin interface, your browser session is still protected, the certificate is just self-signed by the server, not an external authority.
+
+
+2. SITE ADMINISTRATOR DETAILS:
+
+A site administrator interface is available the admin user for each site you set up. Within the site administration pages, you will be able to add new users to sites, edit email settings for various users (such as auto-responders, forwarding, adding/deleting aliases), view webalizer statistics, password-protect certain web directories and lots of other things.
+
+	* The Site admin site is at http://www.domainname/admin (where domainname will be one of the sites set up on the server).
+	* Login name: the site admin for that particular site.
+	* You can also get to the site admin pages for a particular site by clicking on its domain name via the 'View Sites' page of the main Appliance Admin Site.
+
+
+3. USER ADMINISTRATOR DETAILS:
+
+For each additional user that is added to a site by the site administrator, there is a user interface available. This area enables each user to set up email forwarding, aliases, auto-responders and spam settings.
+
+	* The user admin site is at http://www.domainname.com/user
+
+
+4. FTP INSTRUCTIONS:
+
+FTP to www.domainname, using the site administrator username@domainname and the relevant password. YOU NEED TO INCLUDE THE @DOMAIN PART AFTER THE USERNAME TO LOG IN SUCCESSFULLY.
+
+Upon entering the FTP site, you will start in the admin user's home directory. Here you will see two more directories: mainwebsite_html and mainwebsite_cgi. These are symbolic links to other directories and they take you to the web directory and the cgi-bin directory.
+
+If you navigate to mainwebsite_html, your FTP application should show you actually going to /var/www/html. This is the directory where all your web pages reside. Anything that is uploaded here will be accessible over the web.
+
+Navigating to mainwebsite_cgi, your FTP application should show you actually going to /var/www/cgi-bin.  This is the directory where scripts such as FormMail can be uploaded to. If you are using Miva on the site, a lot of the files needed to run Miva are stored here DO NOT DELETE THEM!
+
+
+5. EMAIL DETAILS:
+
+When a user is initially set up for a site within Ensim, they will be able to receive mail to username@domainname. You can add extra email aliases for a user within the relevant Site Administrator and User Administrator pages. The first user created for a site is the admin user, and will automatically be set up with a catch-all address.
+
+There are two ways to view your emails on an Ensim server: you can download from your POP account into your email client, or you can login to the web-based application, Squirrelmail.
+
+To download your POP emails, set your email client to use www.domainname as the POP server, the username/account login as username@domainname and the relevant password for the user. Set the SMTP server as the one provided by your internet service provider.
+
+To view your email via the web-based application, go to http://www.domainname/webmail and log in with the same details above.
+
+Note: if you check your mail in your email client and then check your mail via squirrelmail, the emails will have gone. This is because they have been downloaded and deleted from the server to your email client.
+
+One of the great features of the Ensim Control Panel is the ability to enable mail scanning and spam filtering for any sites that you set up. Users of the site will then have the ability to control the severity of spam filtering via their individual user interfaces (www.domainname.com/user)
+
+
+6. MYSQL DETAILS:
+
+Each site on an Ensim server can be MySQL enabled from within the Appliance Administrator Interface. This can be done either when the site is created, or later via the Site Configuration settings.
+
+Each site's databases can be administered by the phpMyAdmin utility. This is accessible via the appropriate Site Administration page.
+
+
+
+7. SUPPORT:
+
+It is worth reading the comprehensive documentation provided within the Ensim Appliance interface. Many of the questions you may have regarding using Ensim, setting up sites, email etc, will be answered there. There are links to the help files on the welcome pages of the Administrative interfaces.
+
+If you cannot find answers to your questions in the documentation, go to http://support.1steasy.com. You can read various knowledge base articles or can send a support email directly to us and we aim to respond within 3 hours. If you are really stuck - just pick up the phone and dial 01260 295 222.
+
+Thank you once again for ordering your Dedicated Server solution from 1st Easy Limited.
+
+May we take this opportunity to wish you every success with this exciting Internet business channel.
