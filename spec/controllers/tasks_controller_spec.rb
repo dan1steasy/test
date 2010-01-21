@@ -1,7 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe TasksController do
-  #integrate_views
 
   def mock_task(stubs={})
     @mock_task ||= mock_model(Task, stubs)

@@ -17,4 +17,18 @@ describe "/tasks/new" do
       form.should have_selector('input', :type => 'submit')
     end
   end
+  
+  it "should render a label for the task description field" do
+    response.should have_selector("form") do |form|
+      form.should have_tag("label[for=task_description]", "Task description:")
+    end
+  end
+
+  it "should render a text area for the task description" do
+    response.should have_selector("form") do |form|
+      form.should have_selector("textarea",
+                                :name => "task[description]")
+    end
+  end
+
 end
