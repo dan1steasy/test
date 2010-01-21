@@ -1,0 +1,84 @@
+Your new server is ready - [[FQDN]]
+
+Welcome to 1st Easy!
+
+This email contains everything that you need to get started: login details, how to get technical support, and other useful information.
+
+Many thanks again for choosing 1st Easy to host your server - we hope that you will be delighted with the service that we provide.
+
+Best Regards,
+
+1st Easy technical support team
+--
+
+
+1. Your login information
+
+Your server is live and SSH is running. You can SSH to the server address below as the root user or the non-root user account, using the relevant passwords below.
+
+    * Server name: [[FQDN]]
+    * Your root password: [[ROOT_PASS]]
+
+    * Non-root user account login: [[SERVER_ADMIN_USER]]
+    * Non-root user account password: [[SERVER_ADMIN_PASS]]
+
+
+2. Technical support
+
+The fastest route to technical support is to open a ticket; this way, our entire support team can view and respond to the issue, which can be quickly and efficiently managed.
+
+    * Open a ticket with our support team: [http://support.1steasy.com/?_a=tickets&_m=submit]
+    * Send an email to our support team: support@1steasy.com
+    * Visit our Knowledgebase for "how to" guides: [http://support.1steasy.com/?_a=knowledgebase]
+    * Call our techincal support team: 0808 222 221
+    * 1st Easy blog (service announcements, updates): [http://www.1steasy.com/blog]
+    * Twitter (service announcements, updates): [http://www.twitter.com/1steasy]
+
+
+3. Complaints
+
+If you are unhappy with any aspect of our service, we would like to know. We take complaints seriously, and by working with you to resolve a problem quickly, we hope to demonstrate our commitment to providing the best standard of customer support and service that we can.
+
+If you have a complaint, please use our complaints form:
+
+    * [http://www.1steasy.com/complaints.htm]
+
+
+4. Referrals and resellers
+
+Alternatively, if you have been pleased with the service that we have provided, why not recommend us? We will happily pay a referral credit as a thank you for any qualifying business.
+Product/Service - Credit
+Rails web hosting - £10 (Mid-level +)
+Dedicated Server - £100 (Mid-level +)
+Server Colocation - £150
+
+We also offer up to 20% discount for resellers - for full information, please see our resellers and referrals page: http://www.1steasy.com/resellers.htm.
+
+
+5. Accounts and billing
+
+Payment can be made via telephone, post, bank-transfer or Standing Order (for regular payments). Full details are below:
+
+    * How can I pay 1st Easy? [http://www.1steasy.com/billing.htm]
+
+
+
+6. 1st Easy services
+
+1st Easy offer a range of Internet services, including:
+
+    * Spam/Virus protection [http://www.1steasy.com/email-filtering.htm]
+    * Domain registration [http://www.1steasy.com/cgi-bin/2008_domain_reg.cgi]
+    * Website hosting [http://www.1steasy.com/web-hosting.htm]
+    * MIVA Merchant 5.5 store hosting [http://www.1steasy.com/miva-merchant.htm]
+    * Linux dedicated servers [http://www.1steasy.com/dedicated-servers.htm]
+    * Secure server colocation [http://www.1steasy.com/manchester-colocation.htm]
+    * Internet connectivity [http://www.1steasy.com/internet-connectivity.htm]
+
+This email is confidential and intended solely for the use of the individual to whom it is addressed. Any views or opinions presented are solely those of the author, and do not necessarily represent those of 1st Easy Limited.
+
+If you are not the intended recipient be advised that you have received this email in error, and that any use, dissemination, forwarding, printing or copying of this email is strictly prohibited. If you have received this email in error, please contact the sender.
+
+1st Easy Limited is a company registered in England and Wales with company number 384 1912; VAT No: 738 7670 86
+
+Registered Address: Lower Washford Mill, Mill Street, Buglawton, Congleton, Cheshire, CW12 2AD
