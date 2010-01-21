@@ -1,0 +1,30 @@
+<% @page_title = "Listing tasks" -%>
+
+<!--[div;contentleft]-->
+<div id="contentleft">
+  <h2>Tasks</h2>
+    <p><%= pluralize @tasks.count, 'task' %> in the database.</p>
+  <table class="listing">
+    <tr>
+      <th>Description</th>
+      <th>Date added</th>
+      <th>Complete?</th>
+    </tr>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.description %></td>
+        <td><%= task.created_at.to_s(:long)%></td>
+        <td><%= task.complete? %></td>
+        <td><%= link_to(image_tag('edit.gif', :title => 'Edit task'), edit_task_path(task)) %></td>
+        <td>
+          <%= link_to(image_tag('delete.gif', :title => 'Delete task' ), task,
+                      :confirm => 'Are you sure you want to delete this task?', :method => :delete) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate @tasks %>
+  <p><%= link_to "New", new_task_url %> - add a new task.</p>
+</div>
+<!--[eodiv:contentleft]-->

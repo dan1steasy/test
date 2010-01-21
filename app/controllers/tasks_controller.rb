@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @tasks = Task.paginate(:order => "created_at",
+                           :per_page => session[:list_limit], :page => params[:page])
   end
 
   def new
