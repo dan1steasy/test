@@ -15,6 +15,7 @@ Best Regards,
 1. Your login information
 
 Your server is live and SSH is running. You can SSH to the server address below as the root user or the non-root user account, using the relevant passwords below.
+Please note that your server is behind a border firewall, which is currently set up to only allow connections through to standard hosting ports (e.g.: SSH, HTTP, SMTP, POP, IMAP, etc). If you wish to have custom ports opened, please submit a ticket as per the instructions below.
 
     * Server name: [[FQDN]]
     * Your root password: [[ROOT_PASS]]
