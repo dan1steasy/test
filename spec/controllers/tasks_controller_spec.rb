@@ -15,27 +15,54 @@ describe TasksController do
 
   describe "GET 'new'" do
     before(:each) do
+      Task.stub(:new).and_return(mock_task)
       get 'new'
     end
 
     it "should be successful" do
       response.should be_success
     end
+
+    it "should assign a new task as @task" do
+      assigns[:task].should equal(mock_task)
+    end
+
   end
 
   describe "POST create" do
     describe "with valid params" do
-      it "should assign a newly created @task" do
-        post :create,
-          Task.stub(:new).with({'description' => 'task description'}).and_return(mock_task(:save => true))
+      before(:each) do
+        Task.stub(:new).with({'description' => 'task description'}).and_return(mock_task(:save => true))
+        post :create, :task => {:description => 'task description'}
+      end
+
+      it "should assign a newly created task as @task" do
         assigns[:task].should equal(mock_task)
       end
-      it "should redirect to show the new @task"
+
+      it "should set a flash[:notice]" do
+        flash[:notice].should == "Task successfully created."
+      end
+
+      it "should redirect to show the list of tasks" do
+        response.should redirect_to(tasks_path)
+      end
     end
 
-    describe "with invalid params" do
-      it "should assign a newly created but unsaved @task"
-      it "should re-render the 'new' template"
+    describe "with invalid params (blank description)" do
+      before(:each) do
+        description = ''
+        Task.stub(:new).with({'description' => description}).and_return(mock_task(:save => false))
+        post :create, :task => {:description => description}
+      end
+
+      it "should assign a newly created but unsaved @task" do
+        assigns[:task].should equal(mock_task)
+      end
+
+      it "should re-render the 'new' template" do
+        response.should render_template('new')
+      end
     end
   end
 end
