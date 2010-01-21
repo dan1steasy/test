@@ -35,6 +35,7 @@ task :chgrp do
   run "chgrp nobody #{release_path}/public/javascripts"
   # Allow our whois queries to be cached
   run "chgrp nobody #{release_path}/tmp"
+  run "chmod g+w #{release_path}/tmp"
 end
 
 desc "Symlink the DB config file from shared directory to current"
