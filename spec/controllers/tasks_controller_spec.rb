@@ -21,6 +21,8 @@ describe TasksController do
     end
   end
 
+  
+
   describe "GET 'new'" do
     before(:each) do
       Task.stub(:new).and_return(mock_task)
