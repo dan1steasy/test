@@ -4,5 +4,8 @@
 <div id="contentleft">
   <h2>Datacentre task details</h2>
   <p><%= @task.description %></p>
+  <%= check_box @task, @task.is_complete? %>
+  <p><%= link_to 'Edit task', edit_task_url(@task) %></p>
+  <p><%= link_to 'Delete task', '#' %></p>
 </div>
 <!--[eodiv:contentleft]-->
