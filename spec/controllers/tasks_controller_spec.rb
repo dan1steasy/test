@@ -21,7 +21,13 @@ describe TasksController do
     end
   end
 
-  
+  describe "GET show" do
+    it "should assign the requested task as @task" do
+      Task.stub(:find).with('1').and_return(mock_task)
+      get :show, :id => '1'
+      assigns[:task].should == mock_task
+    end
+  end
 
   describe "GET 'new'" do
     before(:each) do

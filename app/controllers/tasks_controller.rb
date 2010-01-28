@@ -4,6 +4,10 @@ class TasksController < ApplicationController
                            :per_page => session[:list_limit], :page => params[:page])
   end
 
+  def show
+    @task = Task.find(params[:id])
+  end
+
   def new
     @task = Task.new
   end
