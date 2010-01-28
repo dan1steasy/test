@@ -15,12 +15,11 @@ describe TasksController do
 
   describe "GET index" do
     it "should find all tasks as @tasks" do
-      Task.stub(:find).with(:all).and_return([mock_task])
+      Task.stub(:paginate).and_return([mock_task])
       get 'index'
       assigns[:tasks].should == [mock_task]
     end
   end
-
 
   describe "GET 'new'" do
     before(:each) do
