@@ -16,6 +16,7 @@ describe "/tasks/index.html.erb" do
         :created_at => 1.days.ago
       )
     ]
+    assigns[:tasks].stub!(:total_pages).and_return(1)
   end
 
   it "should render a list of tasks" do
