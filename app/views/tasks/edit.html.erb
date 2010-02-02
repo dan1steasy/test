@@ -1,10 +1,8 @@
-<% @page_title = "New Datacentre Task" -%>
-<% @body_options = focus_first_field 'task' -%>
+<% @page_title = "Edit Datacentre Task" -%>
 
 <!--[div:contentleft]-->
 <div id="contentleft">
-  <h2>Add new datacentre task</h2>
-  <p>Use the form below to add a new datacentre task</p>
+  <h2>Edit datacentre task</h2>
   <%= error_messages_for :task %>
   <% form_for(@task) do |f| %>
     <table>
@@ -13,7 +11,11 @@
         <td><%= f.text_area :description, :rows => 3 %></td>
       </tr>
       <tr>
-        <td><%= f.submit "Add task" %></td>
+        <td><%= f.label :is_complete, "Task completed:" %></td>
+        <td><%= f.check_box :is_complete %></td>
+      </tr>
+      <tr>
+        <td><%= f.submit "Update task" %></td>
       </tr>
     </table>
   <% end %>

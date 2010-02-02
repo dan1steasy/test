@@ -21,4 +21,12 @@ class Task < ActiveRecord::Base
   def complete?
     is_complete
   end
+
+  def created_by_user
+    User.find(self.created_by).name
+  end
+
+  def updated_by_user
+    User.find(self.updated_by).name unless self.updated_by.blank?
+  end
 end

@@ -3,9 +3,14 @@
 <!--[div:contentleft]-->
 <div id="contentleft">
   <h2>Datacentre task details</h2>
+  <%= edit_and_delete_options @task %>
   <p><%= @task.description %></p>
-  <%= check_box @task, @task.is_complete? %>
-  <p><%= link_to 'Edit task', edit_task_url(@task) %></p>
-  <p><%= link_to 'Delete task', '#' %></p>
+  <div class="audit">
+    <p>Created by <%= @task.created_by_user %> on <%= @task.created_at.to_s(:db) %></p>
+    <% if @task.updated_by != nil %>
+      <p>Last updated by <%= @task.updated_by_user %> on <%= @task.updated_at.to_s(:db) %></p>
+    <% end %>
+  </div>
+  <p>completion details here</p>
 </div>
 <!--[eodiv:contentleft]-->

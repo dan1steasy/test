@@ -22,4 +22,21 @@ class TasksController < ApplicationController
     end
   end
 
+  def edit
+    @task = Task.find(params[:id])
+  end
+
+  def update
+    @task = Task.find(params[:id])
+    if @task.update_attributes(params[:task])
+      @task.update_attribute(:updated_by, session[:user])
+      flash[:notice] = 'Task was successfully updated.'
+      redirect_to(@task)
+    else
+      flash[:error] = "Could not update task!"
+      render :action => "edit"
+    end
+  end
+ 
+
 end
