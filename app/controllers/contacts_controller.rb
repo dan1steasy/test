@@ -66,20 +66,15 @@ class ContactsController < ApplicationController
     if request.post?
       redirect_to :action => 'show', :id => params[:contact][:id] and return
     else
-      begin
-        @contact = Contact.find params[:id]
-        @colleagues = @contact.colleagues
-        contacts_company_ids = @contact.companies.map {|comp| comp.account_ids}
-        @accounts = Account.find(contacts_company_ids) unless contacts_company_ids.flatten.empty?
-        # Get the relevant notes
-        if User.find(session[:user]).is_in_finance
-          @contact_notes = @contact.contact_notes
-        else
-          @contact_notes = @contact.contact_notes.find(:all, :conditions => ['is_financial = ?', false])
-        end
-      rescue
-        flash[:error] = $!
-        redirect_to :action => 'list'
+      @contact = Contact.find params[:id]
+      @colleagues = @contact.colleagues
+      contacts_company_ids = @contact.companies.map {|comp| comp.account_ids}
+      @accounts = Account.find(contacts_company_ids) unless contacts_company_ids.flatten.empty?
+      # Get the relevant notes
+      if User.find(session[:user]).is_in_finance
+        @contact_notes = @contact.contact_notes
+      else
+        @contact_notes = @contact.contact_notes.find(:all, :conditions => ['is_financial = ?', false])
       end
     end
   end
