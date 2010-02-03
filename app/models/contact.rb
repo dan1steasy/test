@@ -66,9 +66,14 @@ class Contact < ActiveRecord::Base
 
   def colleagues
     contact_ids = Company.find(self.company_ids).map {|comp| comp.contact_ids}
-    contact_ids.flatten!.uniq!
-    contact_ids.delete(self.id)
-    Contact.find(contact_ids)
+    contact_ids.flatten!
+    if contact_ids.blank?
+      []
+    else
+      contact_ids.uniq!
+      contact_ids.delete(self.id)
+      Contact.find(contact_ids) unless contact_ids.blank?
+    end
   end
 
   def self.find_general_contacts(honour_subscribed_preference=false)
