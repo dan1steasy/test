@@ -72,7 +72,7 @@ class Contact < ActiveRecord::Base
     else
       contact_ids.uniq!
       contact_ids.delete(self.id)
-      Contact.find(contact_ids) unless contact_ids.blank?
+      Contact.find(contact_ids)
     end
   end
 
