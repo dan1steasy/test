@@ -29,8 +29,17 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
+    # We want to capture task completions
+    old_is_complete = @task.is_complete
     if @task.update_attributes(params[:task])
       @task.update_attribute(:updated_by, session[:user])
+      if(old_is_complete == false && @task.is_complete == true)
+        # Task has just been completed
+        @task.update_attribute(:completed_by, session[:user])
+      elsif(old_is_complete == true && @task.is_complete == false)
+        # Task has been marked as incomplete - clear out completed_by attribute
+        @task.update_attribute(:completed_by, nil)
+      end
       flash[:notice] = 'Task was successfully updated.'
       redirect_to(@task)
     else

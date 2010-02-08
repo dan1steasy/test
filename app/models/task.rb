@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20100120120153
+# Schema version: 20100208131342
 #
 # Table name: tasks
 #
@@ -11,6 +11,7 @@
 #  completed_by :integer(4)    
 #  created_at   :datetime      
 #  updated_at   :datetime      
+#  completed_at :datetime      
 #
 
 class Task < ActiveRecord::Base
