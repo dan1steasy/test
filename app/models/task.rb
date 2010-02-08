@@ -22,6 +22,14 @@ class Task < ActiveRecord::Base
     is_complete
   end
 
+  def complete_string(invert=false)
+    if invert
+      self.complete? ? 'not completed' : 'completed'
+    else
+      self.complete? ? 'completed' : 'not completed'
+    end
+  end
+
   def created_by_user
     User.find(self.created_by).name
   end

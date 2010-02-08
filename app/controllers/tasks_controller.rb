@@ -14,6 +14,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(params[:task])
+    @task.created_by = session[:user]
     if @task.save
       flash[:notice] = "Task successfully created."
       redirect_to tasks_path
@@ -38,5 +39,10 @@ class TasksController < ApplicationController
     end
   end
  
+  def destroy
+    @task = Task.find(params[:id])
+    @task.destroy
+    redirect_to tasks_url
+  end
 
 end
