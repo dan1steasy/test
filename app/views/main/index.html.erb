@@ -21,6 +21,35 @@
     <li><%= link_to "Email contacts", :controller => 'emails' %> - send emails to contacts.</li>
   </ul>
 
+  <h2>Incomplete DC Tasks</h2>
+  <% if @incomplete_tasks.blank? %>
+    <p>There are currently no imcomplete datacentre tasks.</p>
+  <% else -%>
+    <p>Pending datacentre tasks (descriptions may be truncated, view a task to see complete description)</p>
+    <table class="listing">
+      <tr>
+        <th>Description</th>
+        <th>Created at</th>
+        <th>Created by</th>
+      </tr>
+      <% @incomplete_tasks.each do |task| %>
+        <tr class="<%= cycle('list-even', 'list-odd') %>">
+          <td><%= truncate(task.description, 60) %></td>
+          <td><%= task.created_at.to_s(:db)%></td>
+          <td><%= task.created_by_user %></td>
+          <td><%= link_to("Done",
+                          task_path(:id => task.id, :task => {:is_complete => true}),
+                          :method => :put) %> 
+          <td><%= link_to(image_tag('show.gif', :title => 'Show task'), task) %></td>
+        </tr>
+      <% end -%>
+    </table>
+    <br />
+  <% end -%>
+  <ul>
+    <li><%= link_to "Tasks", tasks_path %> - manage datacentre tasks</li>
+  </ul>
+
   <h2>Control Panel</h2>
   <p>Manage system users, support levels and view statistics in the
   <%= link_to 'control panel', :controller => 'cp' %>.</p>
