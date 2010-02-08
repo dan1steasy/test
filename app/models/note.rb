@@ -40,6 +40,12 @@ class Note < ActiveRecord::Base
     result[0].note
   end
 
+  def self.find_with_recent_activity(limit=10)
+    latest_created = find :all, :select => "id, created_at AS date", :order => 'created_at DESC', :limit => limit
+    latest_updated = find :all, :order => 'updated_at DESC', :limit => limit
+    
+  end
+
 end
 
 class CompanyNote < Note
