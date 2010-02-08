@@ -10,10 +10,10 @@
     <% if @task.updated_by != nil %>
       <p>Last updated by <%= @task.updated_by_user %> on <%= @task.updated_at.to_s(:db) %></p>
     <% end %>
+    <% if @task.complete? -%>
+      <p>Task was completed by <%= @task.completed_by_user %> on <%= @task.completed_at.to_s(:db) %></p>
+    <% end -%>
   </div>
-  <% if @task.complete? -%>
-    <p>completion details here</p>
-  <% end -%>
   <h2>Options</h2>
     <ul>
       <li><%= link_to "Edit", edit_task_path(@task) %> - edit this task</li>

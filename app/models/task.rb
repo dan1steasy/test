@@ -38,4 +38,8 @@ class Task < ActiveRecord::Base
   def updated_by_user
     User.find(self.updated_by).name unless self.updated_by.blank?
   end
+
+  def completed_by_user
+    User.find(self.completed_by).name unless self.completed_by.blank?
+  end
 end

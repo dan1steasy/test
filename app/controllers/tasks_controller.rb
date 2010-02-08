@@ -36,9 +36,11 @@ class TasksController < ApplicationController
       if(old_is_complete == false && @task.is_complete == true)
         # Task has just been completed
         @task.update_attribute(:completed_by, session[:user])
+        @task.update_attribute(:completed_at, Time.now)
       elsif(old_is_complete == true && @task.is_complete == false)
         # Task has been marked as incomplete - clear out completed_by attribute
         @task.update_attribute(:completed_by, nil)
+        @task.update_attribute(:completed_at, nil)
       end
       flash[:notice] = 'Task was successfully updated.'
       redirect_to(@task)
