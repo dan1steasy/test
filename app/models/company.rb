@@ -121,6 +121,10 @@ class Company < ActiveRecord::Base
     IpAddress.find_networks(self)
   end
 
+  def created_by_user
+    User.find(self.created_by).name
+  end
+
   private
   def country_is_uk?
     if self.country == "United Kingdom"

@@ -65,7 +65,7 @@
     <% for account in @latest_accounts -%>
     <li>
       <%= link_to(account.fqdn_with_status, account_url(:fqdn => account.fqdn)) %>
-      (added by <%= User.find(account.created_by).real_name %>
+      (added by <%= account.created_by_user %>
       on <%= account.created_at.to_s(:short) %>)
     </li>
     <% end -%>
@@ -76,7 +76,7 @@
     <% for company in @latest_companies -%>
     <li>
       <%= link_to(company.name, :controller => :companies, :action => :show, :id => company) %>
-      (added by <%= User.find(company.created_by).real_name %>
+      (added by <%= company.created_by_user %>
       on <%= company.created_at.to_s(:short) %>)
     </li>
     <% end -%>

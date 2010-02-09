@@ -254,6 +254,10 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def created_by_user
+    User.find(self.created_by).name
+  end
+
   private
   def decryption_key(user_id)
     user = User.find user_id
