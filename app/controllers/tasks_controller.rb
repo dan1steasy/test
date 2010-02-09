@@ -43,7 +43,7 @@ class TasksController < ApplicationController
         @task.update_attribute(:completed_at, nil)
       end
       flash[:notice] = 'Task was successfully updated.'
-      redirect_to(@task)
+      redirect_to(params[:redirect_to] || @task)
     else
       flash[:error] = "Could not update task!"
       render :action => "edit"
