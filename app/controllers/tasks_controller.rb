@@ -5,7 +5,11 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
+    if params[:id] == 'list' # catch our old-style 'list' URL
+      redirect_to tasks_path
+    else
+      @task = Task.find(params[:id])
+    end
   end
 
   def new
