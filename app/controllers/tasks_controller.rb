@@ -47,8 +47,8 @@ class TasksController < ApplicationController
         @task.update_attribute(:completed_at, nil)
       end
       flash[:notice] = 'Task was successfully updated.'
-      if params[:redirect_to]
-        redirect_to(url_for(params[:redirect_to]))
+      if params[:redirect_to_main]
+        redirect_to(url_for('/'))
       else
         redirect_to @task
       end
