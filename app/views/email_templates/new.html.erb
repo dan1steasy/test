@@ -6,10 +6,10 @@
   <h2>Create new email template</h2>
   <p>Email templates can be used as helpers to allow you to quickly create an email (e.g.: a 'welcome email' template). Your template can include HTML content to control the look and feel of the email. You should also put a plain text version of the template in the 'text body' field for users who cannot see HTML emails.</p>
   <p>Add a new email template using the form below.</p>
-  <% form_for :email_template, :url => {:action => :create},
+  <% form_for @email_template, :url => {:action => :create},
               :html => {:name => 'email_template', :id => 'email_template'} do |form| -%>
     <table>
-      <%= render :partial => 'form', :object => @email_template, :locals => {:form => form} %>
+      <%= render :partial => 'form', :locals => {:form => form} %>
       <tr>
         <td><%= submit_tag "Add template" %></td>
       </tr>
