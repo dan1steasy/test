@@ -281,7 +281,17 @@ class VTiger < ActiveRecord::Base
   VTiger.establish_connection configurations['vtiger']
 end
 
-class VTCompany < VTiger
+class VtCompany < VTiger
   set_table_name  'vtiger_account'
   set_primary_key 'accountid'
+
+  has_one :vt_company_address, :foreign_key => 'accountaddressid'
+
+end
+
+class VtCompanyAddress < VTiger
+  set_table_name  'vtiger_accountbillads'
+  set_primary_key 'accountaddressid'
+
+  belongs_to :vt_company, :foreign_key => 'accountaddressid'
 end

@@ -215,7 +215,5 @@ class VTiger < ActiveRecord::Base
   VTiger.establish_connection configurations['vtiger']
 end
 
-class VTContact < VTiger
-  set_table_name  'vtiger_account'
-  set_primary_key 'accountid'
+class VtContact < VTiger
 end
