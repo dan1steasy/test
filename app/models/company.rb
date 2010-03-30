@@ -276,3 +276,12 @@ class OldCompany < OldAE
                               :created_by => 1, :old_id => self.id)
   end
 end
+
+class VTiger < ActiveRecord::Base
+  VTiger.establish_connection configurations['vtiger']
+end
+
+class VTCompany < VTiger
+  set_table_name  'vtiger_account'
+  set_primary_key 'accountid'
+end
