@@ -7,6 +7,7 @@
     <%= pluralize @total_hardware, 'hardware asset' %> in the database, with a total value of
     <%= number_to_currency(@total_value, :unit => '&pound;') %>
   </p>
+  <p>Insured asset value: <%= number_to_currency(@insured_value, :unit => '&pound;') %></p>
   <%= will_paginate @hardware %>
   <%= render :partial => 'listing' %>
   <%= will_paginate @hardware %>

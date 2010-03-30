@@ -61,6 +61,7 @@ class HardwareController < ApplicationController
     end
     @total_hardware = Hardware.count(:conditions => conditions_array)
     @total_value = Hardware.sum(:asset_value, :conditions => conditions_array)
+    @insured_value = Hardware.sum(:asset_value, :conditions => ["asset_tag LIKE ?", "i%"])
     @hardware = Hardware.paginate(:order => "#{order_by} #{order}", :conditions => conditions_array,
                                   :per_page => session[:list_limit], :page => params[:page])
   end
