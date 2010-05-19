@@ -210,10 +210,3 @@ class OldContact < OldAE
   end
 
 end
-
-class VTiger < ActiveRecord::Base
-  VTiger.establish_connection configurations['vtiger']
-end
-
-class VtContact < VTiger
-end
