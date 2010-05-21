@@ -46,12 +46,12 @@ end
 namespace :phpmyadmin do
   desc "Disable access to phpMyAdmin"
   task :disable, :roles => :web do
-    run "echo 'deny from all' > #{release_path}/public/phpmyadmin/.htaccess"
+    run "echo 'deny from all' > #{current_path}/public/phpmyadmin/.htaccess"
   end
 
   desc "Enable access to phpMyAdmin"
   task :enable, :roles => :web do
-    run "rm -f #{release_path}/public/phpmyadmin/.htaccess"
+    run "rm -f #{current_path}/public/phpmyadmin/.htaccess"
   end
 end
 
