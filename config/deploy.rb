@@ -55,4 +55,4 @@ namespace :phpmyadmin do
   end
 end
 
-after 'deploy:update_code', 'symlink_database_yml', 'chgrp'
+after 'deploy:update_code', 'symlink_database_yml', 'chgrp', 'phpmyadmin:disable'
