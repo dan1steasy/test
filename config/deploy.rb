@@ -43,4 +43,16 @@ task :symlink_database_yml do
   run "ln -nsf #{shared_path}/config/database.yml #{release_path}/config/database.yml"
 end
 
+namespace :phpmyadmin do
+  desc "Disable access to phpMyAdmin"
+  task :disable, :roles => :web do
+    run "echo 'deny from all' > #{release_path}/public/phpmyadmin/.htaccess"
+  end
+
+  desc "Enable access to phpMyAdmin"
+  task :enable, :roles => :web do
+    run "rm -f #{release_path}/public/phpmyadmin/.htaccess"
+  end
+end
+
 after 'deploy:update_code', 'symlink_database_yml', 'chgrp'
