@@ -15,8 +15,6 @@ class Ssl < ActiveRecord::Base
 
   validates_format_of :key,
                       :with => /^-----BEGIN RSA PRIVATE KEY-----/
-  validates_format_of :request,
-                      :with => /^-----BEGIN CERTIFICATE REQUEST-----/
   validates_format_of :certificate,
                       :with => /^-----BEGIN CERTIFICATE-----/
 
